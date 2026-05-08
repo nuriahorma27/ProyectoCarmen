@@ -276,60 +276,30 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
 .fl.on{opacity:1;transform:translateX(0) scale(1)}
 
 /* ══ MOBILE EXPERIENCE ════════════════════════════ */
-@keyframes mob-rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:translateY(0)}}
-@keyframes mob-scale{from{opacity:0;transform:scale(.96) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-
 @media(max-width:768px){
-  /* Stronger reveal base */
-  .fu{transform:translateY(36px);transition:opacity .6s cubic-bezier(.22,.97,.44,1),transform .6s cubic-bezier(.22,.97,.44,1)}
-  .fl{transform:translateX(0) translateY(36px);transition:opacity .65s cubic-bezier(.22,.97,.44,1),transform .65s cubic-bezier(.22,.97,.44,1)}
-  .fl.on{transform:none}
-
-  /* Hero: sequential entrance — each element fades+rises in turn */
-  .hero-pills  {opacity:0;animation:mob-rise .6s .06s cubic-bezier(.22,.97,.44,1) both}
-  .hero-name   {opacity:0;animation:mob-rise .7s .20s cubic-bezier(.22,.97,.44,1) both}
-  .hero-tagline{opacity:0;animation:mob-rise .6s .36s cubic-bezier(.22,.97,.44,1) both}
-  .hero-sub    {opacity:0;animation:mob-rise .6s .48s cubic-bezier(.22,.97,.44,1) both}
-  .hero-ctas   {opacity:0;animation:mob-rise .6s .62s cubic-bezier(.22,.97,.44,1) both}
-
-  /* Stacking card effect: sections slide over each other with rounded tops */
-  #sobre-mi         {border-radius:20px 20px 0 0;overflow:hidden;position:relative;z-index:2;margin-top:-20px}
-  .met-scroll-section{border-radius:20px 20px 0 0;position:relative;z-index:3;margin-top:-20px}
-  .laptop-section   {border-radius:20px 20px 0 0;overflow:hidden;position:relative;z-index:4;margin-top:-20px}
-  #servicios        {border-radius:20px 20px 0 0;overflow:hidden;position:relative;z-index:5;margin-top:-20px}
-  #reserva          {border-radius:20px 20px 0 0;overflow:hidden;position:relative;z-index:6;margin-top:-20px}
-
-  /* Laptop frame: scale-in reveal via IntersectionObserver (.mob-on) */
-  .laptop-frame{opacity:0!important;transform:translateY(44px) scale(.88)!important;transition:opacity .75s cubic-bezier(.22,.97,.44,1),transform .75s cubic-bezier(.22,.97,.44,1)}
-  .laptop-frame.mob-on{opacity:1!important;transform:none!important}
-
-  /* Tactile feedback */
-  .btn:active{transform:scale(.96);transition:transform .08s}
-  .srv-card:active{transform:translateY(-2px);transition:transform .1s}
+  /* Stronger inner reveals */
+  .fu{transform:translateY(40px);transition:opacity .65s cubic-bezier(.22,.97,.44,1),transform .65s cubic-bezier(.22,.97,.44,1)}
+  .fl{transform:translateY(40px) scale(.97);transition:opacity .7s cubic-bezier(.22,.97,.44,1),transform .7s cubic-bezier(.22,.97,.44,1)}
+  .fl.on{opacity:1;transform:none}
+  /* Rounded section tops */
+  #sobre-mi,.met-scroll-section,.laptop-section,#servicios,#reserva{border-radius:20px 20px 0 0}
+  .btn:active{transform:scale(.95)}
 }
-
 @media(max-width:640px){
-  /* Method steps: slide in from left, one by one */
+  /* Met step cards */
   .met-spotlight{
-    opacity:0!important;
-    transform:translateX(-24px)!important;
-    transition:opacity .55s cubic-bezier(.22,.97,.44,1),transform .55s cubic-bezier(.22,.97,.44,1)!important;
-    border-left:3px solid var(--green)!important;
-    border-bottom:none!important;
-    border-radius:0 14px 14px 0!important;
-    background:#fff!important;
-    box-shadow:0 2px 20px rgba(0,0,0,.07)!important;
-    margin:0 0 12px!important;
+    opacity:0!important;transform:translateY(44px)!important;
+    transition:opacity .6s cubic-bezier(.22,.97,.44,1),transform .6s cubic-bezier(.22,.97,.44,1)!important;
+    border-left:3px solid var(--green)!important;border-bottom:none!important;
+    border-radius:0 14px 14px 0!important;background:#fff!important;
+    box-shadow:0 2px 20px rgba(0,0,0,.07)!important;margin:0 0 14px!important;
     padding:20px 20px 20px 22px!important
   }
-  .met-spotlight.mob-on{opacity:1!important;transform:translateX(0)!important}
-  .met-spot-n{font-size:2rem!important;opacity:1!important;color:var(--green)!important;font-weight:700!important;font-family:var(--serif)!important;margin-bottom:4px!important}
-  .met-spot-t{font-size:1.1rem!important}
+  .met-spotlight.mob-in{opacity:1!important;transform:none!important}
+  .met-spot-n{font-size:2rem!important;opacity:1!important;color:var(--green)!important;font-weight:700!important}
   .met-sticky{padding:32px 16px 40px!important}
-
-  /* Service cards: scale in with stagger */
-  .srv-card.fu{transform:scale(.96) translateY(28px)!important}
-  .srv-card.fu.on{transform:scale(1) translateY(0)!important}
+  .laptop-frame{opacity:0!important;transform:translateY(40px) scale(.9)!important;transition:opacity .75s cubic-bezier(.22,.97,.44,1),transform .75s cubic-bezier(.22,.97,.44,1)}
+  .laptop-frame.mob-in{opacity:1!important;transform:none!important}
 }
 </style>
 </head>
@@ -962,18 +932,52 @@ function animCount(el, target, suffix, dur){
   window.addEventListener('load',tick);
 })();
 
-/* ── Mobile-only reveal observers ───────────────── */
+/* ── Mobile animations (JS-driven, fires after paint) ── */
 (function(){
   if(window.innerWidth>768)return;
-  var ob=new IntersectionObserver(function(ens){
-    ens.forEach(function(e){if(e.isIntersecting){e.target.classList.add('mob-on');ob.unobserve(e.target);}});
-  },{threshold:.15,rootMargin:'0px 0px -30px 0px'});
-  /* Laptop frame scale-in */
-  var lf=document.getElementById('laptop-frame');
-  if(lf)ob.observe(lf);
-  /* Methodology steps slide-in (mobile only) */
+  var cb='cubic-bezier(.22,.97,.44,1)';
+
+  /* 1. Hero: sequential fade-up triggered AFTER the page is visible */
+  var hSels=['.hero-pills','.hero-name','.hero-tagline','.hero-sub','.hero-ctas'];
+  var hDels=[0,160,320,480,640];
+  hSels.forEach(function(s){
+    var el=document.querySelector(s);
+    if(el){el.style.opacity='0';el.style.transform='translateY(44px)';}
+  });
+  setTimeout(function(){
+    hSels.forEach(function(s,i){
+      var el=document.querySelector(s);
+      if(!el)return;
+      setTimeout(function(){
+        el.style.transition='opacity .65s '+cb+',transform .65s '+cb;
+        requestAnimationFrame(function(){el.style.opacity='1';el.style.transform='none';});
+      },hDels[i]);
+    });
+  },80); /* 80ms base lets the browser finish its first paint */
+
+  /* 2. Whole-section reveals: each section slides up from below as you scroll */
+  var secIds=['sobre-mi','metodologia','mvp2','servicios','reserva'];
+  secIds.forEach(function(id){
+    var s=document.getElementById(id);
+    if(s){s.style.opacity='0';s.style.transform='translateY(64px)';s.style.transition='opacity .8s '+cb+',transform .8s '+cb;}
+  });
+  var secOb=new IntersectionObserver(function(ens){
+    ens.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.style.opacity='1';e.target.style.transform='none';
+      secOb.unobserve(e.target);
+    });
+  },{threshold:0.04});
+  secIds.forEach(function(id){var s=document.getElementById(id);if(s)secOb.observe(s);});
+
+  /* 3. Met steps + laptop frame (≤640px) */
   if(window.innerWidth<=640){
-    document.querySelectorAll('.met-spotlight').forEach(function(el){ob.observe(el);});
+    var mobOb=new IntersectionObserver(function(ens){
+      ens.forEach(function(e){if(e.isIntersecting){e.target.classList.add('mob-in');mobOb.unobserve(e.target);}});
+    },{threshold:0.1});
+    document.querySelectorAll('.met-spotlight').forEach(function(el){mobOb.observe(el);});
+    var lf=document.getElementById('laptop-frame');
+    if(lf)mobOb.observe(lf);
   }
 })();
 </script>
