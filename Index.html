@@ -666,7 +666,7 @@ function animCount(el, target, suffix, dur){
     var ep=p<0.5?2*p*p:-1+(4-2*p)*p;
     var scale=0.52+ep*1.82;
     frame.style.transform='scale('+scale+')';
-    if(ctx)ctx.style.opacity=Math.max(0,1-p*6).toString();
+    if(ctx)ctx.style.opacity=Math.max(0,1-p*14).toString();
   }
   window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
   update();
