@@ -69,6 +69,10 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .h-mob{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:10px 16px 18px;flex-direction:column;gap:2px;display:none}
 .h-mob a{font-size:.98rem;color:var(--text);padding:11px 14px;border-radius:8px;display:block;cursor:pointer}
 .h-mob a:hover{background:var(--bg-alt)}
+.h-icons{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.h-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);background:transparent;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--muted)}
+.h-icon:hover{border-color:var(--green);color:var(--green);background:var(--green-l)}
+.h-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:768px){.h-nav,.h-cta{display:none!important}.h-burger{display:flex}}
 
 /* ── Hero ───────────────────────────────────────── */
@@ -315,6 +319,14 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
       <a onclick="goTo('servicios')">Servicios</a>
       <a onclick="goTo('reserva')">Empezamos</a>
     </nav>
+    <div class="h-icons">
+      <a href="portal.html" class="h-icon" title="Área de clientes">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </a>
+      <a href="admin.html" class="h-icon" title="Panel de administración">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </a>
+    </div>
     <button class="btn btn-green h-cta" onclick="openBookModal()" style="flex-shrink:0">Reservar cita</button>
     <button class="h-burger" onclick="toggleMob()" aria-label="Menú">
       <span></span><span></span><span></span>
@@ -326,6 +338,16 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     <a onclick="goTo('servicios');toggleMob()">Servicios</a>
     <a onclick="goTo('reserva');toggleMob()">Empezamos</a>
     <button class="btn btn-green" style="margin-top:8px;width:100%;justify-content:center" onclick="openBookModal();toggleMob()">Reservar cita</button>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <a href="portal.html" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border);color:var(--muted);font-size:.84rem;font-weight:500;text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Área clientes
+      </a>
+      <a href="admin.html" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border);color:var(--muted);font-size:.84rem;font-weight:500;text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Panel admin
+      </a>
+    </div>
   </div>
 </header>
 

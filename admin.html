@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin · Carmen Marañón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#ffffff;--bg-alt:#f6f5f2;--text:#19181a;--muted:#857f78;--light:#c2bcb5;
+--green:#3b6750;--green-d:#2c4f3c;--green-l:#eef3ef;
+--border:#e4e1db;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+--sh:0 2px 14px rgba(25,20,10,.07);--sh-lg:0 8px 40px rgba(25,20,10,.11);--r:12px;
+--sidebar:240px;
+}
+html,body{height:100%;font-family:var(--sans);font-size:15px;color:var(--text);background:var(--bg-alt);}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--sans);cursor:pointer;}
+input,textarea,select{font-family:var(--sans);}
+
+/* LAYOUT */
+.layout{display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);background:#19181a;display:flex;flex-direction:column;height:100vh;position:fixed;left:0;top:0;z-index:100;transition:transform .3s;}
+.main{margin-left:var(--sidebar);flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
+
+/* SIDEBAR */
+.sb-logo{padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sb-logo-name{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:#fff;letter-spacing:.01em;line-height:1.2;}
+.sb-logo-label{font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;}
+.sb-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.6);font-size:.875rem;font-weight:400;cursor:pointer;transition:all .18s;user-select:none;}
+.sb-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.sb-item.active{background:var(--green);color:var(--green-l);}
+.sb-item svg{width:18px;height:18px;flex-shrink:0;opacity:.8;}
+.sb-item.active svg{opacity:1;}
+.sb-footer{padding:16px 12px;border-top:1px solid rgba(255,255,255,.08);}
+.sb-user{display:flex;align-items:center;gap:10px;}
+.sb-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff;flex-shrink:0;}
+.sb-user-info{flex:1;min-width:0;}
+.sb-user-name{font-size:.8rem;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-user-link{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:1px;cursor:pointer;}
+.sb-user-link:hover{color:rgba(255,255,255,.7);}
+
+/* TOP BAR */
+.topbar{background:var(--bg);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-title{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--text);}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.hamburger{display:none;background:none;border:none;padding:6px;color:var(--text);}
+.hamburger svg{width:22px;height:22px;}
+
+/* CONTENT */
+.content{padding:32px;flex:1;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:28px;}
+.page-header h1{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--text);line-height:1.2;}
+.page-header p{color:var(--muted);font-size:.9rem;margin-top:4px;}
+.page-header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+
+/* CARDS */
+.card{background:var(--bg);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);}
+.card-pad{padding:24px;}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;box-shadow:var(--sh);display:flex;align-items:flex-start;justify-content:space-between;}
+.stat-body{}
+.stat-number{font-family:var(--serif);font-size:2.4rem;font-weight:700;color:var(--text);line-height:1;}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:5px;}
+.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stat-icon svg{width:22px;height:22px;}
+.si-green{background:var(--green-l);color:var(--green);}
+.si-blue{background:#eef0f8;color:#4a5fad;}
+.si-amber{background:#fef6e7;color:#b07d1a;}
+.si-red{background:#fceef0;color:#b43a3a;}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:10px 16px;border-bottom:1px solid var(--border);}
+tbody td{padding:14px 16px;font-size:.875rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--bg-alt);}
+.pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:500;}
+.pill-green{background:var(--green-l);color:var(--green);}
+.pill-yellow{background:#fef6e7;color:#b07d1a;}
+.pill-gray{background:#f0eeeb;color:var(--muted);}
+.pill-blue{background:#eef0f8;color:#4a5fad;}
+.pill-red{background:#fceef0;color:#b43a3a;}
+
+/* ACTIVITY FEED */
+.activity-list{display:flex;flex-direction:column;gap:0;}
+.activity-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:6px;flex-shrink:0;}
+.activity-text{font-size:.875rem;color:var(--text);flex:1;}
+.activity-time{font-size:.78rem;color:var(--light);flex-shrink:0;margin-top:1px;}
+
+/* DASHBOARD TWO COL */
+.dash-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;}
+
+/* PATIENTS */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.search-wrap{position:relative;flex:1;max-width:340px;}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;border:1px solid var(--border);border-radius:8px;font-size:.875rem;background:var(--bg);color:var(--text);outline:none;transition:border .2s;}
+.search-wrap input:focus{border-color:var(--green);}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--light);pointer-events:none;}
+.search-icon svg{width:16px;height:16px;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:8px;font-size:.875rem;font-weight:500;border:none;transition:all .18s;}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:var(--green-d);}
+.btn-outline{background:transparent;color:var(--green);border:1.5px solid var(--green);}
+.btn-outline:hover{background:var(--green-l);}
+.btn-sm{padding:7px 13px;font-size:.8rem;}
+.btn-gray{background:var(--bg-alt);color:var(--text);border:1px solid var(--border);}
+.btn-gray:hover{background:var(--border);}
+
+.patients-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.patient-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--sh);transition:box-shadow .2s;}
+.patient-card:hover{box-shadow:var(--sh-lg);}
+.pc-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.pc-avatar{width:46px;height:46px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:600;color:#fff;flex-shrink:0;}
+.pc-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--text);}
+.pc-age{font-size:.8rem;color:var(--muted);}
+.pc-goal{font-size:.82rem;color:var(--muted);margin-bottom:14px;}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;}
+.pc-link{font-size:.82rem;color:var(--green);font-weight:500;cursor:pointer;}
+.pc-link:hover{text-decoration:underline;}
+
+/* PATIENT DETAIL */
+.patient-detail{display:none;}
+.patient-detail.open{display:block;}
+.pd-back{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);cursor:pointer;margin-bottom:20px;}
+.pd-back:hover{color:var(--text);}
+.pd-back svg{width:16px;height:16px;}
+.pd-header{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:20px;display:flex;align-items:center;gap:20px;box-shadow:var(--sh);}
+.pd-avatar{width:70px;height:70px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:600;color:#fff;flex-shrink:0;}
+.pd-info{flex:1;}
+.pd-name{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--text);}
+.pd-sub{font-size:.875rem;color:var(--muted);margin-top:3px;}
+.pd-tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:24px;}
+.pd-tab{padding:10px 18px;font-size:.875rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s;}
+.pd-tab:hover{color:var(--text);}
+.pd-tab.active{color:var(--green);border-bottom-color:var(--green);}
+.pd-pane{display:none;}
+.pd-pane.active{display:block;}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.info-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
+.info-card h4{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;margin-bottom:12px;}
+.info-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.875rem;}
+.info-row:last-child{border-bottom:none;}
+.info-row span:first-child{color:var(--muted);}
+
+/* SESSIONS */
+.session-form-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--sh);margin-bottom:24px;}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.form-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.fi{display:flex;flex-direction:column;gap:5px;}
+.fi label{font-size:.78rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.fi input,.fi textarea,.fi select{padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--text);background:var(--bg);outline:none;transition:border .2s;resize:vertical;}
+.fi input:focus,.fi textarea:focus,.fi select:focus{border-color:var(--green);}
+.fi textarea{min-height:90px;}
+.session-list{display:flex;flex-direction:column;gap:12px;}
+.session-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:var(--sh);}
+.si-info h4{font-family:var(--serif);font-size:1rem;font-weight:600;}
+.si-info p{font-size:.8rem;color:var(--muted);margin-top:3px;}
+.si-meta{text-align:right;flex-shrink:0;}
+.si-meta .weight{font-size:1.1rem;font-weight:600;color:var(--green);}
+.si-meta .date{font-size:.78rem;color:var(--muted);}
+
+/* PLANS */
+.plans-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;}
+.weekly-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px;}
+.wg-header{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;padding:6px 4px;background:var(--bg-alt);border-radius:6px;}
+.wg-cell{padding:0;}
+.wg-cell textarea{width:100%;min-height:54px;resize:vertical;border:1.5px solid var(--border);border-radius:6px;padding:6px 7px;font-size:.75rem;font-family:var(--sans);color:var(--text);background:var(--bg);outline:none;transition:border .18s;}
+.wg-cell textarea:focus{border-color:var(--green);}
+.wg-meal{font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:4px 0 4px;text-align:right;padding-right:8px;display:flex;align-items:center;}
+.weekly-grid-wrap{display:grid;grid-template-columns:80px 1fr;gap:0;}
+.meal-labels{display:flex;flex-direction:column;gap:6px;padding-top:30px;}
+.plan-list-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);}
+.plan-list-item:last-child{border-bottom:none;}
+.pli-info h4{font-size:.875rem;font-weight:600;}
+.pli-info p{font-size:.78rem;color:var(--muted);margin-top:2px;}
+
+/* CALENDAR */
+.cal-toggle{display:flex;gap:4px;margin-bottom:20px;}
+.cal-toggle button{padding:8px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:.83rem;font-weight:500;background:var(--bg);color:var(--muted);cursor:pointer;transition:all .18s;}
+.cal-toggle button.active{background:var(--green);color:#fff;border-color:var(--green);}
+.week-cal{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--bg);}
+.wc-head{display:grid;grid-template-columns:64px repeat(7,1fr);}
+.wc-head-cell{padding:12px 8px;text-align:center;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--border);border-right:1px solid var(--border);}
+.wc-head-cell:last-child{border-right:none;}
+.wc-body{display:grid;grid-template-columns:64px repeat(7,1fr);}
+.wc-time{font-size:.72rem;color:var(--muted);padding:8px 8px;text-align:right;border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:flex-end;}
+.wc-cell{border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px;position:relative;padding:3px;}
+.wc-cell:last-child{border-right:none;}
+.wc-appt{background:var(--green-l);border-left:3px solid var(--green);border-radius:4px;padding:4px 6px;font-size:.72rem;color:var(--green);font-weight:500;line-height:1.3;cursor:pointer;}
+
+/* TOOLS */
+.bmi-result{display:none;background:var(--green-l);border:1px solid var(--green);border-radius:var(--r);padding:24px;margin-top:20px;}
+.bmi-result.show{display:block;}
+.bmi-value{font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--green);}
+.bmi-cat{font-size:1rem;font-weight:600;color:var(--green-d);margin-top:4px;}
+.bmi-bar-wrap{height:10px;background:var(--border);border-radius:5px;margin:16px 0 8px;overflow:hidden;}
+.bmi-bar-fill{height:100%;border-radius:5px;transition:width .6s ease;}
+.bmi-text{font-size:.85rem;color:var(--green-d);}
+.ref-table th{background:var(--bg-alt);}
+
+/* WEB EDITOR */
+.web-section{margin-bottom:28px;}
+.web-section h3{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:14px;}
+.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.price-edit-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
+.price-edit-card h4{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;}
+.save-toast{display:none;position:fixed;bottom:28px;right:28px;background:var(--green);color:#fff;padding:12px 20px;border-radius:8px;font-size:.875rem;font-weight:500;box-shadow:var(--sh-lg);z-index:999;align-items:center;gap:8px;}
+.save-toast.show{display:flex;animation:slideUp .3s ease;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* MESSAGES */
+.msg-layout{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 64px - 64px);gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--bg);}
+.conv-list{border-right:1px solid var(--border);overflow-y:auto;}
+.conv-item{padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:11px;align-items:flex-start;}
+.conv-item:hover{background:var(--bg-alt);}
+.conv-item.active{background:var(--green-l);}
+.conv-avatar{width:40px;height:40px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:#fff;flex-shrink:0;}
+.conv-info{flex:1;min-width:0;}
+.conv-name{font-size:.875rem;font-weight:600;color:var(--text);}
+.conv-preview{font-size:.78rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.conv-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.conv-time{font-size:.72rem;color:var(--light);}
+.conv-badge{background:var(--green);color:#fff;border-radius:20px;font-size:.68rem;font-weight:600;padding:2px 7px;}
+.chat-view{display:flex;flex-direction:column;}
+.chat-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;flex-shrink:0;}
+.chat-name{font-weight:600;font-size:.9rem;}
+.chat-status{font-size:.75rem;color:var(--muted);}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.msg-bubble{max-width:70%;padding:11px 15px;border-radius:12px;font-size:.875rem;line-height:1.5;}
+.msg-bubble.from{background:var(--bg-alt);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px;}
+.msg-bubble.to{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+.msg-time{font-size:.7rem;margin-top:4px;opacity:.6;}
+.chat-input{padding:14px 16px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;}
+.chat-input input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;outline:none;transition:border .2s;}
+.chat-input input:focus{border-color:var(--green);}
+
+/* MOBILE */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99;}
+@media(max-width:900px){
+.sidebar{transform:translateX(-100%);}
+.sidebar.open{transform:translateX(0);}
+.main{margin-left:0;}
+.hamburger{display:flex;}
+.overlay.show{display:block;}
+.stats-grid{grid-template-columns:repeat(2,1fr);}
+.dash-grid{grid-template-columns:1fr;}
+.patients-grid{grid-template-columns:1fr;}
+.plans-layout{grid-template-columns:1fr;}
+.msg-layout{grid-template-columns:1fr;}
+.conv-list{display:none;}
+.price-cards{grid-template-columns:1fr;}
+.info-grid{grid-template-columns:1fr;}
+.form-grid{grid-template-columns:1fr;}
+.form-grid-2{grid-template-columns:1fr;}
+.weekly-grid{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:560px){
+.stats-grid{grid-template-columns:1fr 1fr;}
+.content{padding:20px 16px;}
+.topbar{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-name">Carmen Marañón</div>
+    <div class="sb-logo-label">Panel admin</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-item active" data-section="dashboard" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      Dashboard
+    </div>
+    <div class="sb-item" data-section="pacientes" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Pacientes
+    </div>
+    <div class="sb-item" data-section="sesiones" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Sesiones
+    </div>
+    <div class="sb-item" data-section="planes" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+      Planes
+    </div>
+    <div class="sb-item" data-section="citas" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Citas
+    </div>
+    <div class="sb-item" data-section="herramientas" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      Herramientas
+    </div>
+    <div class="sb-item" data-section="web" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Web
+    </div>
+    <div class="sb-item" data-section="mensajes" onclick="navigate(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Mensajes
+      <span style="margin-left:auto;background:#b43a3a;color:#fff;border-radius:20px;font-size:.65rem;font-weight:600;padding:2px 7px;">3</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-avatar">CM</div>
+      <div class="sb-user-info">
+        <div class="sb-user-name">Carmen Marañón</div>
+        <div class="sb-user-link">Cerrar sesión</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="hamburger" onclick="toggleSidebar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="topbar-title" id="topbarTitle">Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <div style="font-size:.82rem;color:var(--muted);" id="topbarDate"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <section class="section active" id="sec-dashboard">
+      <div class="page-header">
+        <h1>Buenos días, Carmen</h1>
+        <p id="dashDate"></p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-body">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Pacientes activos</div>
+          </div>
+          <div class="stat-icon si-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-body">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Citas esta semana</div>
+          </div>
+          <div class="stat-icon si-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-body">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Planes enviados</div>
+          </div>
+          <div class="stat-icon si-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-body">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Nuevas solicitudes</div>
+          </div>
+          <div class="stat-icon si-red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card card-pad">
+          <h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:16px;">Próximas citas</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Paciente</th><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500;">María García</td><td>Lunes 12 mayo</td><td>10:00h</td><td>Seguimiento</td><td><span class="pill pill-green">Confirmada</span></td></tr>
+                <tr><td style="font-weight:500;">Laura Martínez</td><td>Martes 13 mayo</td><td>11:30h</td><td>Primera consulta</td><td><span class="pill pill-yellow">Pendiente</span></td></tr>
+                <tr><td style="font-weight:500;">Ana Rodríguez</td><td>Miércoles 14 mayo</td><td>09:00h</td><td>Seguimiento</td><td><span class="pill pill-green">Confirmada</span></td></tr>
+                <tr><td style="font-weight:500;">Carlos Pérez</td><td>Jueves 15 mayo</td><td>16:00h</td><td>Revisión plan</td><td><span class="pill pill-yellow">Pendiente</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card card-pad">
+          <h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:16px;">Actividad reciente</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text">Plan enviado a <strong>María García</strong></div>
+              <div class="activity-time">hace 2h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#4a5fad;"></div>
+              <div class="activity-text">Nueva reserva de <strong>Laura Martínez</strong></div>
+              <div class="activity-time">hace 5h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#b07d1a;"></div>
+              <div class="activity-text">Sesión completada con <strong>Ana Rodríguez</strong></div>
+              <div class="activity-time">ayer</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div class="activity-text">Plan actualizado para <strong>Carlos Pérez</strong></div>
+              <div class="activity-time">ayer</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#b43a3a;"></div>
+              <div class="activity-text">Nueva solicitud de <strong>Isabel Romero</strong></div>
+              <div class="activity-time">hace 2 días</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACIENTES -->
+    <section class="section" id="sec-pacientes">
+      <div id="patients-list-view">
+        <div class="page-header">
+          <div class="page-header-row">
+            <h1>Pacientes</h1>
+            <button class="btn btn-green">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nuevo paciente
+            </button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <input type="text" placeholder="Buscar paciente…">
+          </div>
+          <button class="btn btn-gray btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            Filtrar
+          </button>
+        </div>
+        <div class="patients-grid">
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar">MG</div><div><div class="pc-name">María García</div><div class="pc-age">28 años</div></div></div><div class="pc-goal">Objetivo: Pérdida de grasa</div><div class="pc-footer"><span class="pill pill-green">Activo</span><span class="pc-link" onclick="openPatient('MG','María García','28','Pérdida de grasa')">Ver ficha →</span></div></div>
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar" style="background:#4a5fad;">LM</div><div><div class="pc-name">Laura Martínez</div><div class="pc-age">34 años</div></div></div><div class="pc-goal">Objetivo: Rendimiento deportivo</div><div class="pc-footer"><span class="pill pill-green">Activo</span><span class="pc-link" onclick="openPatient('LM','Laura Martínez','34','Rendimiento deportivo')">Ver ficha →</span></div></div>
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar" style="background:#b07d1a;">AR</div><div><div class="pc-name">Ana Rodríguez</div><div class="pc-age">42 años</div></div></div><div class="pc-goal">Objetivo: Mejora de hábitos</div><div class="pc-footer"><span class="pill pill-green">Activo</span><span class="pc-link" onclick="openPatient('AR','Ana Rodríguez','42','Mejora de hábitos')">Ver ficha →</span></div></div>
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar" style="background:#5a4a8a;">CP</div><div><div class="pc-name">Carlos Pérez</div><div class="pc-age">26 años</div></div></div><div class="pc-goal">Objetivo: Ganancia muscular</div><div class="pc-footer"><span class="pill pill-green">Activo</span><span class="pc-link" onclick="openPatient('CP','Carlos Pérez','26','Ganancia muscular')">Ver ficha →</span></div></div>
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar" style="background:#b43a3a;">EL</div><div><div class="pc-name">Elena López</div><div class="pc-age">31 años</div></div></div><div class="pc-goal">Objetivo: Control patología</div><div class="pc-footer"><span class="pill pill-gray">En pausa</span><span class="pc-link" onclick="openPatient('EL','Elena López','31','Control patología')">Ver ficha →</span></div></div>
+          <div class="patient-card"><div class="pc-header"><div class="pc-avatar" style="background:#3a7a6b;">SS</div><div><div class="pc-name">Sara Sánchez</div><div class="pc-age">25 años</div></div></div><div class="pc-goal">Objetivo: Pérdida de grasa</div><div class="pc-footer"><span class="pill pill-green">Activo</span><span class="pc-link" onclick="openPatient('SS','Sara Sánchez','25','Pérdida de grasa')">Ver ficha →</span></div></div>
+        </div>
+      </div>
+
+      <div class="patient-detail" id="patient-detail">
+        <div class="pd-back" onclick="closePatient()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Volver a pacientes
+        </div>
+        <div class="pd-header">
+          <div class="pd-avatar" id="pd-avatar">MG</div>
+          <div class="pd-info">
+            <div class="pd-name" id="pd-name">María García</div>
+            <div class="pd-sub" id="pd-sub">28 años · Pérdida de grasa</div>
+          </div>
+          <span class="pill pill-green" style="margin-left:auto;">Activo</span>
+          <button class="btn btn-outline btn-sm" style="margin-left:12px;">Editar</button>
+        </div>
+        <div class="pd-tabs">
+          <div class="pd-tab active" onclick="pdTab(this,'info')">Información</div>
+          <div class="pd-tab" onclick="pdTab(this,'sesiones')">Sesiones</div>
+          <div class="pd-tab" onclick="pdTab(this,'plan')">Plan</div>
+          <div class="pd-tab" onclick="pdTab(this,'mensajes')">Mensajes</div>
+        </div>
+        <div class="pd-pane active" id="pd-info">
+          <div class="info-grid">
+            <div class="info-card">
+              <h4>Datos personales</h4>
+              <div class="info-row"><span>Nombre</span><span>María García López</span></div>
+              <div class="info-row"><span>Email</span><span>maria@email.com</span></div>
+              <div class="info-row"><span>Teléfono</span><span>+34 612 345 678</span></div>
+              <div class="info-row"><span>Fecha de nacimiento</span><span>14 marzo 1996</span></div>
+              <div class="info-row"><span>Altura</span><span>164 cm</span></div>
+              <div class="info-row"><span>Peso inicial</span><span>72,4 kg</span></div>
+            </div>
+            <div class="info-card">
+              <h4>Objetivo y motivo de consulta</h4>
+              <p style="font-size:.875rem;color:var(--text);line-height:1.6;">Pérdida de grasa corporal con mantenimiento de masa muscular. Refiere sensación de cansancio y hábitos alimentarios irregulares. Busca aprender a comer bien y crear rutinas sostenibles.</p>
+            </div>
+            <div class="info-card">
+              <h4>Historial de salud</h4>
+              <div class="info-row"><span>Alergias</span><span>Ninguna conocida</span></div>
+              <div class="info-row"><span>Intolerancias</span><span>Lactosa leve</span></div>
+              <div class="info-row"><span>Medicación</span><span>Ninguna</span></div>
+              <div class="info-row"><span>Actividad física</span><span>3 días/semana</span></div>
+            </div>
+            <div class="info-card">
+              <h4>Notas</h4>
+              <p style="font-size:.875rem;color:var(--text);line-height:1.6;">Paciente muy motivada. Trabaja en turno partido, lo que dificulta los horarios de comida. Se sugiere estructurar 5 comidas adaptadas a su jornada. Progresa bien.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pd-pane" id="pd-sesiones">
+          <div class="session-list">
+            <div class="session-item"><div class="si-info"><h4>Sesión de seguimiento</h4><p>Revisión de adherencia al plan · Buena evolución general</p></div><div class="si-meta"><div class="weight">70,2 kg</div><div class="date">2 mayo 2025</div></div></div>
+            <div class="session-item"><div class="si-info"><h4>Sesión de seguimiento</h4><p>Ajuste de macros tras análisis · Aumento de proteína</p></div><div class="si-meta"><div class="weight">71,0 kg</div><div class="date">15 abril 2025</div></div></div>
+            <div class="session-item"><div class="si-info"><h4>Primera consulta</h4><p>Evaluación inicial · Toma de medidas y establecimiento de objetivos</p></div><div class="si-meta"><div class="weight">72,4 kg</div><div class="date">1 abril 2025</div></div></div>
+          </div>
+        </div>
+        <div class="pd-pane" id="pd-plan">
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;">Plan Semana 5 — activo</div>
+                <div style="font-size:.82rem;color:var(--muted);margin-top:4px;">Enviado el 5 mayo 2025 · <span class="pill pill-green" style="font-size:.7rem;">Enviado</span></div>
+              </div>
+              <button class="btn btn-green btn-sm">Crear nuevo plan</button>
+            </div>
+          </div>
+          <div class="card card-pad">
+            <h4 style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500;margin-bottom:12px;">Planes anteriores</h4>
+            <div class="plan-list-item"><div class="pli-info"><h4>Plan Semana 4</h4><p>Enviado 28 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+            <div class="plan-list-item"><div class="pli-info"><h4>Plan Semana 3</h4><p>Enviado 21 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+            <div class="plan-list-item"><div class="pli-info"><h4>Plan Semana 1–2</h4><p>Enviado 1 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+          </div>
+        </div>
+        <div class="pd-pane" id="pd-mensajes">
+          <div class="card" style="display:flex;flex-direction:column;height:380px;">
+            <div class="chat-messages" style="padding:20px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;">
+              <div><div class="msg-bubble from">Hola Carmen, ¿cómo llevo el plan esta semana?</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-left:4px;">hace 2 días</div></div>
+              <div style="align-self:flex-end;text-align:right;"><div class="msg-bubble to">¡Hola María! Lo estás haciendo muy bien. He visto que llevas la adherencia al 90% 🎉</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-right:4px;">hace 2 días</div></div>
+              <div><div class="msg-bubble from">Genial, la verdad que me siento con más energía.</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-left:4px;">ayer</div></div>
+            </div>
+            <div class="chat-input">
+              <input type="text" placeholder="Escribe un mensaje…">
+              <button class="btn btn-green btn-sm">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SESIONES -->
+    <section class="section" id="sec-sesiones">
+      <div class="page-header">
+        <div class="page-header-row">
+          <h1>Sesiones</h1>
+          <button class="btn btn-green">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nueva sesión
+          </button>
+        </div>
+      </div>
+      <div class="session-form-card">
+        <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:20px;">Registrar sesión</h3>
+        <div class="form-grid" style="margin-bottom:16px;">
+          <div class="fi">
+            <label>Paciente</label>
+            <select>
+              <option>Seleccionar paciente…</option>
+              <option>María García</option>
+              <option>Laura Martínez</option>
+              <option>Ana Rodríguez</option>
+              <option>Carlos Pérez</option>
+              <option>Elena López</option>
+              <option>Sara Sánchez</option>
+            </select>
+          </div>
+          <div class="fi">
+            <label>Fecha</label>
+            <input type="date" value="2025-05-08">
+          </div>
+          <div class="fi">
+            <label>Tipo de sesión</label>
+            <select>
+              <option>Seguimiento</option>
+              <option>Primera consulta</option>
+              <option>Revisión de plan</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid" style="margin-bottom:16px;">
+          <div class="fi">
+            <label>Peso actual (kg)</label>
+            <input type="number" placeholder="70.2" step="0.1">
+          </div>
+          <div class="fi">
+            <label>IMC calculado</label>
+            <input type="text" placeholder="Se calcula automáticamente" readonly style="background:var(--bg-alt);color:var(--muted);">
+          </div>
+          <div class="fi">
+            <label>Cintura (cm)</label>
+            <input type="number" placeholder="74">
+          </div>
+        </div>
+        <div class="form-grid" style="margin-bottom:16px;">
+          <div class="fi">
+            <label>Cadera (cm)</label>
+            <input type="number" placeholder="96">
+          </div>
+          <div class="fi">
+            <label>Masa muscular (%)</label>
+            <input type="number" placeholder="32.4" step="0.1">
+          </div>
+          <div class="fi">
+            <label>Adjuntar archivo</label>
+            <input type="file" style="padding:7px 10px;">
+          </div>
+        </div>
+        <div class="form-grid-2" style="margin-bottom:20px;">
+          <div class="fi">
+            <label>Notas de la sesión</label>
+            <textarea placeholder="Observaciones, evolución, estado general de la paciente…"></textarea>
+          </div>
+          <div class="fi">
+            <label>Objetivos próxima sesión</label>
+            <textarea placeholder="Metas a alcanzar hasta la próxima visita…"></textarea>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-green">Guardar sesión</button>
+          <button class="btn btn-gray">Cancelar</button>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:16px;">Historial de sesiones</h3>
+      <div class="session-list">
+        <div class="session-item"><div class="si-info"><h4>María García</h4><p>Seguimiento · Buena adherencia, reduce grasa visceral progresivamente</p></div><div class="si-meta"><div class="weight">70,2 kg</div><div class="date">2 mayo 2025</div></div></div>
+        <div class="session-item"><div class="si-info"><h4>Laura Martínez</h4><p>Primera consulta · Evaluación completa, deportista amateur con objetivo de rendimiento</p></div><div class="si-meta"><div class="weight">63,8 kg</div><div class="date">30 abril 2025</div></div></div>
+        <div class="session-item"><div class="si-info"><h4>Ana Rodríguez</h4><p>Revisión · Mejora de hábitos consolidada, menor picoteo entre horas</p></div><div class="si-meta"><div class="weight">68,5 kg</div><div class="date">28 abril 2025</div></div></div>
+        <div class="session-item"><div class="si-info"><h4>Carlos Pérez</h4><p>Seguimiento · Ganancia de masa muscular en curso, ajuste de ingesta calórica</p></div><div class="si-meta"><div class="weight">78,1 kg</div><div class="date">25 abril 2025</div></div></div>
+        <div class="session-item"><div class="si-info"><h4>Sara Sánchez</h4><p>Seguimiento · Muy motivada, se amplía déficit calórico moderadamente</p></div><div class="si-meta"><div class="weight">62,4 kg</div><div class="date">22 abril 2025</div></div></div>
+      </div>
+    </section>
+
+    <!-- PLANES -->
+    <section class="section" id="sec-planes">
+      <div class="page-header"><h1>Planes alimentarios</h1></div>
+      <div class="plans-layout">
+        <div>
+          <div class="card card-pad">
+            <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:16px;">Crear plan</h3>
+            <div class="form-grid-2" style="margin-bottom:14px;">
+              <div class="fi">
+                <label>Crear plan para</label>
+                <select>
+                  <option>Seleccionar paciente…</option>
+                  <option selected>María García</option>
+                  <option>Laura Martínez</option>
+                  <option>Ana Rodríguez</option>
+                  <option>Carlos Pérez</option>
+                </select>
+              </div>
+              <div class="fi">
+                <label>Nombre del plan</label>
+                <input type="text" value="Plan Semana 6">
+              </div>
+            </div>
+            <div class="weekly-grid-wrap">
+              <div class="meal-labels">
+                <div class="wg-meal" style="height:30px;"></div>
+                <div class="wg-meal" style="min-height:60px;">Desayuno</div>
+                <div class="wg-meal" style="min-height:60px;">Media mañana</div>
+                <div class="wg-meal" style="min-height:60px;">Almuerzo</div>
+                <div class="wg-meal" style="min-height:60px;">Merienda</div>
+                <div class="wg-meal" style="min-height:60px;">Cena</div>
+              </div>
+              <div>
+                <div class="weekly-grid">
+                  <div class="wg-header">Lun</div><div class="wg-header">Mar</div><div class="wg-header">Mié</div><div class="wg-header">Jue</div><div class="wg-header">Vie</div><div class="wg-header">Sáb</div><div class="wg-header">Dom</div>
+                  <div class="wg-cell"><textarea placeholder="Desayuno lunes…"></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div>
+                  <div class="wg-cell"><textarea placeholder="Media mañana…"></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div>
+                  <div class="wg-cell"><textarea placeholder="Almuerzo…"></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div>
+                  <div class="wg-cell"><textarea placeholder="Merienda…"></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div>
+                  <div class="wg-cell"><textarea placeholder="Cena…"></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div><div class="wg-cell"><textarea></textarea></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px;">
+              <button class="btn btn-green">Guardar plan</button>
+              <button class="btn btn-outline">Enviar al paciente</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad">
+          <h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:16px;">Planes recientes</h3>
+          <div class="plan-list-item"><div class="pli-info"><h4>María García · Semana 5</h4><p>Enviado 5 mayo 2025</p></div><span class="pill pill-green">Enviado</span></div>
+          <div class="plan-list-item"><div class="pli-info"><h4>Laura Martínez · Semana 1</h4><p>Guardado 1 mayo 2025</p></div><span class="pill pill-gray">Borrador</span></div>
+          <div class="plan-list-item"><div class="pli-info"><h4>Ana Rodríguez · Semana 4</h4><p>Enviado 28 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+          <div class="plan-list-item"><div class="pli-info"><h4>Carlos Pérez · Semana 3</h4><p>Enviado 24 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+          <div class="plan-list-item"><div class="pli-info"><h4>Sara Sánchez · Semana 2</h4><p>Guardado 20 abril 2025</p></div><span class="pill pill-gray">Borrador</span></div>
+          <div class="plan-list-item"><div class="pli-info"><h4>María García · Semana 4</h4><p>Enviado 28 abril 2025</p></div><span class="pill pill-green">Enviado</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CITAS -->
+    <section class="section" id="sec-citas">
+      <div class="page-header"><div class="page-header-row"><h1>Citas</h1><button class="btn btn-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nueva cita</button></div></div>
+      <div class="cal-toggle">
+        <button class="active">Semana</button>
+        <button>Mes</button>
+      </div>
+      <div class="week-cal" style="margin-bottom:24px;">
+        <div class="wc-head">
+          <div class="wc-head-cell"></div>
+          <div class="wc-head-cell">Lun 12</div>
+          <div class="wc-head-cell">Mar 13</div>
+          <div class="wc-head-cell">Mié 14</div>
+          <div class="wc-head-cell">Jue 15</div>
+          <div class="wc-head-cell">Vie 16</div>
+          <div class="wc-head-cell">Sáb 17</div>
+          <div class="wc-head-cell">Dom 18</div>
+        </div>
+        <div class="wc-body">
+          <div class="wc-time">09:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">10:00</div><div class="wc-cell"><div class="wc-appt">María García<br><small>Seguimiento</small></div></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">11:00</div><div class="wc-cell"></div><div class="wc-cell"><div class="wc-appt">Laura Martínez<br><small>1ª Consulta</small></div></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">12:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">13:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">15:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"><div class="wc-appt">Ana Rodríguez<br><small>Seguimiento</small></div></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">16:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"><div class="wc-appt">Carlos Pérez<br><small>Revisión plan</small></div></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div>
+          <div class="wc-time">17:00</div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"></div><div class="wc-cell"><div class="wc-appt">Sara Sánchez<br><small>Seguimiento</small></div></div><div class="wc-cell"></div><div class="wc-cell"></div>
+        </div>
+      </div>
+      <div class="card card-pad">
+        <h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:16px;">Próximas citas</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Paciente</th><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Estado</th><th></th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500;">María García</td><td>Lunes 12 mayo</td><td>10:00h</td><td>Seguimiento</td><td><span class="pill pill-green">Confirmada</span></td><td><button class="btn btn-gray btn-sm">Detalles</button></td></tr>
+              <tr><td style="font-weight:500;">Laura Martínez</td><td>Martes 13 mayo</td><td>11:30h</td><td>Primera consulta</td><td><span class="pill pill-yellow">Pendiente</span></td><td><button class="btn btn-gray btn-sm">Detalles</button></td></tr>
+              <tr><td style="font-weight:500;">Ana Rodríguez</td><td>Miércoles 14 mayo</td><td>15:00h</td><td>Seguimiento</td><td><span class="pill pill-green">Confirmada</span></td><td><button class="btn btn-gray btn-sm">Detalles</button></td></tr>
+              <tr><td style="font-weight:500;">Carlos Pérez</td><td>Jueves 15 mayo</td><td>16:00h</td><td>Revisión plan</td><td><span class="pill pill-yellow">Pendiente</span></td><td><button class="btn btn-gray btn-sm">Detalles</button></td></tr>
+              <tr><td style="font-weight:500;">Sara Sánchez</td><td>Viernes 16 mayo</td><td>17:00h</td><td>Seguimiento</td><td><span class="pill pill-green">Confirmada</span></td><td><button class="btn btn-gray btn-sm">Detalles</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERRAMIENTAS -->
+    <section class="section" id="sec-herramientas">
+      <div class="page-header"><h1>Herramientas</h1></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+        <div class="card card-pad">
+          <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:20px;">Calculadora IMC</h3>
+          <div class="fi" style="margin-bottom:14px;">
+            <label>Nombre del paciente</label>
+            <input type="text" id="bmi-name" placeholder="María García">
+          </div>
+          <div class="form-grid-2" style="margin-bottom:20px;">
+            <div class="fi">
+              <label>Peso (kg)</label>
+              <input type="number" id="bmi-weight" placeholder="70.2" step="0.1">
+            </div>
+            <div class="fi">
+              <label>Altura (cm)</label>
+              <input type="number" id="bmi-height" placeholder="164">
+            </div>
+          </div>
+          <button class="btn btn-green" onclick="calcBMI()">Calcular IMC</button>
+          <div class="bmi-result" id="bmi-result">
+            <div class="bmi-value" id="bmi-val">—</div>
+            <div class="bmi-cat" id="bmi-cat">—</div>
+            <div class="bmi-bar-wrap"><div class="bmi-bar-fill" id="bmi-bar" style="width:0%;background:var(--green);"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:10px;"><span>16</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
+            <p class="bmi-text" id="bmi-text"></p>
+          </div>
+        </div>
+        <div class="card card-pad">
+          <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:16px;">Tablas de referencia nutricional</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Macronutriente</th><th>Recomendación</th><th>Por kg peso</th></tr></thead>
+              <tbody>
+                <tr><td>Proteínas</td><td>10–35% kcal</td><td>0,8–2,2 g/kg</td></tr>
+                <tr><td>Carbohidratos</td><td>45–65% kcal</td><td>3–6 g/kg</td></tr>
+                <tr><td>Grasas</td><td>20–35% kcal</td><td>0,8–1,2 g/kg</td></tr>
+                <tr><td>Fibra</td><td>25–38 g/día</td><td>—</td></tr>
+                <tr><td>Agua</td><td>2–3 L/día</td><td>35 ml/kg</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:20px;">
+            <h4 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;">Categorías IMC</h4>
+            <table>
+              <thead class="ref-table"><tr><th>Categoría</th><th>IMC</th></tr></thead>
+              <tbody>
+                <tr><td>Bajo peso</td><td>&lt; 18,5</td></tr>
+                <tr><td>Normopeso</td><td>18,5 – 24,9</td></tr>
+                <tr><td>Sobrepeso</td><td>25 – 29,9</td></tr>
+                <tr><td>Obesidad grado I</td><td>30 – 34,9</td></tr>
+                <tr><td>Obesidad grado II</td><td>35 – 39,9</td></tr>
+                <tr><td>Obesidad mórbida</td><td>≥ 40</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEB -->
+    <section class="section" id="sec-web">
+      <div class="page-header"><h1>Editor web</h1><p>Edita el contenido de tu página web. Los cambios se publican al guardar.</p></div>
+
+      <div class="web-section">
+        <h3>Precios de servicios</h3>
+        <div class="price-cards">
+          <div class="price-edit-card">
+            <h4>Consulta individual</h4>
+            <div class="fi" style="margin-bottom:10px;">
+              <label>Precio</label>
+              <input type="text" value="40€ / sesión">
+            </div>
+            <div class="fi" style="margin-bottom:14px;">
+              <label>Descripción</label>
+              <textarea style="min-height:70px;">Evaluación personalizada, análisis de hábitos y diseño de plan inicial adaptado a tus objetivos.</textarea>
+            </div>
+            <button class="btn btn-green btn-sm" onclick="showToast()">Guardar</button>
+          </div>
+          <div class="price-edit-card">
+            <h4>Seguimiento semanal</h4>
+            <div class="fi" style="margin-bottom:10px;">
+              <label>Precio</label>
+              <input type="text" value="30€ / semana">
+            </div>
+            <div class="fi" style="margin-bottom:14px;">
+              <label>Descripción</label>
+              <textarea style="min-height:70px;">Sesión semanal de revisión, ajuste del plan y soporte continuo para mantener el progreso.</textarea>
+            </div>
+            <button class="btn btn-green btn-sm" onclick="showToast()">Guardar</button>
+          </div>
+          <div class="price-edit-card">
+            <h4>Plan mensual completo</h4>
+            <div class="fi" style="margin-bottom:10px;">
+              <label>Precio</label>
+              <input type="text" value="110€ / mes">
+            </div>
+            <div class="fi" style="margin-bottom:14px;">
+              <label>Descripción</label>
+              <textarea style="min-height:70px;">Acompañamiento total: consulta inicial, 4 seguimientos semanales y planes alimentarios mensuales.</textarea>
+            </div>
+            <button class="btn btn-green btn-sm" onclick="showToast()">Guardar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="web-section">
+        <h3>Textos de la web</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="card card-pad">
+            <h4 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Sección Hero</h4>
+            <div class="fi" style="margin-bottom:10px;"><label>Eyebrow</label><input type="text" value="Nutricionista deportiva y clínica · Asturias"></div>
+            <div class="fi" style="margin-bottom:10px;"><label>Título principal</label><input type="text" value="Transforma tu relación con la comida"></div>
+            <div class="fi" style="margin-bottom:14px;"><label>Subtítulo</label><textarea style="min-height:70px;">Planes personalizados, seguimiento cercano y resultados reales. Porque comer bien no debería ser complicado.</textarea></div>
+            <button class="btn btn-green btn-sm" onclick="showToast()">Guardar cambios</button>
+          </div>
+          <div class="card card-pad">
+            <h4 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Sección Sobre mí</h4>
+            <div class="fi" style="margin-bottom:10px;"><label>Eyebrow</label><input type="text" value="Sobre mí"></div>
+            <div class="fi" style="margin-bottom:10px;"><label>Título</label><input type="text" value="Hola, soy Carmen"></div>
+            <div class="fi" style="margin-bottom:14px;"><label>Texto</label><textarea style="min-height:70px;">Dietista-nutricionista colegiada con más de 8 años de experiencia. Especializada en nutrición deportiva y patología digestiva.</textarea></div>
+            <button class="btn btn-green btn-sm" onclick="showToast()">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENSAJES -->
+    <section class="section" id="sec-mensajes">
+      <div class="page-header"><h1>Mensajes</h1></div>
+      <div class="msg-layout">
+        <div class="conv-list">
+          <div class="conv-item active" onclick="selectConv(this,'María García','MG')">
+            <div class="conv-avatar">MG</div>
+            <div class="conv-info">
+              <div class="conv-name">María García</div>
+              <div class="conv-preview">Genial, me siento con más energía</div>
+            </div>
+            <div class="conv-meta"><div class="conv-time">ayer</div></div>
+          </div>
+          <div class="conv-item" onclick="selectConv(this,'Laura Martínez','LM')">
+            <div class="conv-avatar" style="background:#4a5fad;">LM</div>
+            <div class="conv-info">
+              <div class="conv-name">Laura Martínez</div>
+              <div class="conv-preview">¿Puedo sustituir el pollo por tofu?</div>
+            </div>
+            <div class="conv-meta"><div class="conv-time">hace 3h</div><div class="conv-badge">2</div></div>
+          </div>
+          <div class="conv-item" onclick="selectConv(this,'Ana Rodríguez','AR')">
+            <div class="conv-avatar" style="background:#b07d1a;">AR</div>
+            <div class="conv-info">
+              <div class="conv-name">Ana Rodríguez</div>
+              <div class="conv-preview">Muchas gracias por el plan Carmen</div>
+            </div>
+            <div class="conv-meta"><div class="conv-time">hace 1d</div><div class="conv-badge">1</div></div>
+          </div>
+          <div class="conv-item" onclick="selectConv(this,'Carlos Pérez','CP')">
+            <div class="conv-avatar" style="background:#5a4a8a;">CP</div>
+            <div class="conv-info">
+              <div class="conv-name">Carlos Pérez</div>
+              <div class="conv-preview">¿Cuántas proteínas debo tomar?</div>
+            </div>
+            <div class="conv-meta"><div class="conv-time">hace 2d</div></div>
+          </div>
+          <div class="conv-item" onclick="selectConv(this,'Sara Sánchez','SS')">
+            <div class="conv-avatar" style="background:#3a7a6b;">SS</div>
+            <div class="conv-info">
+              <div class="conv-name">Sara Sánchez</div>
+              <div class="conv-preview">He bajado 800g esta semana 🎉</div>
+            </div>
+            <div class="conv-meta"><div class="conv-time">hace 3d</div></div>
+          </div>
+        </div>
+        <div class="chat-view">
+          <div class="chat-header">
+            <div class="conv-avatar" id="chat-avatar">MG</div>
+            <div>
+              <div class="chat-name" id="chat-name">María García</div>
+              <div class="chat-status">Activa hace 2 horas</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <div style="align-self:center;font-size:.75rem;color:var(--light);margin:8px 0;">Ayer</div>
+            <div><div class="msg-bubble from">Hola Carmen, ¿cómo llevo el plan esta semana?</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-left:4px;">10:32</div></div>
+            <div style="align-self:flex-end;text-align:right;"><div class="msg-bubble to">¡Hola María! Lo estás haciendo muy bien. He visto que llevas la adherencia al 90% 🎉</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-right:4px;">10:45</div></div>
+            <div><div class="msg-bubble from">¡Qué bien! La verdad que esta semana me ha costado menos que las anteriores.</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-left:4px;">11:02</div></div>
+            <div style="align-self:flex-end;text-align:right;"><div class="msg-bubble to">Es normal, el cuerpo se va adaptando. Para la próxima semana vamos a ajustar un poco las cantidades del almuerzo.</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-right:4px;">11:10</div></div>
+            <div style="align-self:center;font-size:.75rem;color:var(--light);margin:8px 0;">Hoy</div>
+            <div><div class="msg-bubble from">Genial, me siento con más energía.</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-left:4px;">09:15</div></div>
+          </div>
+          <div class="chat-input">
+            <input type="text" id="chat-input-field" placeholder="Escribe un mensaje…" onkeydown="if(event.key==='Enter')sendMsg()">
+            <button class="btn btn-green btn-sm" onclick="sendMsg()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<div class="save-toast" id="save-toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  Cambios guardados correctamente
+</div>
+
+<script>
+// DATE
+const days=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const now=new Date();
+const dateStr=days[now.getDay()]+', '+now.getDate()+' de '+months[now.getMonth()]+' de '+now.getFullYear();
+document.getElementById('topbarDate').textContent=dateStr;
+document.getElementById('dashDate').textContent=dateStr.charAt(0).toUpperCase()+dateStr.slice(1);
+
+// NAV
+const sectionTitles={dashboard:'Dashboard',pacientes:'Pacientes',sesiones:'Sesiones',planes:'Planes',citas:'Citas',herramientas:'Herramientas',web:'Editor web',mensajes:'Mensajes'};
+function navigate(el){
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  const sec=el.dataset.section;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+sec).classList.add('active');
+  document.getElementById('topbarTitle').textContent=sectionTitles[sec];
+  closeSidebar();
+}
+
+// SIDEBAR MOBILE
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// PATIENT DETAIL
+function openPatient(initials,name,age,goal){
+  document.getElementById('patients-list-view').style.display='none';
+  document.getElementById('patient-detail').classList.add('open');
+  document.getElementById('pd-avatar').textContent=initials;
+  document.getElementById('pd-name').textContent=name;
+  document.getElementById('pd-sub').textContent=age+' años · '+goal;
+  pdTab(document.querySelector('.pd-tab'),'info');
+}
+function closePatient(){
+  document.getElementById('patients-list-view').style.display='';
+  document.getElementById('patient-detail').classList.remove('open');
+}
+function pdTab(el,pane){
+  document.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.pd-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pd-'+pane).classList.add('active');
+}
+
+// BMI
+function calcBMI(){
+  const w=parseFloat(document.getElementById('bmi-weight').value);
+  const h=parseFloat(document.getElementById('bmi-height').value);
+  if(!w||!h)return;
+  const bmi=w/((h/100)**2);
+  const rounded=Math.round(bmi*10)/10;
+  let cat,color,text,pct;
+  if(bmi<18.5){cat='Bajo peso';color='#4a5fad';text='El índice de masa corporal está por debajo del rango saludable. Se recomienda una evaluación nutricional detallada.';pct=Math.max(5,(bmi-14)/10*40);}
+  else if(bmi<25){cat='Normopeso';color='var(--green)';text='El índice de masa corporal se encuentra dentro del rango saludable. Se recomienda mantener los hábitos actuales.';pct=40+(bmi-18.5)/6.5*30;}
+  else if(bmi<30){cat='Sobrepeso';color='#b07d1a';text='El índice de masa corporal indica sobrepeso. Se recomienda ajustar la alimentación e incrementar la actividad física.';pct=70+(bmi-25)/5*15;}
+  else{cat='Obesidad';color='#b43a3a';text='El índice de masa corporal indica obesidad. Se recomienda un seguimiento nutricional y médico especializado.';pct=Math.min(95,85+(bmi-30)/10*10);}
+  document.getElementById('bmi-val').textContent=rounded;
+  document.getElementById('bmi-cat').textContent=cat;
+  document.getElementById('bmi-cat').style.color=color;
+  document.getElementById('bmi-bar').style.width=pct+'%';
+  document.getElementById('bmi-bar').style.background=color;
+  document.getElementById('bmi-text').textContent=text;
+  document.getElementById('bmi-result').classList.add('show');
+}
+
+// TOAST
+function showToast(){
+  const t=document.getElementById('save-toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// MESSAGES
+function selectConv(el,name,initials){
+  document.querySelectorAll('.conv-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('chat-name').textContent=name;
+  document.getElementById('chat-avatar').textContent=initials;
+  el.querySelector('.conv-badge')&&(el.querySelector('.conv-badge').style.display='none');
+}
+function sendMsg(){
+  const inp=document.getElementById('chat-input-field');
+  const val=inp.value.trim();
+  if(!val)return;
+  const msgs=document.getElementById('chat-messages');
+  const wrap=document.createElement('div');
+  wrap.style.cssText='align-self:flex-end;text-align:right;';
+  wrap.innerHTML='<div class="msg-bubble to">'+val+'</div><div class="msg-time" style="color:var(--muted);font-size:.7rem;margin-right:4px;">ahora</div>';
+  msgs.appendChild(wrap);
+  msgs.scrollTop=msgs.scrollHeight;
+  inp.value='';
+}
+
+// CAL TOGGLE
+document.querySelectorAll('.cal-toggle button').forEach(b=>{
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.cal-toggle button').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

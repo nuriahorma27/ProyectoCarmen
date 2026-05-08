@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi portal · Carmen Marañón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#ffffff;--bg-alt:#f6f5f2;--text:#19181a;--muted:#857f78;--light:#c2bcb5;
+--green:#3b6750;--green-d:#2c4f3c;--green-l:#eef3ef;
+--border:#e4e1db;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+--sh:0 2px 14px rgba(25,20,10,.07);--sh-lg:0 8px 40px rgba(25,20,10,.11);--r:12px;
+}
+html,body{font-family:var(--sans);font-size:15px;color:var(--text);background:var(--bg-alt);min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--sans);cursor:pointer;}
+input,textarea,select{font-family:var(--sans);}
+
+/* NAVBAR */
+.navbar{background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--sh);}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--text);letter-spacing:.01em;white-space:nowrap;}
+.nav-tabs{display:flex;align-items:center;gap:2px;}
+.nav-tab{padding:8px 14px;border-radius:8px;font-size:.875rem;font-weight:400;color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.nav-tab:hover{background:var(--bg-alt);color:var(--text);}
+.nav-tab.active{background:var(--green-l);color:var(--green);font-weight:500;}
+.nav-user{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.nav-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:#fff;}
+.nav-name{font-size:.85rem;font-weight:500;white-space:nowrap;}
+.nav-exit{font-size:.78rem;color:var(--muted);cursor:pointer;}
+.nav-exit:hover{color:var(--text);}
+.nav-mobile-toggle{display:none;background:none;border:none;padding:4px;color:var(--text);}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:40px 24px;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:28px;}
+.page-header h1{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--text);}
+.page-header p{color:var(--muted);font-size:.9rem;margin-top:4px;}
+.page-header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+
+/* CARDS */
+.card{background:var(--bg);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);}
+.card-pad{padding:24px;}
+
+/* PILLS */
+.pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:500;}
+.pill-green{background:var(--green-l);color:var(--green);}
+.pill-yellow{background:#fef6e7;color:#b07d1a;}
+.pill-gray{background:#f0eeeb;color:var(--muted);}
+.pill-blue{background:#eef0f8;color:#4a5fad;}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:8px;font-size:.875rem;font-weight:500;border:none;transition:all .18s;cursor:pointer;}
+.btn-green{background:var(--green);color:#fff;}
+.btn-green:hover{background:var(--green-d);}
+.btn-outline{background:transparent;color:var(--green);border:1.5px solid var(--green);}
+.btn-outline:hover{background:var(--green-l);}
+.btn-sm{padding:7px 13px;font-size:.8rem;}
+.btn-gray{background:var(--bg-alt);color:var(--text);border:1px solid var(--border);}
+.btn-gray:hover{background:var(--border);}
+
+/* ===== INICIO ===== */
+.welcome-banner{background:var(--green);border-radius:var(--r);padding:36px 40px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden;}
+.welcome-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.welcome-banner::after{content:'';position:absolute;right:40px;bottom:-60px;width:140px;height:140px;background:rgba(255,255,255,.04);border-radius:50%;}
+.wb-eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:8px;}
+.wb-title{font-family:var(--serif);font-size:2.4rem;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.wb-sub{font-size:.9rem;opacity:.8;}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+.summary-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh);}
+.sc-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;margin-bottom:8px;}
+.sc-value{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--text);line-height:1.3;}
+.sc-sub{font-size:.78rem;color:var(--muted);margin-top:4px;}
+.sc-icon{width:36px;height:36px;border-radius:8px;background:var(--green-l);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.sc-icon svg{width:18px;height:18px;color:var(--green);}
+.progress-section{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--sh);margin-bottom:24px;}
+.progress-section h3{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:20px;}
+.evo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px;}
+.evo-item{padding:16px 20px;text-align:center;}
+.evo-item:not(:last-child){border-right:1px solid var(--border);}
+.evo-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px;}
+.evo-val{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--text);}
+.evo-val.green{color:var(--green);}
+.evo-val.muted{color:var(--light);}
+.progress-bar-wrap{background:var(--bg-alt);border-radius:6px;height:12px;overflow:hidden;position:relative;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green) 0%,#5a9a7a 100%);border-radius:6px;transition:width .8s ease;}
+.progress-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-top:6px;}
+.quick-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ===== MI PLAN ===== */
+.plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.plan-header h2{font-family:var(--serif);font-size:1.5rem;font-weight:600;}
+.week-cards{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:24px;}
+.day-card{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:box-shadow .2s;cursor:pointer;}
+.day-card:hover{box-shadow:var(--sh-lg);}
+.day-card.expanded{border-color:var(--green);}
+.day-head{padding:12px 10px;text-align:center;background:var(--bg);}
+.day-name{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--muted);}
+.day-date{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--text);margin-top:2px;}
+.day-dot{width:7px;height:7px;border-radius:50%;background:var(--green);margin:6px auto 0;}
+.day-dot.empty{background:var(--border);}
+.day-body{display:none;padding:12px;border-top:1px solid var(--border);background:var(--bg-alt);}
+.day-card.expanded .day-body{display:block;}
+.meal-item{margin-bottom:10px;}
+.meal-item:last-child{margin-bottom:0;}
+.meal-name{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;font-weight:600;color:var(--green);margin-bottom:3px;}
+.meal-content{font-size:.78rem;color:var(--text);line-height:1.5;}
+.notes-card{background:var(--green-l);border:1px solid var(--green);border-radius:var(--r);padding:22px 24px;}
+.notes-card h4{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--green-d);margin-bottom:10px;}
+.notes-card p{font-size:.875rem;color:var(--green-d);line-height:1.7;}
+
+/* ===== SESIONES ===== */
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--border);}
+.tl-item{position:relative;margin-bottom:28px;}
+.tl-dot{position:absolute;left:-28px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--green);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--green);}
+.tl-date{font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.tl-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:22px;box-shadow:var(--sh);}
+.tl-card h3{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.tl-weight{font-size:.875rem;font-weight:600;color:var(--green);}
+.tl-section{margin-bottom:12px;}
+.tl-section h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;margin-bottom:6px;}
+.tl-section ul{padding-left:16px;}
+.tl-section ul li{font-size:.875rem;color:var(--text);line-height:1.6;}
+.tl-section p{font-size:.875rem;color:var(--text);line-height:1.6;}
+
+/* ===== MENSAJES ===== */
+.chat-wrap{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;height:520px;}
+.chat-top{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.chat-top-avatar{width:40px;height:40px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:#fff;}
+.chat-top-name{font-weight:600;font-size:.9rem;}
+.chat-top-hint{font-size:.75rem;color:var(--muted);}
+.chat-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.msg-bubble{max-width:72%;padding:12px 16px;border-radius:12px;font-size:.875rem;line-height:1.55;}
+.msg-bubble.from{background:var(--bg-alt);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px;}
+.msg-bubble.to{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+.msg-meta{font-size:.7rem;color:var(--muted);margin-top:3px;}
+.msg-meta.right{text-align:right;margin-right:2px;}
+.chat-bottom{padding:14px 16px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;}
+.chat-bottom input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.875rem;outline:none;transition:border .2s;}
+.chat-bottom input:focus{border-color:var(--green);}
+.chat-hint{text-align:center;font-size:.78rem;color:var(--light);margin-top:10px;}
+
+/* ===== FACTURAS ===== */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:10px 16px;border-bottom:1px solid var(--border);}
+tbody td{padding:14px 16px;font-size:.875rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--bg-alt);}
+.inv-total{display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:16px 20px;border-top:2px solid var(--border);margin-top:4px;}
+.inv-total-label{font-size:.875rem;color:var(--muted);}
+.inv-total-val{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--text);}
+.download-btn{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--green);font-weight:500;cursor:pointer;padding:5px 9px;border-radius:6px;border:1px solid var(--green);transition:all .18s;}
+.download-btn:hover{background:var(--green-l);}
+
+/* MOBILE NAV */
+.mobile-nav-menu{display:none;background:var(--bg);border-top:1px solid var(--border);padding:8px 12px 12px;}
+.mobile-nav-menu.open{display:block;}
+.mobile-nav-menu .nav-tab{display:block;padding:10px 14px;margin-bottom:2px;}
+
+@media(max-width:860px){
+.nav-tabs{display:none;}
+.nav-mobile-toggle{display:flex;}
+.week-cards{grid-template-columns:repeat(4,1fr);}
+.summary-grid{grid-template-columns:1fr 1fr;}
+.evo-grid{grid-template-columns:1fr;}
+.evo-item:not(:last-child){border-right:none;border-bottom:1px solid var(--border);}
+}
+@media(max-width:560px){
+.summary-grid{grid-template-columns:1fr;}
+.week-cards{grid-template-columns:repeat(3,1fr);}
+.main{padding:24px 16px;}
+.welcome-banner{padding:24px;}
+.wb-title{font-size:1.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">Carmen Marañón</div>
+    <div class="nav-tabs" id="nav-tabs">
+      <div class="nav-tab active" data-section="inicio" onclick="navigate(this)">Inicio</div>
+      <div class="nav-tab" data-section="plan" onclick="navigate(this)">Mi Plan</div>
+      <div class="nav-tab" data-section="sesiones" onclick="navigate(this)">Sesiones</div>
+      <div class="nav-tab" data-section="mensajes" onclick="navigate(this)">Mensajes</div>
+      <div class="nav-tab" data-section="facturas" onclick="navigate(this)">Facturas</div>
+    </div>
+    <div class="nav-user">
+      <div class="nav-avatar">MG</div>
+      <div>
+        <div class="nav-name">María García</div>
+        <div class="nav-exit">Salir</div>
+      </div>
+      <button class="nav-mobile-toggle" onclick="toggleMobileMenu()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav-menu" id="mobile-menu">
+    <div class="nav-tab active" data-section="inicio" onclick="navigate(this)">Inicio</div>
+    <div class="nav-tab" data-section="plan" onclick="navigate(this)">Mi Plan</div>
+    <div class="nav-tab" data-section="sesiones" onclick="navigate(this)">Sesiones</div>
+    <div class="nav-tab" data-section="mensajes" onclick="navigate(this)">Mensajes</div>
+    <div class="nav-tab" data-section="facturas" onclick="navigate(this)">Facturas</div>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- INICIO -->
+  <section class="section active" id="sec-inicio">
+    <div class="welcome-banner">
+      <div class="wb-eyebrow">Portal de seguimiento</div>
+      <div class="wb-title">Hola, María 👋</div>
+      <div class="wb-sub">Semana 3 de tu plan · Estás haciéndolo genial</div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="sc-label">Próxima cita</div>
+        <div class="sc-value">Jueves 15 Mayo</div>
+        <div class="sc-sub">10:00h · Seguimiento</div>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
+        <div class="sc-label">Plan activo</div>
+        <div class="sc-value">Plan Semana 3</div>
+        <div class="sc-sub">Enviado hace 2 días</div>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="sc-label">Último mensaje</div>
+        <div class="sc-value" style="font-size:.95rem;">"¡Lo estás haciendo muy bien!"</div>
+        <div class="sc-sub">Carmen · ayer</div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <h3>Tu evolución</h3>
+      <div class="evo-grid">
+        <div class="evo-item">
+          <div class="evo-label">Peso inicial</div>
+          <div class="evo-val muted">72,0 kg</div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-label">Peso actual</div>
+          <div class="evo-val green">70,2 kg</div>
+        </div>
+        <div class="evo-item">
+          <div class="evo-label">Objetivo</div>
+          <div class="evo-val" style="color:var(--text);">65,0 kg</div>
+        </div>
+      </div>
+      <div style="margin-bottom:6px;font-size:.8rem;color:var(--muted);">Progreso hacia el objetivo <span style="float:right;font-weight:600;color:var(--green);">25%</span></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:25%;"></div>
+      </div>
+      <div class="progress-labels"><span>72 kg</span><span>65 kg</span></div>
+      <p style="font-size:.8rem;color:var(--muted);margin-top:10px;">Has perdido <strong style="color:var(--green);">1,8 kg</strong> de los 7 kg de diferencia hasta tu objetivo. ¡Vas por buen camino!</p>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:14px;">Accesos rápidos</h3>
+    <div class="quick-actions">
+      <button class="btn btn-green" onclick="navigateTo('plan')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Ver mi plan
+      </button>
+      <button class="btn btn-outline" onclick="navigateTo('mensajes')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Escribir a Carmen
+      </button>
+    </div>
+  </section>
+
+  <!-- MI PLAN -->
+  <section class="section" id="sec-plan">
+    <div class="plan-header">
+      <div>
+        <p style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;">Semana 12–18 de mayo</p>
+        <h2>Plan Semana 3</h2>
+      </div>
+      <button class="btn btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar PDF
+      </button>
+    </div>
+
+    <div class="week-cards">
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Lun</div><div class="day-date">12</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Yogur griego natural (125 g)<br>Granola sin azúcar (30 g)<br>Fruta de temporada (1 pieza)</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Puñado de almendras (20 g)<br>Infusión</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Ensalada de garbanzos, tomate, pepino y aguacate<br>Pechuga de pollo a la plancha (150 g)<br>Pan integral (40 g)</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Fruta (1 pieza mediana)<br>Tortita de maíz (2 uds)</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Crema de calabaza (200 ml)<br>Salmón al horno (130 g)<br>Brócoli al vapor</div></div>
+        </div>
+      </div>
+      <div class="day-card expanded" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Mar</div><div class="day-date">13</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Tostadas de pan integral (2)<br>Aguacate (½)<br>Huevo escalfado (1 ud)<br>Café solo o con bebida vegetal</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Kéfir (150 ml)<br>Plátano pequeño</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Lentejas estofadas con verduras (200 g)<br>Ensalada verde de acompañamiento<br>Fruta (1 pieza)</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Queso fresco batido (100 g)<br>Nueces (4 ud)</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Tortilla de 2 huevos con espinacas<br>Ensalada de tomate y pepino<br>Pan integral (30 g)</div></div>
+        </div>
+      </div>
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Mié</div><div class="day-date">14</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Porridge de avena (50 g) con leche vegetal<br>Arándanos (60 g)<br>Semillas de chía (10 g)</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Naranja (1 ud)<br>Café o té</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Arroz integral (70 g en crudo) con verduras salteadas<br>Merluza al papillote (150 g)<br>Ensalada</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Hummus (40 g)<br>Crudités (zanahoria, pepino, apio)</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Menestra de verduras<br>Pavo a la plancha (120 g)<br>Pieza de fruta</div></div>
+        </div>
+      </div>
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Jue</div><div class="day-date">15</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Smoothie: plátano + espinacas + leche vegetal + proteína (20 g)</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Manzana<br>Queso fresco (60 g)</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Pasta integral (70 g en crudo) con tomate y atún<br>Ensalada verde</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Yogur griego natural (125 g)<br>Miel (1 cdta)</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Gazpacho (200 ml)<br>Lubina al horno (130 g)<br>Espárragos a la plancha</div></div>
+        </div>
+      </div>
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Vie</div><div class="day-date">16</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Tostadas con tomate triturado y aceite de oliva<br>Lonchas de jamón (30 g)<br>Café</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Fruta (1 pieza)<br>Infusión</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Paella de verduras (libre)<br>Ensalada de endivias</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Puñado de pistachos (20 g)<br>Pera</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Sopa de miso con tofu<br>Edamame (80 g)<br>Fruta de temporada</div></div>
+        </div>
+      </div>
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Sáb</div><div class="day-date">17</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Brunch: 2 huevos revueltos con champiñones<br>Pan integral (60 g)<br>Aguacate (½)</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Sin toma (brunch más tarde)</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Carne magra a la plancha (150 g)<br>Patata asada (120 g)<br>Ensalada variada</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Fruta (1–2 piezas)<br>Infusión</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Libre moderado · Recuerda mantener porciones razonables</div></div>
+        </div>
+      </div>
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-head"><div class="day-name">Dom</div><div class="day-date">18</div><div class="day-dot"></div></div>
+        <div class="day-body">
+          <div class="meal-item"><div class="meal-name">Desayuno</div><div class="meal-content">Tostadas con mantequilla de cacahuete (20 g)<br>Plátano<br>Café</div></div>
+          <div class="meal-item"><div class="meal-name">Media mañana</div><div class="meal-content">Yogur griego (125 g)<br>Frutos rojos</div></div>
+          <div class="meal-item"><div class="meal-name">Almuerzo</div><div class="meal-content">Cocido ligero o similar (comida familiar)<br>Ensalada de acompañamiento</div></div>
+          <div class="meal-item"><div class="meal-name">Merienda</div><div class="meal-content">Fruta y frutos secos (20 g)</div></div>
+          <div class="meal-item"><div class="meal-name">Cena</div><div class="meal-content">Crema de verduras (200 ml)<br>Tortilla francesa (2 huevos)<br>Ensalada</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-card">
+      <h4>Notas de Carmen</h4>
+      <p>Esta semana hemos aumentado ligeramente la proteína del almuerzo para apoyar la recuperación tras el ejercicio. Recuerda hidratarte bien (al menos 2 litros de agua al día) y no saltarte la merienda, aunque no tengas mucha hambre. El sábado puedes ser más flexible, pero intenta mantener el orden de las comidas. ¡Estás haciendo un trabajo estupendo! 🌿</p>
+    </div>
+  </section>
+
+  <!-- SESIONES -->
+  <section class="section" id="sec-sesiones">
+    <div class="page-header"><h1>Mis sesiones</h1><p>Historial de tu seguimiento nutricional</p></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2 de mayo de 2025</div>
+        <div class="tl-card">
+          <h3>Sesión de seguimiento <span class="tl-weight">70,2 kg</span></h3>
+          <div class="tl-section">
+            <h4>Logros de la semana</h4>
+            <ul>
+              <li>Adherencia al plan del 90%</li>
+              <li>Pérdida de 0,8 kg respecto a la sesión anterior</li>
+              <li>Reducción del picoteo nocturno</li>
+              <li>Aumento de la ingesta de verduras</li>
+            </ul>
+          </div>
+          <div class="tl-section">
+            <h4>Notas de Carmen</h4>
+            <p>Excelente evolución esta semana. Has conseguido mantener una adherencia muy alta incluso con la agenda complicada del trabajo. Seguimos en la misma línea y ajustamos el almuerzo del jueves para mejorar la saciedad post-entreno.</p>
+          </div>
+          <div class="tl-section">
+            <h4>Objetivos para la próxima sesión</h4>
+            <ul>
+              <li>Mantener la adherencia al 85% o más</li>
+              <li>Incorporar 1 ración adicional de legumbres</li>
+              <li>Registrar sensación de hambre/saciedad</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">15 de abril de 2025</div>
+        <div class="tl-card">
+          <h3>Sesión de seguimiento <span class="tl-weight">71,0 kg</span></h3>
+          <div class="tl-section">
+            <h4>Logros de la semana</h4>
+            <ul>
+              <li>Primera semana con adherencia superior al 80%</li>
+              <li>Pérdida de 1,4 kg desde la consulta inicial</li>
+              <li>Mejora de la energía durante la mañana</li>
+            </ul>
+          </div>
+          <div class="tl-section">
+            <h4>Notas de Carmen</h4>
+            <p>Muy bien con la distribución de las comidas. Hemos ajustado el aporte de proteínas para optimizar la composición corporal. Se nota que has interiorizado la importancia del desayuno.</p>
+          </div>
+          <div class="tl-section">
+            <h4>Objetivos para la próxima sesión</h4>
+            <ul>
+              <li>Mantener el desayuno cada día sin excepción</li>
+              <li>Reducir los azúcares añadidos en los snacks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">1 de abril de 2025</div>
+        <div class="tl-card">
+          <h3>Primera consulta <span class="tl-weight">72,4 kg</span></h3>
+          <div class="tl-section">
+            <h4>Evaluación inicial</h4>
+            <ul>
+              <li>IMC: 26,9 (sobrepeso leve)</li>
+              <li>Intolerancia a lactosa leve — adaptación del plan</li>
+              <li>Actividad física: 3 días/semana (cardio + fuerza)</li>
+              <li>Objetivo principal: pérdida de grasa corporal</li>
+            </ul>
+          </div>
+          <div class="tl-section">
+            <h4>Notas de Carmen</h4>
+            <p>Primera sesión muy completa. Se diseña plan hipocalórico moderado con suficiente proteína para preservar masa muscular. Prioridad: estructurar las comidas y eliminar el picoteo desorganizado entre horas.</p>
+          </div>
+          <div class="tl-section">
+            <h4>Objetivos para la próxima sesión</h4>
+            <ul>
+              <li>Seguir el plan al menos 5 de 7 días</li>
+              <li>No saltarse ningún desayuno</li>
+              <li>Hidratación: 2 L de agua al día</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENSAJES -->
+  <section class="section" id="sec-mensajes">
+    <div class="page-header"><h1>Mensajes</h1></div>
+    <div class="chat-wrap">
+      <div class="chat-top">
+        <div class="chat-top-avatar">CM</div>
+        <div>
+          <div class="chat-top-name">Carmen Marañón</div>
+          <div class="chat-top-hint">Tu nutricionista · Respondemos en menos de 24h</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="portal-msgs">
+        <div style="align-self:center;font-size:.75rem;color:var(--light);padding:6px 12px;background:var(--bg-alt);border-radius:20px;">2 de mayo</div>
+        <div>
+          <div class="msg-bubble from">Hola Carmen, ¿cómo llevo el plan esta semana?</div>
+          <div class="msg-meta">10:32</div>
+        </div>
+        <div style="align-self:flex-end;text-align:right;">
+          <div class="msg-bubble to">¡Hola María! Lo estás haciendo muy bien. He visto que llevas la adherencia al 90% 🎉</div>
+          <div class="msg-meta right">10:45</div>
+        </div>
+        <div>
+          <div class="msg-bubble from">¡Qué bien! La verdad que esta semana me ha costado menos que las anteriores.</div>
+          <div class="msg-meta">11:02</div>
+        </div>
+        <div style="align-self:flex-end;text-align:right;">
+          <div class="msg-bubble to">Es normal, el cuerpo se va adaptando. Para la próxima semana vamos a ajustar un poco las cantidades del almuerzo para mejorar la saciedad tras el entreno.</div>
+          <div class="msg-meta right">11:10</div>
+        </div>
+        <div style="align-self:center;font-size:.75rem;color:var(--light);padding:6px 12px;background:var(--bg-alt);border-radius:20px;">Ayer</div>
+        <div>
+          <div class="msg-bubble from">Genial, me siento con más energía. ¿Puedo añadir un snack extra después del gym?</div>
+          <div class="msg-meta">09:15</div>
+        </div>
+        <div style="align-self:flex-end;text-align:right;">
+          <div class="msg-bubble to">¡Claro que sí! Te recomiendo un yogur griego con fruta o un batido de proteína con plátano. Algo ligero para la recuperación.</div>
+          <div class="msg-meta right">10:30</div>
+        </div>
+      </div>
+      <div class="chat-bottom">
+        <input type="text" id="portal-chat-input" placeholder="Escribe un mensaje a Carmen…" onkeydown="if(event.key==='Enter')portalSend()">
+        <button class="btn btn-green btn-sm" onclick="portalSend()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <p class="chat-hint">Respondemos en menos de 24 horas en días laborables</p>
+  </section>
+
+  <!-- FACTURAS -->
+  <section class="section" id="sec-facturas">
+    <div class="page-header"><h1>Facturas</h1></div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Concepto</th>
+              <th>Importe</th>
+              <th>Estado</th>
+              <th>Descargar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--muted);">1 mayo 2025</td>
+              <td style="font-weight:500;">Seguimiento semanal — semana 3</td>
+              <td style="font-weight:600;">30,00 €</td>
+              <td><span class="pill pill-green">Pagada</span></td>
+              <td><span class="download-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);">22 abril 2025</td>
+              <td style="font-weight:500;">Seguimiento semanal — semana 2</td>
+              <td style="font-weight:600;">30,00 €</td>
+              <td><span class="pill pill-green">Pagada</span></td>
+              <td><span class="download-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);">8 abril 2025</td>
+              <td style="font-weight:500;">Seguimiento semanal — semana 1</td>
+              <td style="font-weight:600;">30,00 €</td>
+              <td><span class="pill pill-green">Pagada</span></td>
+              <td><span class="download-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);">1 abril 2025</td>
+              <td style="font-weight:500;">Consulta inicial + plan personalizado</td>
+              <td style="font-weight:600;">40,00 €</td>
+              <td><span class="pill pill-yellow">Pendiente</span></td>
+              <td><span class="download-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="inv-total">
+        <span class="inv-total-label">Total pagado</span>
+        <span class="inv-total-val">90,00 €</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// NAV
+function navigate(el){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('[data-section="'+el.dataset.section+'"]').forEach(t=>t.classList.add('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+el.dataset.section).classList.add('active');
+  document.getElementById('mobile-menu').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function navigateTo(sec){
+  const tab=document.querySelector('.nav-tab[data-section="'+sec+'"]');
+  if(tab)navigate(tab);
+}
+
+// MOBILE MENU
+function toggleMobileMenu(){
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// DAY CARDS
+function toggleDay(card){
+  const wasExpanded=card.classList.contains('expanded');
+  document.querySelectorAll('.day-card').forEach(c=>c.classList.remove('expanded'));
+  if(!wasExpanded)card.classList.add('expanded');
+}
+
+// SEND MSG
+function portalSend(){
+  const inp=document.getElementById('portal-chat-input');
+  const val=inp.value.trim();
+  if(!val)return;
+  const msgs=document.getElementById('portal-msgs');
+  const wrap=document.createElement('div');
+  wrap.style.cssText='align-self:flex-end;text-align:right;';
+  wrap.innerHTML='<div class="msg-bubble to">'+val+'</div><div class="msg-meta right">ahora</div>';
+  msgs.appendChild(wrap);
+  msgs.scrollTop=msgs.scrollHeight;
+  inp.value='';
+}
+</script>
+</body>
+</html>
