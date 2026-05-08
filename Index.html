@@ -144,9 +144,9 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .met-scroll-section{height:600vh;position:relative;padding:0}
 .met-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:var(--bg-alt)}
 .met-hdr{position:absolute;top:clamp(28px,5vh,56px);left:0;right:0;text-align:center;transition:opacity .4s;z-index:2}
-.met-progress{position:absolute;top:clamp(18px,3.5vh,34px);left:50%;transform:translateX(-50%);display:flex;gap:7px;width:min(320px,52vw);z-index:3;transition:opacity .4s}
-.met-prog-bar{flex:1;height:2px;background:rgba(59,103,80,.15);border-radius:2px;overflow:hidden}
-.met-prog-fill{height:100%;width:0%;background:var(--green);border-radius:2px}
+.met-progress{position:absolute;right:clamp(18px,3.5vw,44px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:3;transition:opacity .4s}
+.met-prog-bar{width:2px;height:52px;background:rgba(59,103,80,.15);border-radius:2px;overflow:hidden;position:relative}
+.met-prog-fill{position:absolute;top:0;left:0;width:100%;height:0%;background:var(--green);border-radius:2px}
 .met-spotlight{position:absolute;top:50%;left:50%;width:min(600px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:transform,opacity}
 .met-spot-n{font-family:var(--serif);font-size:clamp(5rem,13vw,8.5rem);font-weight:700;color:var(--green);opacity:.13;line-height:1;margin-bottom:2px}
 .met-spot-t{font-family:var(--serif);font-size:clamp(1.6rem,3.8vw,2.7rem);font-weight:600;line-height:1.2;margin-bottom:16px}
@@ -227,9 +227,9 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     <span class="h-name">Carmen Marañón</span>
     <nav class="h-nav">
       <a onclick="goTo('sobre-mi')">Sobre mí</a>
+      <a onclick="goTo('metodologia')">Cómo trabajo</a>
       <a onclick="goTo('servicios')">Servicios</a>
-      <a onclick="goTo('metodologia')">Metodología</a>
-      <a onclick="goTo('test-inicial')">Primera consulta</a>
+      <a onclick="goTo('reserva')">Empezamos</a>
       <a onclick="goTo('faq')">FAQ</a>
     </nav>
     <button class="btn btn-green h-cta" onclick="goTo('reserva')" style="flex-shrink:0">Reservar cita</button>
@@ -239,9 +239,9 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
   <div class="h-mob" id="hmob">
     <a onclick="goTo('sobre-mi');toggleMob()">Sobre mí</a>
+    <a onclick="goTo('metodologia');toggleMob()">Cómo trabajo</a>
     <a onclick="goTo('servicios');toggleMob()">Servicios</a>
-    <a onclick="goTo('metodologia');toggleMob()">Metodología</a>
-    <a onclick="goTo('test-inicial');toggleMob()">Primera consulta</a>
+    <a onclick="goTo('reserva');toggleMob()">Empezamos</a>
     <a onclick="goTo('faq');toggleMob()">FAQ</a>
     <button class="btn btn-green" style="margin-top:8px;width:100%;justify-content:center" onclick="goTo('reserva');toggleMob()">Reservar cita</button>
   </div>
@@ -336,31 +336,6 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
       <div class="met-spot-n">04</div>
       <div class="met-spot-t">Resultados que duran</div>
       <div class="met-spot-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
-    </div>
-
-    <div class="met-all" id="met-all">
-      <div class="met-all-grid">
-        <div class="met-all-card">
-          <div class="met-all-n">01</div>
-          <div class="met-all-t">Te conozco a fondo</div>
-          <div class="met-all-d">Formulario inicial con tus objetivos, hábitos y rutina para aprovechar al máximo cada sesión.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">02</div>
-          <div class="met-all-t">Diseñamos tu plan</div>
-          <div class="met-all-d">Plan nutricional completamente personalizado, sin plantillas genéricas ni restricciones innecesarias.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">03</div>
-          <div class="met-all-t">Seguimiento de verdad</div>
-          <div class="met-all-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos cada avance contigo.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">04</div>
-          <div class="met-all-t">Resultados que duran</div>
-          <div class="met-all-d">Aprenderás a entender tu alimentación y tomar decisiones autónomas para siempre.</div>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -473,78 +448,62 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
 </section>
 
-<!-- ══ TEST INICIAL ═══════════════════════════════ -->
-<section class="section" id="test-inicial">
-  <div class="wrap" style="max-width:800px">
-    <div class="fu" style="text-align:center;margin-bottom:48px">
-      <div class="eyebrow">Primera consulta</div>
-      <h2 class="h2" style="margin-bottom:14px">Cuéntame sobre ti</h2>
-      <p class="lead" style="max-width:520px;margin:0 auto">Rellena este formulario antes de nuestra primera consulta. Así llego preparada y aprovechamos cada minuto juntas.</p>
-    </div>
-    <div id="tfw" class="fu" style="transition-delay:.1s">
-      <div class="form-wrap">
-        <form id="tf" novalidate>
-          <div class="fg">
-            <div class="ff">
-              <label class="flabel">Nombre completo *</label>
-              <input class="fi" type="text" name="nombre" placeholder="Tu nombre y apellidos" required/>
+<!-- ══ RESERVA ════════════════════════════════════ -->
+<section id="reserva">
+  <div class="wrap">
+    <div class="res-grid">
+      <div class="fu">
+        <div class="eyebrow">Empezamos</div>
+        <h2 class="res-h">¿Lista para empezar?</h2>
+        <p class="res-sub">Cuéntame qué tipo de consulta buscas y cuál es tu objetivo. Te respondo en menos de 24 horas para coordinar nuestra primera sesión gratuita.</p>
+        <div class="res-pts">
+          <div class="res-pt"><div class="res-dot"></div>Primera videollamada de 15 min gratuita</div>
+          <div class="res-pt"><div class="res-dot"></div>Respuesta en menos de 24 horas</div>
+          <div class="res-pt"><div class="res-dot"></div>Sin compromiso hasta decidir juntas</div>
+        </div>
+      </div>
+      <div id="rfw" class="fu" style="transition-delay:.15s">
+        <div class="form-wrap">
+          <form id="rf" novalidate>
+            <div class="fg" style="gap:14px">
+              <div class="ff">
+                <label class="flabel">Nombre *</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required/>
+              </div>
+              <div class="ff">
+                <label class="flabel">Email *</label>
+                <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
+              </div>
+              <div class="ff full">
+                <label class="flabel">¿Qué tipo de consulta te interesa? *</label>
+                <select class="fs" name="tipo" required>
+                  <option value="">Seleccionar…</option>
+                  <option>Consulta individual (sesión única)</option>
+                  <option>Seguimiento semanal</option>
+                  <option>Plan nutricional mensual</option>
+                  <option>Aún no lo sé, quiero que me orientes</option>
+                </select>
+              </div>
+              <div class="ff full">
+                <label class="flabel">¿Cuál es tu objetivo principal? *</label>
+                <select class="fs" name="objetivo" required>
+                  <option value="">Seleccionar…</option>
+                  <option>Perder grasa corporal</option>
+                  <option>Ganar masa muscular</option>
+                  <option>Mejorar el rendimiento deportivo</option>
+                  <option>Control de una patología</option>
+                  <option>Mejorar mis hábitos generales</option>
+                  <option>Otro</option>
+                </select>
+              </div>
             </div>
-            <div class="ff">
-              <label class="flabel">Email *</label>
-              <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
+            <div style="margin-top:18px">
+              <button type="submit" class="btn btn-green btn-lg" style="width:100%;justify-content:center">
+                Solicitar cita
+              </button>
             </div>
-            <div class="ff">
-              <label class="flabel">Teléfono <span class="fopt">(opcional)</span></label>
-              <input class="fi" type="tel" name="tel" placeholder="+34 600 000 000"/>
-            </div>
-            <div class="ff">
-              <label class="flabel">Edad</label>
-              <input class="fi" type="number" name="edad" placeholder="Ej: 28" min="14" max="99"/>
-            </div>
-            <div class="ff full">
-              <label class="flabel">¿Cuál es tu objetivo principal? *</label>
-              <select class="fs" name="objetivo" required>
-                <option value="">Seleccionar…</option>
-                <option>Perder grasa corporal</option>
-                <option>Ganar masa muscular</option>
-                <option>Mejorar el rendimiento deportivo</option>
-                <option>Control de una patología</option>
-                <option>Mejorar mis hábitos generales</option>
-                <option>Otro</option>
-              </select>
-            </div>
-            <div class="ff full">
-              <label class="flabel">¿Cuál es tu nivel de actividad física?</label>
-              <select class="fs" name="actividad">
-                <option value="">Seleccionar…</option>
-                <option>Sedentario (menos de 2 días/semana)</option>
-                <option>Actividad ligera (2–3 días/semana)</option>
-                <option>Actividad moderada (3–5 días/semana)</option>
-                <option>Deportista amateur (5–6 días/semana)</option>
-                <option>Deportista de alto rendimiento</option>
-              </select>
-            </div>
-            <div class="ff full">
-              <label class="flabel">¿Tienes alergias, intolerancias o restricciones? <span class="fopt">(opcional)</span></label>
-              <input class="fi" type="text" name="alergias" placeholder="Ej: intolerancia al gluten, alergia a los frutos secos…"/>
-            </div>
-            <div class="ff full">
-              <label class="flabel">¿Tienes algún diagnóstico médico relevante? <span class="fopt">(opcional)</span></label>
-              <input class="fi" type="text" name="dx" placeholder="Ej: hipotiroidismo, diabetes tipo 2, SII…"/>
-            </div>
-            <div class="ff full">
-              <label class="flabel">¿Qué esperas de nuestro trabajo juntas?</label>
-              <textarea class="ft" name="exp" placeholder="Cuéntame brevemente qué te ha traído hasta aquí y qué esperas conseguir…"></textarea>
-            </div>
-          </div>
-          <div class="f-row">
-            <button type="submit" class="btn btn-green btn-lg">
-              Enviar formulario
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <span class="f-note">Te respondo en menos de 24 horas</span>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -581,49 +540,6 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
       <div class="faq-item">
         <button class="faq-btn" onclick="faq(this)"><span>¿En cuánto tiempo me contactas tras el formulario?</span><div class="faq-ic">+</div></button>
         <div class="faq-ans" style="display:none">Respondo todos los formularios en máximo 24 horas en días laborables. Solemos coordinar una videollamada corta de 15 minutos gratuita para conocernos antes de empezar.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ RESERVA ════════════════════════════════════ -->
-<section id="reserva">
-  <div class="wrap">
-    <div class="res-grid">
-      <div class="fu">
-        <div class="eyebrow">Reserva de cita</div>
-        <h2 class="res-h">¿Lista para empezar?</h2>
-        <p class="res-sub">Escríbeme con tu nombre, email y una breve descripción de lo que buscas. Te respondo en menos de 24 horas para coordinar nuestra primera sesión.</p>
-        <div class="res-pts">
-          <div class="res-pt"><div class="res-dot"></div>Primera videollamada de 15 min gratuita</div>
-          <div class="res-pt"><div class="res-dot"></div>Respuesta en menos de 24 horas</div>
-          <div class="res-pt"><div class="res-dot"></div>Sin compromiso hasta decidir juntas</div>
-        </div>
-      </div>
-      <div id="rfw" class="fu" style="transition-delay:.15s">
-        <div class="form-wrap">
-          <form id="rf" novalidate>
-            <div class="fg" style="gap:14px">
-              <div class="ff">
-                <label class="flabel">Nombre *</label>
-                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required/>
-              </div>
-              <div class="ff">
-                <label class="flabel">Email *</label>
-                <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
-              </div>
-              <div class="ff full">
-                <label class="flabel">¿Qué te gustaría trabajar? <span class="fopt">(opcional)</span></label>
-                <textarea class="ft" name="msg" placeholder="Ej: Busco mejorar mi rendimiento en running y perder algo de grasa…" style="min-height:78px"></textarea>
-              </div>
-            </div>
-            <div style="margin-top:18px">
-              <button type="submit" class="btn btn-green btn-lg" style="width:100%;justify-content:center">
-                Enviar solicitud de cita
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   </div>
@@ -691,7 +607,6 @@ function makeForm(fid,wid,dark){
     },1200);
   });
 }
-makeForm('tf','tfw',false);
 makeForm('rf','rfw',true);
 
 /* Counter animation */
@@ -751,12 +666,11 @@ function animCount(el, target, suffix, dur){
   var section=document.querySelector('.met-scroll-section');
   if(!section)return;
   var spots=section.querySelectorAll('.met-spotlight');
-  var allGrid=document.getElementById('met-all');
   var hdr=document.getElementById('met-hdr');
   var prog=document.getElementById('met-progress');
   var fills=prog?prog.querySelectorAll('.met-prog-fill'):[];
   var N=spots.length; /* 4 */
-  var phases=N+1;     /* 5 */
+  var phases=N+1;     /* 5: 4 spotlights + 1 final grid */
 
   function ease(t){return t<0.5?2*t*t:-1+(4-2*t)*t;}
   function lerp(a,b,t){return a+(b-a)*t;}
@@ -767,71 +681,69 @@ function animCount(el, target, suffix, dur){
     if(total<=0)return;
     var p=Math.max(0,Math.min(1,-rect.top/total));
     var W=window.innerWidth;
+    var H=window.innerHeight;
 
-    /* Progress bars */
+    /* Progress bars fill from top */
     fills.forEach(function(fill,i){
       var tp=(p-i/phases)*phases;
-      fill.style.width=(tp<0?0:tp>1?100:Math.min(100,tp*100))+'%';
+      fill.style.height=(tp<0?0:tp>1?100:Math.min(100,tp*100))+'%';
     });
 
-    /* Header + progress fade out at final phase */
+    /* Header + progress fade when final phase begins */
     var uiOp=p<0.76?1:Math.max(0,1-(p-0.76)/0.06);
     if(hdr)hdr.style.opacity=uiOp.toString();
     if(prog)prog.style.opacity=uiOp.toString();
 
-    /* Spotlight animations */
+    /* Final-phase grid positions (2×2, same spotlight format) */
+    /* col 0=left, col 1=right; row 0=top, row 1=bottom */
+    var gapX=Math.min(W*0.18,160);
+    var gapY=Math.min(H*0.18,130);
+    var gridX=[[-gapX,gapX],[-gapX,gapX]];
+    var gridY=[[-gapY,-gapY],[gapY,gapY]];
+
     spots.forEach(function(spot,i){
       var pStart=i/phases;
       var pEnd=(i+1)/phases;
       var dur=pEnd-pStart;
 
-      /* Left-list target position */
-      var lx=-(W*0.28);          /* pixels left of center */
-      var ly=(i-1.5)*74;         /* vertical stack */
+      /* Left-list resting position — increased spacing to avoid overlap */
+      var lx=-(W*0.27);
+      var ly=(i-1.5)*132;  /* 132px spacing prevents overlap */
       var lSc=0.46;
-      var lOp=0.65;
+      var lOp=0.68;
 
       var x,y,sc,op;
 
       if(p<pStart){
-        /* Not yet: invisible above center */
-        x=0; y=38; sc=0.88; op=0;
+        x=0; y=36; sc=0.88; op=0;
 
       } else if(p<=pEnd){
-        /* Active phase: enter big → exit to left */
         var t=(p-pStart)/dur;
         var enterP=ease(Math.min(1,t/0.28));
         var exitP=ease(Math.max(0,(t-0.68)/0.32));
-
         x=lerp(0,lx,exitP);
-        y=lerp(0,ly,exitP)+(1-enterP)*38;
+        y=lerp(0,ly,exitP)+(1-enterP)*36;
         sc=lerp(1,lSc,exitP);
-        op=enterP*(1-exitP*0.38);
+        op=enterP*(1-exitP*0.35);
 
       } else if(p<0.8){
-        /* Resting on left */
         x=lx; y=ly; sc=lSc; op=lOp;
 
       } else {
-        /* Final: drag from left to center */
+        /* Drag from left to 2×2 grid — same spotlight style */
         var fp=ease(Math.min(1,(p-0.8)/0.2));
-        x=lerp(lx,0,fp);
-        y=lerp(ly,(i-1.5)*18,fp);
-        sc=lerp(lSc,0.62,fp);
-        op=lerp(lOp,0,Math.min(1,fp*1.6));
+        var col=i%2; var row=Math.floor(i/2);
+        var tx=gridX[row][col];
+        var ty=gridY[row][col];
+        x=lerp(lx,tx,fp);
+        y=lerp(ly,ty,fp);
+        sc=lerp(lSc,0.52,fp);
+        op=lerp(lOp,0.92,fp);
       }
 
       spot.style.transform='translate(calc(-50% + '+Math.round(x)+'px), calc(-50% + '+Math.round(y)+'px)) scale('+sc.toFixed(3)+')';
       spot.style.opacity=Math.max(0,Math.min(1,op)).toFixed(3);
     });
-
-    /* Final grid */
-    if(allGrid){
-      var fp2=ease(Math.max(0,Math.min(1,(p-0.8)/0.2)));
-      allGrid.style.opacity=Math.min(1,fp2*2.2).toFixed(3);
-      allGrid.style.transform='translateY('+(28*(1-fp2))+'px)';
-      allGrid.style.pointerEvents=fp2>0.05?'auto':'none';
-    }
   }
 
   var raf=null;
