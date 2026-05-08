@@ -90,7 +90,7 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .sobre-content-col{padding:clamp(36px,5vw,68px) clamp(28px,4vw,60px);display:flex;flex-direction:column;justify-content:center}
 .sobre-pull{font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.4rem);font-style:italic;line-height:1.45;color:var(--green);margin:14px 0 20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
 .sobre-paras{display:flex;flex-direction:column;gap:10px}
-@media(max-width:768px){.sobre-new{grid-template-columns:1fr}.sobre-photo-col{height:320px}}
+@media(max-width:768px){.sobre-new{grid-template-columns:1fr;height:auto}.sobre-photo-col{height:300px}.sobre-content-col{padding:32px 24px}}
 
 /* ── Laptop zoom (MVP2) ─────────────────────────── */
 .laptop-section{height:220vh;position:relative;background:var(--bg-alt);overflow:clip}
@@ -355,7 +355,7 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     </div>
     <div class="sobre-content-col">
       <div class="eyebrow fu">Sobre mí</div>
-      <h2 class="h2 fu" style="margin-bottom:0;transition-delay:.1s">Hola,<br>soy Carmen</h2>
+      <h2 class="h2 fu" style="margin-bottom:0;transition-delay:.1s">Hola, soy Carmen</h2>
       <p class="sobre-pull fu" style="transition-delay:.2s">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</p>
       <div class="sobre-paras">
         <p class="body fu" style="transition-delay:.32s">Soy nutricionista clínica y deportiva. Me apasiona ayudar a las personas a entender cómo la alimentación puede convertirse en una herramienta real para mejorar el rendimiento, la salud y el bienestar.</p>
