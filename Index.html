@@ -84,16 +84,13 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 
 /* ── Sobre mí ────────────────────────────────────── */
 #sobre-mi{padding:0}
-.sobre-new{display:grid;grid-template-columns:1fr 1fr;min-height:90vh}
-.sobre-photo-col{overflow:hidden;min-height:560px;position:relative}
+.sobre-new{display:grid;grid-template-columns:1fr 1fr;min-height:55vh}
+.sobre-photo-col{overflow:hidden;min-height:360px;max-height:520px;position:relative}
 .sobre-photo-col img{width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block}
-.sobre-content-col{padding:clamp(52px,7vw,96px) clamp(36px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
-.sobre-pull{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.8rem);font-style:italic;line-height:1.45;color:var(--green);margin:20px 0 28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.sobre-paras{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
-.sobre-stats{display:flex;gap:32px;padding-top:28px;border-top:1px solid var(--border)}
-.sobre-stat-num{font-family:var(--serif);font-size:2.6rem;font-weight:700;line-height:1;color:var(--text)}
-.sobre-stat-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:5px}
-@media(max-width:768px){.sobre-new{grid-template-columns:1fr}.sobre-photo-col{height:380px}.sobre-stats{gap:20px}.sobre-stat-num{font-size:2rem}}
+.sobre-content-col{padding:clamp(36px,5vw,68px) clamp(28px,4vw,60px);display:flex;flex-direction:column;justify-content:center}
+.sobre-pull{font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.4rem);font-style:italic;line-height:1.45;color:var(--green);margin:14px 0 20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.sobre-paras{display:flex;flex-direction:column;gap:10px}
+@media(max-width:768px){.sobre-new{grid-template-columns:1fr}.sobre-photo-col{height:320px}}
 
 /* ── Laptop zoom (MVP2) ─────────────────────────── */
 .laptop-section{height:280vh;position:relative;background:var(--bg-alt);overflow:clip}
@@ -151,7 +148,7 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .met-spot-n{font-family:var(--serif);font-size:clamp(5rem,13vw,8.5rem);font-weight:700;color:var(--green);opacity:.13;line-height:1;margin-bottom:2px}
 .met-spot-t{font-family:var(--serif);font-size:clamp(1.6rem,3.8vw,2.7rem);font-weight:600;line-height:1.2;margin-bottom:16px}
 .met-spot-d{font-size:clamp(.86rem,1.15vw,.96rem);color:var(--muted);line-height:1.8;max-width:480px;margin:0 auto}
-.met-empezamos{position:absolute;top:50%;left:50%;font-family:var(--serif);font-size:clamp(2rem,5vw,3.8rem);font-weight:700;color:var(--text);opacity:0;pointer-events:none;will-change:transform,opacity;white-space:nowrap;letter-spacing:-.02em}
+.met-empezamos{position:absolute;top:50%;left:50%;font-family:var(--serif);font-size:clamp(2rem,5vw,3.8rem);font-weight:700;color:var(--green);opacity:0;pointer-events:none;will-change:transform,opacity;white-space:nowrap;letter-spacing:-.02em}
 .met-all{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(90px,14vh,160px) clamp(24px,6vw,60px) 0;opacity:0;pointer-events:none;will-change:transform,opacity}
 .met-all-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:660px;width:100%}
 .met-all-card{background:#fff;border-radius:14px;padding:22px 20px;border:1.5px solid var(--border)}
@@ -159,13 +156,42 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .met-all-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;margin-bottom:5px}
 .met-all-d{font-size:.79rem;color:var(--muted);line-height:1.7}
 @media(max-width:640px){
-  .met-scroll-section{height:auto;padding:64px 0}
-  .met-sticky{position:relative;height:auto;padding:24px 0 48px}
-  .met-hdr{position:relative;top:auto;margin-bottom:32px}
+  .met-scroll-section{height:auto!important;padding:56px 0}
+  .met-sticky{position:relative!important;height:auto;padding:0}
+  .met-hdr{position:relative;top:auto;margin-bottom:28px;padding:0 20px}
   .met-progress{display:none}
-  .met-spotlight{position:relative;top:auto;left:auto;width:100%;opacity:1!important;pointer-events:auto;transform:none!important;padding:0 24px;margin-bottom:8px}
-  .met-spot-n{font-size:3.5rem}
+  .met-empezamos{display:none}
+  .met-spotlight{position:relative!important;top:auto!important;left:auto!important;width:100%!important;opacity:1!important;transform:none!important;pointer-events:auto;padding:24px 20px;margin-bottom:0;border-bottom:1px solid var(--border)}
+  .met-spotlight:last-of-type{border-bottom:none}
+  .met-spot-n{font-size:3rem;opacity:.15}
+  .met-spot-t{font-size:1.4rem;margin-bottom:10px}
+  .met-spot-d{font-size:.88rem}
   .met-all{display:none}
+}
+
+/* ── Responsive global ───────────────────────────── */
+@media(max-width:768px){
+  .section{padding:clamp(40px,6vw,64px) 0}
+  .h2{font-size:clamp(1.7rem,5vw,2.4rem)}
+  .display{font-size:clamp(2.8rem,10vw,5rem)}
+  .res-grid{grid-template-columns:1fr;gap:36px}
+  .laptop-section{height:auto;padding:64px 0}
+  .laptop-sticky{position:relative;height:auto}
+  .laptop-ctx{position:relative;top:auto;margin-bottom:28px}
+  .laptop-frame{width:calc(100vw - 40px);max-width:460px;transform:none!important}
+}
+@media(max-width:480px){
+  .wrap{padding:0 16px}
+  .hero-body{padding:28px 16px 48px}
+  .hero-tagline{font-size:1rem}
+  .hero-sub{font-size:.92rem}
+  .btn-lg{padding:12px 22px;font-size:.88rem}
+  .srv-card{padding:24px 18px}
+  .faq-btn{font-size:.85rem;padding:15px 16px}
+  .sobre-content-col{padding:28px 20px}
+  .sobre-pull{font-size:.95rem}
+  .form-wrap{padding:20px 16px}
+  .res-grid{gap:24px}
 }
 
 /* ── Test inicial form ───────────────────────────── */
@@ -259,7 +285,7 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     <p class="hero-tagline">Nutrición general y deportiva</p>
     <p class="lead hero-sub">Alimentación personalizada que se adapta a tu vida, tus objetivos y tu manera de moverte por el mundo.</p>
     <div class="hero-ctas">
-      <button class="btn btn-green btn-lg" onclick="goTo('test-inicial')">Solicitar primera consulta</button>
+      <button class="btn btn-green btn-lg" onclick="goTo('reserva')">Solicitar cita</button>
       <button class="btn btn-outline btn-lg" onclick="goTo('servicios')">Ver servicios</button>
     </div>
   </div>
@@ -280,20 +306,6 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
         <p class="body fu" style="transition-delay:.32s">Soy nutricionista clínica y deportiva. Me apasiona ayudar a las personas a entender cómo la alimentación puede convertirse en una herramienta real para mejorar el rendimiento, la salud y el bienestar.</p>
         <p class="body fu" style="transition-delay:.46s">Trabajo desde un enfoque completamente personalizado: sin dietas restrictivas, sin soluciones genéricas. Cada plan parte de quién eres tú, tus objetivos, tu rutina y tu estilo de vida.</p>
         <p class="body fu" style="transition-delay:.60s">Si eres deportista, te acompaño a optimizar tu rendimiento. Si buscas mejorar tu salud general, encontramos juntos el camino que tiene sentido para ti.</p>
-      </div>
-      <div class="sobre-stats fu" style="transition-delay:.74s">
-        <div class="sobre-stat">
-          <div class="sobre-stat-num"><span data-count="200" data-suffix="+">0</span></div>
-          <div class="sobre-stat-label">Pacientes</div>
-        </div>
-        <div class="sobre-stat">
-          <div class="sobre-stat-num"><span data-count="5">0</span></div>
-          <div class="sobre-stat-label">Años de experiencia</div>
-        </div>
-        <div class="sobre-stat">
-          <div class="sobre-stat-num"><span data-count="95" data-suffix="%">0</span></div>
-          <div class="sobre-stat-label">Satisfacción</div>
-        </div>
       </div>
     </div>
   </div>
@@ -694,11 +706,14 @@ function animCount(el, target, suffix, dur){
     if(hdr)hdr.style.opacity=uiOp.toString();
     if(prog)prog.style.opacity=uiOp.toString();
 
-    /* Grid positions for 2×2 final layout */
+    /* Skip animation on mobile — CSS handles display */
+    if(W<=640){return;}
+
+    /* Grid positions for 2×2 final layout — shifted down 40px to make room for ¿Empezamos? */
     var gX=Math.min(W*0.17,155);
     var gY=Math.min(H*0.16,118);
     var gx=[[-gX,gX],[-gX,gX]];
-    var gy=[[-gY,-gY],[gY,gY]];
+    var gy=[[-gY+40,-gY+40],[gY+40,gY+40]];
 
     spots.forEach(function(spot,i){
       var pStart=i/phases;
@@ -713,7 +728,8 @@ function animCount(el, target, suffix, dur){
         x=0; y=36; sc=0.88; op=0;
       } else if(p<=pEnd){
         var t=(p-pStart)/dur;
-        var enterP=ease(Math.min(1,t/0.28));
+        /* Step 0 appears immediately; others fade in */
+        var enterP=i===0?1:ease(Math.min(1,t/0.28));
         var exitP=ease(Math.max(0,(t-0.68)/0.32));
         x=lerp(0,lx,exitP); y=lerp(0,ly,exitP)+(1-enterP)*36;
         sc=lerp(1,lSc,exitP); op=enterP*(1-exitP*0.35);
@@ -741,9 +757,9 @@ function animCount(el, target, suffix, dur){
       spot.style.opacity=Math.max(0,Math.min(1,op)).toFixed(3);
     });
 
-    /* ¿Empezamos? — appears above grid, then drags down */
+    /* ¿Empezamos? — appears above grid (well clear of grid row 0), then drags down */
     if(emp){
-      var eY=-Math.min(H*0.22,188); /* above grid */
+      var eY=-Math.min(H*0.34,280); /* high enough above grid+40px offset */
       var eOp,eTY;
       if(p<0.84){eOp=0;eTY=eY+28;}
       else if(p<0.9){var f=ease((p-0.84)/0.06);eOp=f;eTY=lerp(eY+28,eY,f);}
