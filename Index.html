@@ -138,7 +138,7 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 @media(max-width:768px){.srv-grid{grid-template-columns:1fr}}
 
 /* ── Metodología scroll ──────────────────────────── */
-.met-scroll-section{height:600vh;position:relative;padding:0}
+.met-scroll-section{height:600vh;position:relative;padding:0;z-index:1}
 .met-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:var(--bg-alt)}
 .met-hdr{position:absolute;top:clamp(28px,5vh,56px);left:0;right:0;text-align:center;transition:opacity .4s;z-index:2}
 .met-progress{position:absolute;right:clamp(18px,3.5vw,44px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:3;transition:opacity .4s}
@@ -187,7 +187,6 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
   .hero-sub{font-size:.92rem}
   .btn-lg{padding:12px 22px;font-size:.88rem}
   .srv-card{padding:24px 18px}
-  .faq-btn{font-size:.85rem;padding:15px 16px}
   .sobre-content-col{padding:28px 20px}
   .sobre-pull{font-size:.95rem}
   .form-wrap{padding:20px 16px}
@@ -213,15 +212,6 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .f-ok p{color:var(--muted);font-size:.88rem;max-width:380px;margin:0 auto}
 @media(max-width:600px){.fg{grid-template-columns:1fr}}
 
-/* ── FAQ ─────────────────────────────────────────── */
-.faq-wrap{max-width:740px;margin:44px auto 0}
-.faq-item{border:1.5px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color .2s}
-.faq-item.on{border-color:var(--green)}
-.faq-btn{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;padding:18px 22px;background:none;border:none;font-family:var(--sans);font-size:.91rem;font-weight:600;color:var(--text);text-align:left;cursor:pointer;transition:background .15s}
-.faq-btn:hover{background:var(--bg-alt)}
-.faq-ic{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--muted);flex-shrink:0;transition:all .2s;line-height:1}
-.faq-item.on .faq-ic{background:var(--green);border-color:var(--green);color:#fff}
-.faq-ans{padding:0 22px 18px;font-size:.87rem;color:var(--muted);line-height:1.8}
 
 /* ── Reserva ─────────────────────────────────────── */
 #reserva{background:var(--green-l);color:var(--text);padding:clamp(72px,9vw,120px) 0}
@@ -232,6 +222,46 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .res-pt{display:flex;align-items:center;gap:12px;font-size:.87rem;color:var(--muted)}
 .res-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
 @media(max-width:768px){.res-grid{grid-template-columns:1fr;gap:44px}}
+
+/* ── Booking Modal ───────────────────────────────── */
+.bm-overlay{position:fixed;inset:0;background:rgba(25,24,26,.52);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s}
+.bm-overlay.open{opacity:1;pointer-events:all}
+.bm-panel{background:#fff;border-radius:24px;width:100%;max-width:820px;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2);transform:translateY(28px);transition:transform .35s cubic-bezier(.22,.97,.44,1)}
+.bm-overlay.open .bm-panel{transform:translateY(0)}
+.bm-col{padding:clamp(24px,3.5vw,40px)}
+.bm-col-r{border-left:1px solid var(--border);background:var(--bg-alt);border-radius:0 24px 24px 0;display:flex;flex-direction:column;justify-content:center}
+.bm-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:none;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--muted);cursor:pointer;transition:all .15s;z-index:2;line-height:1}
+.bm-close:hover{border-color:var(--text);color:var(--text)}
+.bm-cal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.bm-cal-title{font-family:var(--serif);font-size:1.05rem;font-weight:700}
+.bm-nav{background:none;border:1.5px solid var(--border);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--muted);transition:all .15s;font-family:inherit}
+.bm-nav:hover:not(:disabled){border-color:var(--green);color:var(--green)}
+.bm-nav:disabled{opacity:.28;cursor:default}
+.bm-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.bm-dh{font-size:.65rem;font-weight:600;color:var(--muted);text-align:center;padding:3px 0;text-transform:uppercase;letter-spacing:.04em}
+.bm-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.bm-day{aspect-ratio:1;border-radius:8px;border:1.5px solid transparent;background:none;font-size:.82rem;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--sans);color:var(--border);cursor:default;padding:0}
+.bm-day.avail{color:var(--text);font-weight:500;cursor:pointer;background:rgba(59,103,80,.07)}
+.bm-day.avail:hover{background:var(--green-l);border-color:var(--green);color:var(--green)}
+.bm-day.full{color:#a33;font-weight:500;cursor:default;background:rgba(180,60,60,.07)}
+.bm-day.sel{background:var(--green)!important;border-color:var(--green)!important;color:#fff!important;font-weight:600}
+.bm-day.today{font-weight:700}
+.bm-slots-empty{color:var(--muted);font-size:.87rem;padding:40px 0;text-align:center;line-height:1.8}
+.bm-sel-date{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:14px;text-transform:capitalize}
+.bm-slots-list{display:flex;flex-direction:column;gap:7px}
+.bm-slot{border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:.87rem;font-weight:500;cursor:pointer;background:#fff;text-align:left;transition:all .15s;color:var(--text);font-family:var(--sans);display:flex;align-items:center;gap:10px}
+.bm-slot:hover{border-color:var(--green);background:var(--green-l);color:var(--green)}
+.bm-slot.sel{background:var(--green);border-color:var(--green);color:#fff}
+.bm-slot-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;transition:background .15s}
+.bm-slot.sel .bm-slot-dot{background:#fff}
+.bm-form-back{background:none;border:none;font-size:.8rem;color:var(--muted);cursor:pointer;padding:0;margin-bottom:10px;display:flex;align-items:center;gap:4px;transition:color .15s;font-family:var(--sans)}
+.bm-form-back:hover{color:var(--green)}
+.bm-form-chosen{font-family:var(--serif);font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:18px;line-height:1.35}
+.bm-form{display:flex;flex-direction:column;gap:11px}
+@media(max-width:640px){
+  .bm-panel{grid-template-columns:1fr;max-height:88vh}
+  .bm-col-r{border-left:none;border-top:1px solid var(--border);border-radius:0 0 24px 24px;justify-content:flex-start}
+}
 
 /* ── Footer ─────────────────────────────────────── */
 footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding:22px 0}
@@ -257,9 +287,8 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
       <a onclick="goTo('metodologia')">Cómo trabajo</a>
       <a onclick="goTo('servicios')">Servicios</a>
       <a onclick="goTo('reserva')">Empezamos</a>
-      <a onclick="goTo('faq')">FAQ</a>
     </nav>
-    <button class="btn btn-green h-cta" onclick="goTo('reserva')" style="flex-shrink:0">Reservar cita</button>
+    <button class="btn btn-green h-cta" onclick="openBookModal()" style="flex-shrink:0">Reservar cita</button>
     <button class="h-burger" onclick="toggleMob()" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -269,8 +298,7 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     <a onclick="goTo('metodologia');toggleMob()">Cómo trabajo</a>
     <a onclick="goTo('servicios');toggleMob()">Servicios</a>
     <a onclick="goTo('reserva');toggleMob()">Empezamos</a>
-    <a onclick="goTo('faq');toggleMob()">FAQ</a>
-    <button class="btn btn-green" style="margin-top:8px;width:100%;justify-content:center" onclick="goTo('reserva');toggleMob()">Reservar cita</button>
+    <button class="btn btn-green" style="margin-top:8px;width:100%;justify-content:center" onclick="openBookModal();toggleMob()">Reservar cita</button>
   </div>
 </header>
 
@@ -285,7 +313,7 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
     <p class="hero-tagline">Nutrición general y deportiva</p>
     <p class="lead hero-sub">Alimentación personalizada que se adapta a tu vida, tus objetivos y tu manera de moverte por el mundo.</p>
     <div class="hero-ctas">
-      <button class="btn btn-green btn-lg" onclick="goTo('reserva')">Solicitar cita</button>
+      <button class="btn btn-green btn-lg" onclick="openBookModal()">Solicitar cita</button>
       <button class="btn btn-outline btn-lg" onclick="goTo('servicios')">Ver servicios</button>
     </div>
   </div>
@@ -469,88 +497,80 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
           <div class="res-pt"><div class="res-dot"></div>Sin compromiso hasta decidir juntas</div>
         </div>
       </div>
-      <div id="rfw" class="fu" style="transition-delay:.15s">
-        <div class="form-wrap">
-          <form id="rf" novalidate>
-            <div class="fg" style="gap:14px">
-              <div class="ff">
-                <label class="flabel">Nombre *</label>
-                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required/>
-              </div>
-              <div class="ff">
-                <label class="flabel">Email *</label>
-                <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
-              </div>
-              <div class="ff full">
-                <label class="flabel">¿Qué tipo de consulta te interesa? *</label>
-                <select class="fs" name="tipo" required>
-                  <option value="">Seleccionar…</option>
-                  <option>Consulta individual (sesión única)</option>
-                  <option>Seguimiento semanal</option>
-                  <option>Plan nutricional mensual</option>
-                  <option>Aún no lo sé, quiero que me orientes</option>
-                </select>
-              </div>
-              <div class="ff full">
-                <label class="flabel">¿Cuál es tu objetivo principal? *</label>
-                <select class="fs" name="objetivo" required>
-                  <option value="">Seleccionar…</option>
-                  <option>Perder grasa corporal</option>
-                  <option>Ganar masa muscular</option>
-                  <option>Mejorar el rendimiento deportivo</option>
-                  <option>Control de una patología</option>
-                  <option>Mejorar mis hábitos generales</option>
-                  <option>Otro</option>
-                </select>
-              </div>
-            </div>
-            <div style="margin-top:18px">
-              <button type="submit" class="btn btn-green btn-lg" style="width:100%;justify-content:center">
-                Solicitar cita
-              </button>
-            </div>
-          </form>
+      <div class="fu" style="transition-delay:.15s;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center">
+          <button class="btn btn-green btn-lg" onclick="openBookModal()" style="font-size:1.05rem;padding:18px 40px;gap:12px">
+            Reservar cita
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FAQ ════════════════════════════════════════ -->
-<section class="section" id="faq" style="background:var(--bg-alt)">
-  <div class="wrap">
-    <div class="fu" style="text-align:center">
-      <div class="eyebrow">FAQ</div>
-      <h2 class="h2">Lo que más me preguntan</h2>
+
+<!-- ══ BOOKING MODAL ══════════════════════════════ -->
+<div class="bm-overlay" id="bm-overlay">
+  <div class="bm-panel" id="bm-panel">
+    <button class="bm-close" onclick="closeBookModal()" aria-label="Cerrar">×</button>
+    <!-- Left: calendar -->
+    <div class="bm-col">
+      <div class="bm-cal-hd">
+        <button class="bm-nav" id="bm-prev">&#8249;</button>
+        <span class="bm-cal-title" id="bm-month-title"></span>
+        <button class="bm-nav" id="bm-next">&#8250;</button>
+      </div>
+      <div class="bm-dow">
+        <div class="bm-dh">L</div><div class="bm-dh">M</div><div class="bm-dh">X</div>
+        <div class="bm-dh">J</div><div class="bm-dh">V</div><div class="bm-dh">S</div>
+        <div class="bm-dh">D</div>
+      </div>
+      <div class="bm-days" id="bm-days-grid"></div>
     </div>
-    <div class="faq-wrap fu" style="transition-delay:.1s">
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿Cuántas sesiones necesito para ver resultados?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">Depende de cada persona y objetivo. En general, a partir del primer mes empiezan a notarse cambios reales. Lo importante no es la rapidez sino construir hábitos que duren. Recomiendo un mínimo de 2–3 meses para resultados sostenibles.</div>
+    <!-- Right: slots or form -->
+    <div class="bm-col bm-col-r">
+      <div id="bm-slots-view">
+        <div class="bm-slots-empty" id="bm-empty-msg">Selecciona un día<br>para ver los horarios disponibles</div>
+        <div id="bm-slots-wrap" style="display:none">
+          <p class="bm-sel-date" id="bm-date-label"></p>
+          <div class="bm-slots-list" id="bm-slots-inner"></div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿Las consultas son presenciales u online?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">Trabajo en formato online mediante videollamada, lo que te permite hacer las consultas desde cualquier lugar sin desplazarte. El seguimiento y soporte se realizan por mensajería.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿Haces dietas muy restrictivas?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">No. Mi enfoque es totalmente contrario a las dietas restrictivas. Creo en planes que puedas sostener a largo plazo, que incluyan los alimentos que te gustan y que se adapten a tu vida real. La restricción extrema no es necesaria ni efectiva.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿Puedo compaginarlo con mi entrenamiento?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">Por supuesto. Es una de mis especialidades. El plan se diseña teniendo en cuenta tu tipo de entrenamiento, frecuencia, intensidad y objetivos deportivos. La nutrición bien planificada mejora el rendimiento y la recuperación.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿Qué pasa si no me gusta algo del plan?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">El plan se diseña desde el principio teniendo en cuenta tus preferencias. Y si algo no te convence cuando lo tienes, lo ajustamos. El plan es tuyo y tiene que funcionarte a ti.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="faq(this)"><span>¿En cuánto tiempo me contactas tras el formulario?</span><div class="faq-ic">+</div></button>
-        <div class="faq-ans" style="display:none">Respondo todos los formularios en máximo 24 horas en días laborables. Solemos coordinar una videollamada corta de 15 minutos gratuita para conocernos antes de empezar.</div>
+      <div id="bm-form-view" style="display:none">
+        <button class="bm-form-back" onclick="bmShowSlots()">← Cambiar horario</button>
+        <p class="bm-form-chosen" id="bm-chosen-label"></p>
+        <form id="bm-form" class="bm-form" novalidate>
+          <div class="ff"><label class="flabel">Nombre *</label><input class="fi" type="text" id="bm-name" placeholder="Tu nombre" required></div>
+          <div class="ff"><label class="flabel">Email *</label><input class="fi" type="email" id="bm-email" placeholder="tu@email.com" required></div>
+          <div class="ff"><label class="flabel">Teléfono *</label><input class="fi" type="tel" id="bm-tel" placeholder="+34 600 000 000" required></div>
+          <div class="ff">
+            <label class="flabel">Tipo de consulta *</label>
+            <select class="fs" id="bm-tipo" required>
+              <option value="">Seleccionar…</option>
+              <option>Consulta individual (sesión única)</option>
+              <option>Seguimiento semanal</option>
+              <option>Plan nutricional mensual</option>
+              <option>Aún no lo sé, quiero que me orientes</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label class="flabel">Objetivo principal *</label>
+            <select class="fs" id="bm-obj" required>
+              <option value="">Seleccionar…</option>
+              <option>Perder grasa corporal</option>
+              <option>Ganar masa muscular</option>
+              <option>Mejorar el rendimiento deportivo</option>
+              <option>Control de una patología</option>
+              <option>Mejorar mis hábitos generales</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-green btn-lg" style="width:100%;justify-content:center;margin-top:4px">Solicitar esta cita</button>
+        </form>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ══ FOOTER ═════════════════════════════════════ -->
 <footer>
@@ -579,15 +599,6 @@ function toggleMob(){
   m.style.display=m.style.display==='flex'?'none':'flex';
 }
 
-/* FAQ accordion */
-function faq(btn){
-  var item=btn.closest('.faq-item');
-  var ans=item.querySelector('.faq-ans');
-  var ic=btn.querySelector('.faq-ic');
-  var open=item.classList.toggle('on');
-  ans.style.display=open?'block':'none';
-  ic.textContent=open?'−':'+';
-}
 
 /* Form submit handler */
 function makeForm(fid,wid,dark){
@@ -614,7 +625,122 @@ function makeForm(fid,wid,dark){
     },1200);
   });
 }
-makeForm('rf','rfw',true);
+/* makeForm no longer used — booking handled by modal */
+
+/* ── Booking Modal ──────────────────────────────── */
+var BM={year:0,month:0,selDate:null,selSlot:null};
+var BM_SLOTS={1:['09:00','10:00','11:00','16:00','17:00','18:00'],2:['09:00','10:00','11:00','16:00','17:00','18:00'],3:['09:00','10:00','11:00','16:00','17:00','18:00'],4:['09:00','10:00','11:00','16:00','17:00','18:00'],5:['09:00','10:00','11:00']};
+// Demo full days (no slots available) — replace with real data from Cal.com later
+// Format: 'YYYY-MM-DD'
+var BM_FULL=(function(){var n=new Date();var y=n.getFullYear();var m=String(n.getMonth()+1).padStart(2,'0');var d=String(n.getDate()+3).padStart(2,'0');return [y+'-'+m+'-'+d];}());
+var BM_MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var BM_MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var BM_DIAS=['lunes','martes','miércoles','jueves','viernes','sábado','domingo'];
+
+function openBookModal(){
+  var ov=document.getElementById('bm-overlay');
+  if(!BM.year){var n=new Date();BM.year=n.getFullYear();BM.month=n.getMonth();bmRender();}
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+  ov.onclick=function(e){if(e.target===ov)closeBookModal();};
+}
+function closeBookModal(){
+  document.getElementById('bm-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function bmRender(){
+  var y=BM.year,m=BM.month;
+  document.getElementById('bm-month-title').textContent=BM_MESES[m]+' '+y;
+  var grid=document.getElementById('bm-days-grid');
+  grid.innerHTML='';
+  var first=new Date(y,m,1);
+  var offset=(first.getDay()+6)%7;
+  var dim=new Date(y,m+1,0).getDate();
+  var today=new Date();today.setHours(0,0,0,0);
+  for(var i=0;i<offset;i++){var s=document.createElement('span');s.className='bm-day';grid.appendChild(s);}
+  for(var d=1;d<=dim;d++){
+    var dt=new Date(y,m,d);
+    var dow=dt.getDay();
+    var isPast=dt<today;
+    var isWknd=dow===0||dow===6;
+    var hasS=BM_SLOTS[dow]&&BM_SLOTS[dow].length>0;
+    var dk=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.textContent=d;
+    var isFull=BM_FULL.indexOf(dk)!==-1;
+    var cls='bm-day';
+    if(isPast||isWknd||!hasS){cls+=' past';}
+    else if(isFull){cls+=' full';}
+    else{cls+=' avail';}
+    if(dt.getTime()===today.getTime())cls+=' today';
+    if(BM.selDate===dk)cls+=' sel';
+    btn.className=cls;
+    if(!isPast&&!isWknd&&hasS&&!isFull){
+      (function(dkey,dobj){btn.onclick=function(){bmSelectDay(dkey,dobj);};})(dk,dt);
+    }
+    grid.appendChild(btn);
+  }
+  var nowM=new Date();
+  var prevBtn=document.getElementById('bm-prev');
+  prevBtn.disabled=(y===nowM.getFullYear()&&m===nowM.getMonth());
+}
+
+function bmSelectDay(dk,dt){
+  BM.selDate=dk;BM.selSlot=null;
+  bmRender();
+  var dow=dt.getDay();
+  var dname=BM_DIAS[(dow+6)%7];
+  var label=dname.charAt(0).toUpperCase()+dname.slice(1)+', '+dt.getDate()+' de '+BM_MES[dt.getMonth()];
+  document.getElementById('bm-date-label').textContent=label;
+  var inner=document.getElementById('bm-slots-inner');
+  inner.innerHTML='';
+  (BM_SLOTS[dow]||[]).forEach(function(t){
+    var b=document.createElement('button');
+    b.type='button';
+    b.className='bm-slot';
+    b.innerHTML='<span class="bm-slot-dot"></span>'+t;
+    b.onclick=function(){
+      document.querySelectorAll('.bm-slot').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel');BM.selSlot=t;
+      setTimeout(function(){bmShowForm(label+' · '+t);},260);
+    };
+    inner.appendChild(b);
+  });
+  document.getElementById('bm-empty-msg').style.display='none';
+  document.getElementById('bm-slots-wrap').style.display='block';
+}
+
+function bmShowSlots(){
+  document.getElementById('bm-slots-view').style.display='block';
+  document.getElementById('bm-form-view').style.display='none';
+}
+function bmShowForm(label){
+  document.getElementById('bm-chosen-label').textContent=label;
+  document.getElementById('bm-slots-view').style.display='none';
+  document.getElementById('bm-form-view').style.display='block';
+}
+
+document.getElementById('bm-prev').addEventListener('click',function(){BM.month--;if(BM.month<0){BM.month=11;BM.year--;}bmRender();});
+document.getElementById('bm-next').addEventListener('click',function(){BM.month++;if(BM.month>11){BM.month=0;BM.year++;}bmRender();});
+
+document.getElementById('bm-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var ids=['bm-name','bm-email','bm-tel','bm-tipo','bm-obj'];
+  var ok=true;
+  ids.forEach(function(id){var el=document.getElementById(id);if(!el.value.trim()){el.classList.add('err');ok=false;}else el.classList.remove('err');});
+  var em=document.getElementById('bm-email');
+  if(em.value&&!/\S+@\S+\.\S+/.test(em.value)){em.classList.add('err');ok=false;}
+  if(!BM.selDate||!BM.selSlot)ok=false;
+  if(!ok)return;
+  var btn=e.target.querySelector('button[type="submit"]');
+  btn.textContent='Enviando…';btn.disabled=true;
+  var firstName=document.getElementById('bm-name').value.split(' ')[0];
+  setTimeout(function(){
+    document.getElementById('bm-panel').innerHTML='<div style="padding:60px 40px;text-align:center;width:100%"><div class="f-ok-icon" style="margin-bottom:18px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L19 8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 style="font-family:var(--serif);font-size:1.8rem;font-weight:700;margin-bottom:10px">¡Cita solicitada, '+firstName+'!</h3><p style="color:var(--muted);font-size:.9rem;max-width:360px;margin:0 auto 28px;line-height:1.75">Te confirmo en menos de 24 horas. ¡Hasta pronto!</p><button class="btn btn-outline" onclick="closeBookModal()">Cerrar</button></div>';
+  },1400);
+});
 
 /* Counter animation */
 function animCount(el, target, suffix, dur){
