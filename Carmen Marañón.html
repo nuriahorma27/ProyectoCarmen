@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Carmen Marañón — Nutricionista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ── Tokens ────────────────────────────────────── */
+:root {
+  --bg:      #ffffff;
+  --bg-alt:  #f6f5f2;
+  --text:    #19181a;
+  --muted:   #857f78;
+  --light:   #c2bcb5;
+  --green:   #3b6750;
+  --green-d: #2c4f3c;
+  --green-l: #eef3ef;
+  --border:  #e4e1db;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --sh: 0 2px 14px rgba(25,20,10,.07);
+  --sh-lg: 0 8px 40px rgba(25,20,10,.11);
+  --r: 12px;
+}
+/* ── Reset ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:inherit;border:none}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--green-l);border-radius:3px}
+
+/* ── Layout ─────────────────────────────────────── */
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(18px,4vw,52px)}
+.section{padding:clamp(72px,9vw,120px) 0}
+
+/* ── Type ───────────────────────────────────────── */
+.eyebrow{font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--green);margin-bottom:12px}
+.display{font-family:var(--serif);font-size:clamp(3.4rem,7vw,6.4rem);font-weight:700;line-height:1.0;letter-spacing:-.01em}
+.h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;line-height:1.25}
+.lead{font-size:clamp(1rem,1.5vw,1.1rem);line-height:1.8;color:var(--muted)}
+.body{font-size:.93rem;line-height:1.75;color:var(--muted)}
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:9px;font-size:.9rem;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer;border:none}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-d);transform:translateY(-2px);box-shadow:var(--sh)}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--text);transform:translateY(-2px)}
+.btn-white{background:#fff;color:var(--text)}
+.btn-white:hover{background:var(--bg-alt);transform:translateY(-2px)}
+.btn-lg{padding:15px 34px;font-size:.96rem;border-radius:10px}
+
+/* ── Header ─────────────────────────────────────── */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:all .3s}
+header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
+.h-inner{display:flex;align-items:center;height:66px;gap:16px}
+.h-name{font-family:var(--serif);font-size:1.15rem;font-weight:600;flex-shrink:0;letter-spacing:-.01em}
+.h-nav{display:flex;flex:1;justify-content:center;gap:2px}
+.h-nav a{font-size:.84rem;font-weight:400;color:var(--muted);padding:7px 13px;border-radius:7px;cursor:pointer;transition:all .15s}
+.h-nav a:hover{color:var(--text);background:var(--bg-alt)}
+.h-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px}
+.h-burger span{display:block;width:20px;height:1.5px;background:var(--text);border-radius:2px}
+.h-mob{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:10px 16px 18px;flex-direction:column;gap:2px;display:none}
+.h-mob a{font-size:.98rem;color:var(--text);padding:11px 14px;border-radius:8px;display:block;cursor:pointer}
+.h-mob a:hover{background:var(--bg-alt)}
+@media(max-width:768px){.h-nav,.h-cta{display:none!important}.h-burger{display:flex}}
+
+/* ── Hero ───────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100svh;padding-top:66px}
+.hero-body{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,80px) clamp(24px,4vw,72px)}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.pill{background:var(--green-l);color:var(--green);font-size:.73rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:5px 12px;border-radius:100px}
+.hero-name{margin-bottom:22px}
+.hero-sub{max-width:420px;margin-bottom:38px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-img{overflow:hidden;position:relative}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+@media(max-width:800px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-img{height:420px;order:-1}
+  .hero-body{padding:36px 20px 52px}
+}
+
+/* ── Sobre mí — dynamic ─────────────────────────── */
+#sobre-mi{padding:0}
+.sobre-marquee-strip{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;background:var(--bg-alt)}
+.sobre-marquee{display:flex;gap:0;animation:mq 28s linear infinite;width:max-content}
+.sobre-mq-item{display:flex;align-items:center;gap:0;white-space:nowrap;font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 28px}
+.sobre-mq-item::after{content:'·';color:var(--green);padding-left:28px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.sobre-new{display:grid;grid-template-columns:1fr 1fr;min-height:82vh}
+.sobre-photo-col{overflow:hidden;min-height:520px;position:relative}
+.sobre-photo-col img{width:100%;height:100%;object-fit:cover;object-position:center 12%}
+.sobre-content-col{padding:clamp(52px,7vw,96px) clamp(36px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
+.sobre-pull{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.8rem);font-style:italic;line-height:1.45;color:var(--green);margin:20px 0 28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.sobre-paras{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.sobre-stats{display:flex;gap:32px;padding-top:28px;border-top:1px solid var(--border)}
+.sobre-stat-num{font-family:var(--serif);font-size:2.6rem;font-weight:700;line-height:1;color:var(--text)}
+.sobre-stat-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:5px}
+@media(max-width:768px){.sobre-new{grid-template-columns:1fr}.sobre-photo-col{height:380px}.sobre-stats{gap:20px}.sobre-stat-num{font-size:2rem}}
+
+/* ── Laptop zoom (MVP2) ─────────────────────────── */
+.laptop-section{height:280vh;position:relative;background:var(--bg-alt);overflow:hidden}
+.laptop-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.laptop-ctx{position:absolute;top:clamp(48px,8vh,80px);left:0;right:0;text-align:center;z-index:2;transition:opacity .1s}
+.laptop-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.laptop-frame{width:680px;transform-origin:center center;will-change:transform;flex-shrink:0}
+.laptop-lid{background:#222;border-radius:14px 14px 0 0;padding:14px 14px 8px;border:2px solid #333;box-shadow:0 24px 64px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.2)}
+.laptop-bezel{background:#0d0d0d;border-radius:5px;overflow:hidden;aspect-ratio:16/10;position:relative}
+.laptop-screen-inner{width:100%;height:100%;background:var(--bg-alt);display:flex;align-items:center;justify-content:center}
+.laptop-coming{text-align:center;padding:32px}
+.laptop-coming-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--green);background:var(--green-l);display:inline-block;padding:4px 12px;border-radius:100px;margin-bottom:14px}
+.laptop-coming-title{font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,2rem);font-weight:700;color:var(--text);margin-bottom:8px}
+.laptop-coming-sub{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.laptop-base{background:linear-gradient(to bottom,#2e2e2e,#222);height:20px;width:108%;margin-left:-4%;border-radius:0 0 5px 5px;display:flex;align-items:center;justify-content:center}
+.laptop-trackpad{width:72px;height:9px;background:rgba(255,255,255,.05);border-radius:3px}
+.laptop-foot{width:78%;margin:0 auto;height:6px;background:#1a1a1a;border-radius:0 0 8px 8px}
+@media(max-width:768px){
+  .laptop-section{height:auto;padding:80px 0}
+  .laptop-sticky{position:relative;height:auto}
+  .laptop-ctx{position:relative;top:auto;margin-bottom:32px}
+  .laptop-frame{width:calc(100vw - 48px);max-width:480px;transform:none!important}
+}
+
+/* ── Servicios ───────────────────────────────────── */
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+.srv-card{border:1.5px solid var(--border);border-radius:18px;padding:32px 28px;transition:all .3s;position:relative}
+.srv-card:hover{border-color:var(--green);box-shadow:var(--sh);transform:translateY(-4px)}
+.srv-card.hi{background:var(--green);border-color:var(--green);color:#fff}
+.srv-card.hi .srv-desc,.srv-card.hi .incl li{color:rgba(255,255,255,.68)}
+.srv-card.hi .incl li::before{color:rgba(255,255,255,.5)}
+.srv-card.hi .srv-sep{background:rgba(255,255,255,.18)}
+.srv-card.hi .srv-per{color:rgba(255,255,255,.6)}
+.srv-ico{width:44px;height:44px;border-radius:11px;background:var(--green-l);color:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.srv-card.hi .srv-ico{background:rgba(255,255,255,.16);color:#fff}
+.srv-name{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin-bottom:7px}
+.srv-desc{font-size:.84rem;color:var(--muted);line-height:1.6;margin-bottom:22px}
+.srv-price{margin-bottom:18px}
+.srv-amt{font-family:var(--serif);font-size:2.6rem;font-weight:700;line-height:1}
+.srv-per{font-size:.84rem;color:var(--muted);margin-left:2px}
+.srv-sep{height:1px;background:var(--border);margin:16px 0}
+.incl{list-style:none;display:flex;flex-direction:column;gap:8px}
+.incl li{font-size:.83rem;color:var(--muted);padding-left:16px;position:relative}
+.incl li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700}
+@media(max-width:768px){.srv-grid{grid-template-columns:1fr}}
+
+/* ── Metodología ─────────────────────────────────── */
+.met-grid{display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:start}
+.met-steps{display:flex;flex-direction:column;gap:36px}
+.met-step{display:flex;gap:22px}
+.met-n{font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--border);line-height:1;flex-shrink:0;width:52px;text-align:right;padding-top:4px}
+.met-body{padding-top:6px}
+.met-t{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:6px}
+.met-d{font-size:.87rem;color:var(--muted);line-height:1.75}
+.met-callout{background:var(--green);color:#fff;border-radius:20px;padding:40px;position:sticky;top:96px}
+.callout-q{font-family:var(--serif);font-size:1.55rem;line-height:1.45;font-style:italic;margin-bottom:24px}
+.callout-sep{height:1px;background:rgba(255,255,255,.2);margin-bottom:20px}
+.callout-by{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;opacity:.55}
+@media(max-width:768px){.met-grid{grid-template-columns:1fr;gap:40px}.met-callout{position:static}}
+
+/* ── Test inicial form ───────────────────────────── */
+.form-wrap{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:clamp(24px,4vw,48px)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ff{display:flex;flex-direction:column;gap:5px}
+.ff.full{grid-column:1/-1}
+.flabel{font-size:.83rem;font-weight:600;color:var(--text)}
+.fopt{font-weight:400;color:var(--muted)}
+.fi,.fs,.ft{padding:11px 15px;border-radius:9px;border:1.5px solid var(--border);font-family:var(--sans);font-size:.91rem;color:var(--text);background:#fff;outline:none;transition:all .2s;width:100%;-webkit-appearance:none;appearance:none}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(59,103,80,.1)}
+.fi.err,.fs.err{border-color:oklch(.62 .2 25)}
+.ft{resize:vertical;min-height:88px}
+.f-row{display:flex;align-items:center;gap:16px;margin-top:24px;flex-wrap:wrap}
+.f-note{font-size:.76rem;color:var(--muted)}
+.f-ok{text-align:center;padding:48px 24px;background:var(--green-l);border-radius:16px}
+.f-ok-icon{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.f-ok h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;margin-bottom:8px}
+.f-ok p{color:var(--muted);font-size:.88rem;max-width:380px;margin:0 auto}
+@media(max-width:600px){.fg{grid-template-columns:1fr}}
+
+/* ── FAQ ─────────────────────────────────────────── */
+.faq-wrap{max-width:740px;margin:44px auto 0}
+.faq-item{border:1.5px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color .2s}
+.faq-item.on{border-color:var(--green)}
+.faq-btn{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;padding:18px 22px;background:none;border:none;font-family:var(--sans);font-size:.91rem;font-weight:600;color:var(--text);text-align:left;cursor:pointer;transition:background .15s}
+.faq-btn:hover{background:var(--bg-alt)}
+.faq-ic{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--muted);flex-shrink:0;transition:all .2s;line-height:1}
+.faq-item.on .faq-ic{background:var(--green);border-color:var(--green);color:#fff}
+.faq-ans{padding:0 22px 18px;font-size:.87rem;color:var(--muted);line-height:1.8}
+
+/* ── Reserva ─────────────────────────────────────── */
+#reserva{background:var(--green-l);color:var(--text);padding:clamp(72px,9vw,120px) 0}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.res-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;margin-bottom:16px}
+.res-sub{color:var(--muted);font-size:.92rem;line-height:1.8;margin-bottom:32px}
+.res-pts{display:flex;flex-direction:column;gap:12px}
+.res-pt{display:flex;align-items:center;gap:12px;font-size:.87rem;color:var(--muted)}
+.res-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+@media(max-width:768px){.res-grid{grid-template-columns:1fr;gap:44px}}
+
+/* ── Footer ─────────────────────────────────────── */
+footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding:22px 0}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.foot-n{font-family:var(--serif);font-size:.98rem;font-weight:600;color:rgba(255,255,255,.5)}
+.foot-c{font-size:.76rem;color:rgba(255,255,255,.28)}
+
+/* ── Animations ─────────────────────────────────── */
+.fu{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.fu.on{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ═══════════════════════════════════ -->
+<header id="hdr">
+  <div class="wrap h-inner">
+    <span class="h-name">Carmen Marañón</span>
+    <nav class="h-nav">
+      <a onclick="goTo('sobre-mi')">Sobre mí</a>
+      <a onclick="goTo('servicios')">Servicios</a>
+      <a onclick="goTo('metodologia')">Metodología</a>
+      <a onclick="goTo('test-inicial')">Primera consulta</a>
+      <a onclick="goTo('faq')">FAQ</a>
+    </nav>
+    <button class="btn btn-green h-cta" onclick="goTo('reserva')" style="flex-shrink:0">Reservar cita</button>
+    <button class="h-burger" onclick="toggleMob()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="h-mob" id="hmob">
+    <a onclick="goTo('sobre-mi');toggleMob()">Sobre mí</a>
+    <a onclick="goTo('servicios');toggleMob()">Servicios</a>
+    <a onclick="goTo('metodologia');toggleMob()">Metodología</a>
+    <a onclick="goTo('test-inicial');toggleMob()">Primera consulta</a>
+    <a onclick="goTo('faq');toggleMob()">FAQ</a>
+    <button class="btn btn-green" style="margin-top:8px;width:100%;justify-content:center" onclick="goTo('reserva');toggleMob()">Reservar cita</button>
+  </div>
+</header>
+
+<!-- ══ HERO ══════════════════════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="hero-body">
+    <div class="hero-pills">
+      <span class="pill">Nutrición deportiva</span>
+      <span class="pill">Nutrición clínica</span>
+    </div>
+    <h1 class="display hero-name">Carmen<br>Marañón</h1>
+    <p class="lead hero-sub">Alimentación personalizada que se adapta a tu vida, tus objetivos y tu manera de moverte por el mundo.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-green btn-lg" onclick="goTo('test-inicial')">Solicitar primera consulta</button>
+      <button class="btn btn-outline btn-lg" onclick="goTo('servicios')">Ver servicios</button>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="uploads/photo-1778258607889.jpg" alt="Carmen Marañón — Nutricionista"/>
+  </div>
+</section>
+
+<!-- ══ SOBRE MÍ ═══════════════════════════════════ -->
+<section id="sobre-mi">
+  <!-- Marquee strip -->
+  <div class="sobre-marquee-strip">
+    <div class="sobre-marquee">
+      <span class="sobre-mq-item">Nutrición deportiva</span>
+      <span class="sobre-mq-item">Nutrición clínica</span>
+      <span class="sobre-mq-item">Planes personalizados</span>
+      <span class="sobre-mq-item">Sin restricciones</span>
+      <span class="sobre-mq-item">Resultados sostenibles</span>
+      <span class="sobre-mq-item">Enfoque integral</span>
+      <span class="sobre-mq-item">Nutrición deportiva</span>
+      <span class="sobre-mq-item">Nutrición clínica</span>
+      <span class="sobre-mq-item">Planes personalizados</span>
+      <span class="sobre-mq-item">Sin restricciones</span>
+      <span class="sobre-mq-item">Resultados sostenibles</span>
+      <span class="sobre-mq-item">Enfoque integral</span>
+    </div>
+  </div>
+  <!-- Grid: photo + content -->
+  <div class="sobre-new">
+    <div class="sobre-photo-col">
+      <img src="uploads/photo-1778258607889.jpg" alt="Carmen Marañón"/>
+    </div>
+    <div class="sobre-content-col">
+      <div class="eyebrow fu">Sobre mí</div>
+      <h2 class="h2 fu" style="margin-bottom:0;transition-delay:.07s">Hola,<br>soy Carmen</h2>
+      <p class="sobre-pull fu" style="transition-delay:.14s">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</p>
+      <div class="sobre-paras">
+        <p class="body fu" style="transition-delay:.2s">Soy nutricionista clínica y deportiva. Me apasiona ayudar a las personas a entender cómo la alimentación puede convertirse en una herramienta real para mejorar el rendimiento, la salud y el bienestar.</p>
+        <p class="body fu" style="transition-delay:.28s">Trabajo desde un enfoque completamente personalizado: sin dietas restrictivas, sin soluciones genéricas. Cada plan parte de quién eres tú, tus objetivos, tu rutina y tu estilo de vida.</p>
+        <p class="body fu" style="transition-delay:.36s">Si eres deportista, te acompaño a optimizar tu rendimiento. Si buscas mejorar tu salud general, encontramos juntos el camino que tiene sentido para ti.</p>
+      </div>
+      <div class="sobre-stats fu" style="transition-delay:.44s">
+        <div class="sobre-stat">
+          <div class="sobre-stat-num"><span data-count="200" data-suffix="+">0</span></div>
+          <div class="sobre-stat-label">Pacientes</div>
+        </div>
+        <div class="sobre-stat">
+          <div class="sobre-stat-num"><span data-count="5">0</span></div>
+          <div class="sobre-stat-label">Años de experiencia</div>
+        </div>
+        <div class="sobre-stat">
+          <div class="sobre-stat-num"><span data-count="95" data-suffix="%">0</span></div>
+          <div class="sobre-stat-label">Satisfacción</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICIOS ══════════════════════════════════ -->
+<section class="section" id="servicios">
+  <div class="wrap">
+    <div class="fu" style="text-align:center;max-width:540px;margin:0 auto">
+      <div class="eyebrow">Mis servicios</div>
+      <h2 class="h2">Elige el formato que mejor se adapta a ti</h2>
+    </div>
+    <div class="srv-grid">
+
+      <!-- Consulta individual -->
+      <div class="srv-card fu" style="transition-delay:.05s">
+        <div class="srv-ico">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="11" cy="7" r="4"/><path d="M4 20v-1a7 7 0 0 1 14 0v1"/>
+          </svg>
+        </div>
+        <div class="srv-name">Consulta individual</div>
+        <div class="srv-desc">Para comenzar o resolver dudas puntuales. Analizamos tu situación actual y definimos el camino juntas.</div>
+        <div class="srv-price">
+          <span class="srv-amt">40</span><span style="font-family:var(--serif);font-size:1.5rem">€</span>
+          <span class="srv-per">/ sesión</span>
+        </div>
+        <div class="srv-sep"></div>
+        <ul class="incl">
+          <li>Valoración nutricional completa</li>
+          <li>Análisis de hábitos y objetivos</li>
+          <li>Orientación y primeras pautas</li>
+          <li>Sesión de 60 minutos</li>
+        </ul>
+      </div>
+
+      <!-- Seguimiento — destacado -->
+      <div class="srv-card hi fu" style="transition-delay:.12s">
+        <div class="srv-ico">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M2 13 L6 8 L10 11 L14 5 L18 8 L20 6"/><path d="M2 19h18"/>
+          </svg>
+        </div>
+        <div class="srv-name">Seguimiento semanal</div>
+        <div class="srv-desc">Para quienes quieren acompañamiento continuo. Ajustamos el plan cada semana según tu evolución real.</div>
+        <div class="srv-price">
+          <span class="srv-amt">30</span><span style="font-family:var(--serif);font-size:1.5rem">€</span>
+          <span class="srv-per">/ semana</span>
+        </div>
+        <div class="srv-sep"></div>
+        <ul class="incl">
+          <li>Revisión y ajuste semanal del plan</li>
+          <li>Acceso por mensajería entre sesiones</li>
+          <li>Seguimiento de evolución y métricas</li>
+          <li>Adaptaciones en tiempo real</li>
+        </ul>
+      </div>
+
+      <!-- Plan mensual -->
+      <div class="srv-card fu" style="transition-delay:.2s">
+        <div class="srv-ico">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="2" y="3" width="18" height="17" rx="2"/><path d="M2 9h18M7 1v4M15 1v4"/>
+          </svg>
+        </div>
+        <div class="srv-name">Plan nutricional mensual</div>
+        <div class="srv-desc">La opción más completa. Plan detallado, seguimiento continuo y soporte durante todo el mes.</div>
+        <div class="srv-price">
+          <span class="srv-amt">85</span><span style="font-family:var(--serif);font-size:1.5rem">€</span>
+          <span class="srv-per">/ mes</span>
+        </div>
+        <div class="srv-sep"></div>
+        <ul class="incl">
+          <li>Plan nutricional personalizado completo</li>
+          <li>2 consultas de seguimiento incluidas</li>
+          <li>Menú semanal adaptado a ti</li>
+          <li>Soporte ilimitado por mensajería</li>
+          <li>Ajustes en cualquier momento</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ MVP2 LAPTOP ZOOM ═══════════════════════════ -->
+<section class="laptop-section" id="mvp2">
+  <div class="laptop-sticky">
+    <div class="laptop-ctx">
+      <div class="eyebrow">Próximamente · MVP 2</div>
+      <h2 class="h2" style="max-width:520px;margin:10px auto 0">Tu portal de paciente, en camino</h2>
+    </div>
+    <div class="laptop-stage">
+      <div class="laptop-frame" id="laptop-frame">
+        <div class="laptop-lid">
+          <div class="laptop-bezel">
+            <div class="laptop-screen-inner">
+              <div class="laptop-coming">
+                <span class="laptop-coming-badge">MVP 2 · Portal del paciente</span>
+                <div class="laptop-coming-title">Próximamente</div>
+                <div class="laptop-coming-sub">Recetas · Dashboard · Objetivos · Seguimiento</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="laptop-base"><div class="laptop-trackpad"></div></div>
+        <div class="laptop-foot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ METODOLOGÍA ════════════════════════════════ -->
+<section class="section" id="metodologia" style="background:var(--bg-alt)">
+  <div class="wrap">
+    <div class="met-grid">
+      <div class="fu">
+        <div class="eyebrow">Cómo trabajo</div>
+        <h2 class="h2" style="margin-bottom:52px">Un proceso pensado para ti</h2>
+        <div class="met-steps">
+          <div class="met-step">
+            <div class="met-n">01</div>
+            <div class="met-body">
+              <div class="met-t">Te conozco a fondo</div>
+              <div class="met-d">Antes de la primera consulta, completas un formulario con tus objetivos, hábitos, historial y rutina. Así llego preparada para aprovechar al máximo nuestro tiempo juntas.</div>
+            </div>
+          </div>
+          <div class="met-step">
+            <div class="met-n">02</div>
+            <div class="met-body">
+              <div class="met-t">Diseñamos tu plan</div>
+              <div class="met-d">Creo un plan nutricional adaptado a ti: tu metabolismo, tus gustos, tu estilo de vida y tus objetivos. Sin plantillas genéricas, sin restricciones innecesarias.</div>
+            </div>
+          </div>
+          <div class="met-step">
+            <div class="met-n">03</div>
+            <div class="met-body">
+              <div class="met-t">Seguimiento de verdad</div>
+              <div class="met-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos lo que sí. El seguimiento es donde ocurre el cambio real. Estoy contigo en cada paso.</div>
+            </div>
+          </div>
+          <div class="met-step">
+            <div class="met-n">04</div>
+            <div class="met-body">
+              <div class="met-t">Resultados que duran</div>
+              <div class="met-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fu" style="transition-delay:.15s">
+        <div class="met-callout">
+          <div class="callout-q">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</div>
+          <div class="callout-sep"></div>
+          <div class="callout-by">Mi filosofía de trabajo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TEST INICIAL ═══════════════════════════════ -->
+<section class="section" id="test-inicial">
+  <div class="wrap" style="max-width:800px">
+    <div class="fu" style="text-align:center;margin-bottom:48px">
+      <div class="eyebrow">Primera consulta</div>
+      <h2 class="h2" style="margin-bottom:14px">Cuéntame sobre ti</h2>
+      <p class="lead" style="max-width:520px;margin:0 auto">Rellena este formulario antes de nuestra primera consulta. Así llego preparada y aprovechamos cada minuto juntas.</p>
+    </div>
+    <div id="tfw" class="fu" style="transition-delay:.1s">
+      <div class="form-wrap">
+        <form id="tf" novalidate>
+          <div class="fg">
+            <div class="ff">
+              <label class="flabel">Nombre completo *</label>
+              <input class="fi" type="text" name="nombre" placeholder="Tu nombre y apellidos" required/>
+            </div>
+            <div class="ff">
+              <label class="flabel">Email *</label>
+              <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
+            </div>
+            <div class="ff">
+              <label class="flabel">Teléfono <span class="fopt">(opcional)</span></label>
+              <input class="fi" type="tel" name="tel" placeholder="+34 600 000 000"/>
+            </div>
+            <div class="ff">
+              <label class="flabel">Edad</label>
+              <input class="fi" type="number" name="edad" placeholder="Ej: 28" min="14" max="99"/>
+            </div>
+            <div class="ff full">
+              <label class="flabel">¿Cuál es tu objetivo principal? *</label>
+              <select class="fs" name="objetivo" required>
+                <option value="">Seleccionar…</option>
+                <option>Perder grasa corporal</option>
+                <option>Ganar masa muscular</option>
+                <option>Mejorar el rendimiento deportivo</option>
+                <option>Control de una patología</option>
+                <option>Mejorar mis hábitos generales</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="ff full">
+              <label class="flabel">¿Cuál es tu nivel de actividad física?</label>
+              <select class="fs" name="actividad">
+                <option value="">Seleccionar…</option>
+                <option>Sedentario (menos de 2 días/semana)</option>
+                <option>Actividad ligera (2–3 días/semana)</option>
+                <option>Actividad moderada (3–5 días/semana)</option>
+                <option>Deportista amateur (5–6 días/semana)</option>
+                <option>Deportista de alto rendimiento</option>
+              </select>
+            </div>
+            <div class="ff full">
+              <label class="flabel">¿Tienes alergias, intolerancias o restricciones? <span class="fopt">(opcional)</span></label>
+              <input class="fi" type="text" name="alergias" placeholder="Ej: intolerancia al gluten, alergia a los frutos secos…"/>
+            </div>
+            <div class="ff full">
+              <label class="flabel">¿Tienes algún diagnóstico médico relevante? <span class="fopt">(opcional)</span></label>
+              <input class="fi" type="text" name="dx" placeholder="Ej: hipotiroidismo, diabetes tipo 2, SII…"/>
+            </div>
+            <div class="ff full">
+              <label class="flabel">¿Qué esperas de nuestro trabajo juntas?</label>
+              <textarea class="ft" name="exp" placeholder="Cuéntame brevemente qué te ha traído hasta aquí y qué esperas conseguir…"></textarea>
+            </div>
+          </div>
+          <div class="f-row">
+            <button type="submit" class="btn btn-green btn-lg">
+              Enviar formulario
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="f-note">Te respondo en menos de 24 horas</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ════════════════════════════════════════ -->
+<section class="section" id="faq" style="background:var(--bg-alt)">
+  <div class="wrap">
+    <div class="fu" style="text-align:center">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="h2">Lo que más me preguntan</h2>
+    </div>
+    <div class="faq-wrap fu" style="transition-delay:.1s">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿Cuántas sesiones necesito para ver resultados?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">Depende de cada persona y objetivo. En general, a partir del primer mes empiezan a notarse cambios reales. Lo importante no es la rapidez sino construir hábitos que duren. Recomiendo un mínimo de 2–3 meses para resultados sostenibles.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿Las consultas son presenciales u online?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">Trabajo en formato online mediante videollamada, lo que te permite hacer las consultas desde cualquier lugar sin desplazarte. El seguimiento y soporte se realizan por mensajería.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿Haces dietas muy restrictivas?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">No. Mi enfoque es totalmente contrario a las dietas restrictivas. Creo en planes que puedas sostener a largo plazo, que incluyan los alimentos que te gustan y que se adapten a tu vida real. La restricción extrema no es necesaria ni efectiva.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿Puedo compaginarlo con mi entrenamiento?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">Por supuesto. Es una de mis especialidades. El plan se diseña teniendo en cuenta tu tipo de entrenamiento, frecuencia, intensidad y objetivos deportivos. La nutrición bien planificada mejora el rendimiento y la recuperación.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿Qué pasa si no me gusta algo del plan?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">El plan se diseña desde el principio teniendo en cuenta tus preferencias. Y si algo no te convence cuando lo tienes, lo ajustamos. El plan es tuyo y tiene que funcionarte a ti.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="faq(this)"><span>¿En cuánto tiempo me contactas tras el formulario?</span><div class="faq-ic">+</div></button>
+        <div class="faq-ans" style="display:none">Respondo todos los formularios en máximo 24 horas en días laborables. Solemos coordinar una videollamada corta de 15 minutos gratuita para conocernos antes de empezar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESERVA ════════════════════════════════════ -->
+<section id="reserva">
+  <div class="wrap">
+    <div class="res-grid">
+      <div class="fu">
+        <div class="eyebrow">Reserva de cita</div>
+        <h2 class="res-h">¿Lista para empezar?</h2>
+        <p class="res-sub">Escríbeme con tu nombre, email y una breve descripción de lo que buscas. Te respondo en menos de 24 horas para coordinar nuestra primera sesión.</p>
+        <div class="res-pts">
+          <div class="res-pt"><div class="res-dot"></div>Primera videollamada de 15 min gratuita</div>
+          <div class="res-pt"><div class="res-dot"></div>Respuesta en menos de 24 horas</div>
+          <div class="res-pt"><div class="res-dot"></div>Sin compromiso hasta decidir juntas</div>
+        </div>
+      </div>
+      <div id="rfw" class="fu" style="transition-delay:.15s">
+        <div class="form-wrap">
+          <form id="rf" novalidate>
+            <div class="fg" style="gap:14px">
+              <div class="ff">
+                <label class="flabel">Nombre *</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required/>
+              </div>
+              <div class="ff">
+                <label class="flabel">Email *</label>
+                <input class="fi" type="email" name="email" placeholder="tu@email.com" required/>
+              </div>
+              <div class="ff full">
+                <label class="flabel">¿Qué te gustaría trabajar? <span class="fopt">(opcional)</span></label>
+                <textarea class="ft" name="msg" placeholder="Ej: Busco mejorar mi rendimiento en running y perder algo de grasa…" style="min-height:78px"></textarea>
+              </div>
+            </div>
+            <div style="margin-top:18px">
+              <button type="submit" class="btn btn-green btn-lg" style="width:100%;justify-content:center">
+                Enviar solicitud de cita
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════ -->
+<footer>
+  <div class="wrap foot">
+    <span class="foot-n">Carmen Marañón — Nutricionista</span>
+    <span class="foot-c">© 2026 · Todos los derechos reservados</span>
+  </div>
+</footer>
+
+<script>
+/* Scroll to section */
+function goTo(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});
+}
+
+/* Header on scroll */
+window.addEventListener('scroll',function(){
+  document.getElementById('hdr').classList.toggle('up',window.scrollY>24);
+},{passive:true});
+
+/* Mobile menu */
+function toggleMob(){
+  var m=document.getElementById('hmob');
+  m.style.display=m.style.display==='flex'?'none':'flex';
+}
+
+/* FAQ accordion */
+function faq(btn){
+  var item=btn.closest('.faq-item');
+  var ans=item.querySelector('.faq-ans');
+  var ic=btn.querySelector('.faq-ic');
+  var open=item.classList.toggle('on');
+  ans.style.display=open?'block':'none';
+  ic.textContent=open?'−':'+';
+}
+
+/* Form submit handler */
+function makeForm(fid,wid,dark){
+  var f=document.getElementById(fid);
+  var w=document.getElementById(wid);
+  if(!f)return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=f.querySelector('[name="nombre"]');
+    var em=f.querySelector('[name="email"]');
+    var ok=true;
+    [n,em].forEach(function(x){
+      if(!x)return;
+      if(!x.value.trim()){x.classList.add('err');ok=false;}
+      else x.classList.remove('err');
+    });
+    if(em&&em.value&&!/\S+@\S+\.\S+/.test(em.value)){em.classList.add('err');ok=false;}
+    if(!ok)return;
+    var btn=f.querySelector('button[type="submit"]');
+    btn.textContent='Enviando…';btn.disabled=true;
+    setTimeout(function(){
+      w.innerHTML='<div class="f-ok">'+(dark?'':'<div class="f-ok-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12 L10 17 L19 8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>')+'<h3>¡Mensaje recibido!</h3><p>Te respondo en menos de 24 horas para coordinar nuestra primera sesión. ¡Hasta pronto, '+(n?n.value.split(' ')[0]:'')+'!</p></div>';
+      if(dark)w.querySelector('.f-ok').style.background='rgba(255,255,255,.07)';
+    },1200);
+  });
+}
+makeForm('tf','tfw',false);
+makeForm('rf','rfw',true);
+
+/* Counter animation */
+function animCount(el, target, suffix, dur){
+  var start=performance.now();
+  function step(now){
+    var p=Math.min((now-start)/dur,1);
+    var eased=p<0.5?2*p*p:-1+(4-2*p)*p;
+    el.textContent=Math.round(eased*target)+(suffix||'');
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+(function(){
+  var statsEl=document.querySelector('.sobre-stats');
+  if(!statsEl)return;
+  var done=false;
+  var ob=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(e.isIntersecting&&!done){
+        done=true;
+        statsEl.querySelectorAll('[data-count]').forEach(function(el){
+          animCount(el,parseInt(el.dataset.count),el.dataset.suffix||'',1600);
+        });
+        ob.disconnect();
+      }
+    });
+  },{threshold:0.4});
+  ob.observe(statsEl);
+})();
+
+/* Laptop scroll zoom */
+(function(){
+  var section=document.querySelector('.laptop-section');
+  var frame=document.getElementById('laptop-frame');
+  var ctx=document.querySelector('.laptop-ctx');
+  if(!section||!frame)return;
+  var raf=null;
+  function update(){
+    raf=null;
+    var rect=section.getBoundingClientRect();
+    var range=section.offsetHeight-window.innerHeight;
+    if(range<=0)return;
+    var scrolled=-rect.top;
+    var p=Math.max(0,Math.min(1,scrolled/range));
+    var ep=p<0.5?2*p*p:-1+(4-2*p)*p;
+    var scale=0.52+ep*1.82; /* 0.52 → 2.34 */
+    frame.style.transform='scale('+scale+')';
+    if(ctx)ctx.style.opacity=Math.max(0,1-p*6).toString();
+  }
+  window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
+  update();
+})();
+(function(){
+  var ob=new IntersectionObserver(function(en){
+    en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');ob.unobserve(e.target);}});
+  },{threshold:.08,rootMargin:'0px 0px -36px 0px'});
+  function tick(){document.querySelectorAll('.fu:not([data-ob])').forEach(function(el){el.setAttribute('data-ob','1');ob.observe(el);});}
+  document.addEventListener('DOMContentLoaded',function(){tick();setInterval(tick,300);});
+})();
+</script>
+</body>
+</html>
