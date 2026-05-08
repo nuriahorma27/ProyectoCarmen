@@ -141,26 +141,30 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 @media(max-width:768px){.srv-grid{grid-template-columns:1fr}}
 
 /* ── Metodología scroll ──────────────────────────── */
-.met-scroll-section{height:550vh;position:relative;padding:0}
+.met-scroll-section{height:600vh;position:relative;padding:0}
 .met-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:var(--bg-alt)}
-.met-hdr{position:absolute;top:clamp(32px,6vh,64px);left:0;right:0;text-align:center;transition:opacity .4s}
-.met-spotlight{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(60px,10vh,120px) clamp(24px,6vw,80px) 0;opacity:0;pointer-events:none;will-change:opacity,transform}
-.met-spot-n{font-family:var(--serif);font-size:clamp(5rem,14vw,9rem);font-weight:700;color:var(--green);opacity:.12;line-height:1;margin-bottom:4px}
-.met-spot-t{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.8rem);font-weight:600;line-height:1.2;margin-bottom:18px;max-width:580px}
-.met-spot-d{font-size:clamp(.88rem,1.2vw,.98rem);color:var(--muted);line-height:1.8;max-width:500px}
-.met-all{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(60px,10vh,120px) clamp(24px,6vw,60px) 0;opacity:0;pointer-events:none}
-.met-all-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px;width:100%}
+.met-hdr{position:absolute;top:clamp(28px,5vh,56px);left:0;right:0;text-align:center;transition:opacity .4s;z-index:2}
+.met-progress{position:absolute;top:clamp(18px,3.5vh,34px);left:50%;transform:translateX(-50%);display:flex;gap:7px;width:min(320px,52vw);z-index:3;transition:opacity .4s}
+.met-prog-bar{flex:1;height:2px;background:rgba(59,103,80,.15);border-radius:2px;overflow:hidden}
+.met-prog-fill{height:100%;width:0%;background:var(--green);border-radius:2px}
+.met-spotlight{position:absolute;top:50%;left:50%;width:min(600px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:transform,opacity}
+.met-spot-n{font-family:var(--serif);font-size:clamp(5rem,13vw,8.5rem);font-weight:700;color:var(--green);opacity:.13;line-height:1;margin-bottom:2px}
+.met-spot-t{font-family:var(--serif);font-size:clamp(1.6rem,3.8vw,2.7rem);font-weight:600;line-height:1.2;margin-bottom:16px}
+.met-spot-d{font-size:clamp(.86rem,1.15vw,.96rem);color:var(--muted);line-height:1.8;max-width:480px;margin:0 auto}
+.met-all{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(90px,14vh,160px) clamp(24px,6vw,60px) 0;opacity:0;pointer-events:none;will-change:transform,opacity}
+.met-all-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:660px;width:100%}
 .met-all-card{background:#fff;border-radius:14px;padding:22px 20px;border:1.5px solid var(--border)}
-.met-all-n{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--green);opacity:.25;line-height:1;margin-bottom:6px}
-.met-all-t{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:5px}
-.met-all-d{font-size:.8rem;color:var(--muted);line-height:1.7}
+.met-all-n{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--green);opacity:.25;line-height:1;margin-bottom:6px}
+.met-all-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;margin-bottom:5px}
+.met-all-d{font-size:.79rem;color:var(--muted);line-height:1.7}
 @media(max-width:640px){
   .met-scroll-section{height:auto;padding:64px 0}
-  .met-sticky{position:relative;height:auto;gap:0;padding:0}
-  .met-hdr{position:relative;top:auto;margin-bottom:40px}
-  .met-spotlight{position:relative;inset:auto;opacity:1;pointer-events:auto;padding:28px 24px;margin-bottom:4px}
-  .met-all{display:none}
+  .met-sticky{position:relative;height:auto;padding:24px 0 48px}
+  .met-hdr{position:relative;top:auto;margin-bottom:32px}
+  .met-progress{display:none}
+  .met-spotlight{position:relative;top:auto;left:auto;width:100%;opacity:1!important;pointer-events:auto;transform:none!important;padding:0 24px;margin-bottom:8px}
   .met-spot-n{font-size:3.5rem}
+  .met-all{display:none}
 }
 
 /* ── Test inicial form ───────────────────────────── */
@@ -265,7 +269,7 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
   <!-- Grid: photo + content -->
   <div class="sobre-new">
     <div class="sobre-photo-col fl">
-      <img src="foto.jpg" alt="Carmen Marañón"/>
+      <img src="IMG_7060.jpg" alt="Carmen Marañón"/>
     </div>
     <div class="sobre-content-col">
       <div class="eyebrow fu">Sobre mí</div>
@@ -291,6 +295,74 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ METODOLOGÍA ════════════════════════════════ -->
+<section class="met-scroll-section" id="metodologia">
+  <div class="met-sticky">
+
+    <div class="met-progress" id="met-progress">
+      <div class="met-prog-bar"><div class="met-prog-fill"></div></div>
+      <div class="met-prog-bar"><div class="met-prog-fill"></div></div>
+      <div class="met-prog-bar"><div class="met-prog-fill"></div></div>
+      <div class="met-prog-bar"><div class="met-prog-fill"></div></div>
+    </div>
+
+    <div class="met-hdr" id="met-hdr">
+      <div class="eyebrow">Cómo trabajo</div>
+      <h2 class="h2" style="margin-top:8px">Un proceso pensado para ti</h2>
+    </div>
+
+    <div class="met-spotlight" data-idx="0">
+      <div class="met-spot-n">01</div>
+      <div class="met-spot-t">Te conozco a fondo</div>
+      <div class="met-spot-d">Antes de la primera consulta completas un formulario con tus objetivos, hábitos, historial y rutina. Así llego preparada para aprovechar al máximo nuestro tiempo juntas.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="1">
+      <div class="met-spot-n">02</div>
+      <div class="met-spot-t">Diseñamos tu plan</div>
+      <div class="met-spot-d">Creo un plan nutricional adaptado a ti: tu metabolismo, tus gustos, tu estilo de vida y tus objetivos. Sin plantillas genéricas, sin restricciones innecesarias.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="2">
+      <div class="met-spot-n">03</div>
+      <div class="met-spot-t">Seguimiento de verdad</div>
+      <div class="met-spot-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos lo que sí. El seguimiento es donde ocurre el cambio real. Estoy contigo en cada paso.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="3">
+      <div class="met-spot-n">04</div>
+      <div class="met-spot-t">Resultados que duran</div>
+      <div class="met-spot-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
+    </div>
+
+    <div class="met-all" id="met-all">
+      <div class="met-all-grid">
+        <div class="met-all-card">
+          <div class="met-all-n">01</div>
+          <div class="met-all-t">Te conozco a fondo</div>
+          <div class="met-all-d">Formulario inicial con tus objetivos, hábitos y rutina para aprovechar al máximo cada sesión.</div>
+        </div>
+        <div class="met-all-card">
+          <div class="met-all-n">02</div>
+          <div class="met-all-t">Diseñamos tu plan</div>
+          <div class="met-all-d">Plan nutricional completamente personalizado, sin plantillas genéricas ni restricciones innecesarias.</div>
+        </div>
+        <div class="met-all-card">
+          <div class="met-all-n">03</div>
+          <div class="met-all-t">Seguimiento de verdad</div>
+          <div class="met-all-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos cada avance contigo.</div>
+        </div>
+        <div class="met-all-card">
+          <div class="met-all-n">04</div>
+          <div class="met-all-t">Resultados que duran</div>
+          <div class="met-all-d">Aprenderás a entender tu alimentación y tomar decisiones autónomas para siempre.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -398,67 +470,6 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
         <div class="laptop-foot"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ══ METODOLOGÍA ════════════════════════════════ -->
-<section class="met-scroll-section" id="metodologia">
-  <div class="met-sticky">
-
-    <div class="met-hdr" id="met-hdr">
-      <div class="eyebrow">Cómo trabajo</div>
-      <h2 class="h2" style="margin-top:8px">Un proceso pensado para ti</h2>
-    </div>
-
-    <div class="met-spotlight" data-idx="0">
-      <div class="met-spot-n">01</div>
-      <div class="met-spot-t">Te conozco a fondo</div>
-      <div class="met-spot-d">Antes de la primera consulta completas un formulario con tus objetivos, hábitos, historial y rutina. Así llego preparada para aprovechar al máximo nuestro tiempo juntas.</div>
-    </div>
-
-    <div class="met-spotlight" data-idx="1">
-      <div class="met-spot-n">02</div>
-      <div class="met-spot-t">Diseñamos tu plan</div>
-      <div class="met-spot-d">Creo un plan nutricional adaptado a ti: tu metabolismo, tus gustos, tu estilo de vida y tus objetivos. Sin plantillas genéricas, sin restricciones innecesarias.</div>
-    </div>
-
-    <div class="met-spotlight" data-idx="2">
-      <div class="met-spot-n">03</div>
-      <div class="met-spot-t">Seguimiento de verdad</div>
-      <div class="met-spot-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos lo que sí. El seguimiento es donde ocurre el cambio real. Estoy contigo en cada paso.</div>
-    </div>
-
-    <div class="met-spotlight" data-idx="3">
-      <div class="met-spot-n">04</div>
-      <div class="met-spot-t">Resultados que duran</div>
-      <div class="met-spot-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
-    </div>
-
-    <div class="met-all" id="met-all">
-      <div class="met-all-grid">
-        <div class="met-all-card">
-          <div class="met-all-n">01</div>
-          <div class="met-all-t">Te conozco a fondo</div>
-          <div class="met-all-d">Formulario inicial con tus objetivos, hábitos y rutina para aprovechar al máximo cada sesión.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">02</div>
-          <div class="met-all-t">Diseñamos tu plan</div>
-          <div class="met-all-d">Plan nutricional completamente personalizado, sin plantillas genéricas ni restricciones innecesarias.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">03</div>
-          <div class="met-all-t">Seguimiento de verdad</div>
-          <div class="met-all-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos cada avance contigo.</div>
-        </div>
-        <div class="met-all-card">
-          <div class="met-all-n">04</div>
-          <div class="met-all-t">Resultados que duran</div>
-          <div class="met-all-d">Aprenderás a entender tu alimentación y tomar decisiones autónomas para siempre.</div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -742,45 +753,84 @@ function animCount(el, target, suffix, dur){
   var spots=section.querySelectorAll('.met-spotlight');
   var allGrid=document.getElementById('met-all');
   var hdr=document.getElementById('met-hdr');
+  var prog=document.getElementById('met-progress');
+  var fills=prog?prog.querySelectorAll('.met-prog-fill'):[];
   var N=spots.length; /* 4 */
-  var phases=N+1;     /* 5 total: 4 spotlights + 1 final */
+  var phases=N+1;     /* 5 */
+
+  function ease(t){return t<0.5?2*t*t:-1+(4-2*t)*t;}
+  function lerp(a,b,t){return a+(b-a)*t;}
 
   function update(){
     var rect=section.getBoundingClientRect();
     var total=section.offsetHeight-window.innerHeight;
     if(total<=0)return;
     var p=Math.max(0,Math.min(1,-rect.top/total));
+    var W=window.innerWidth;
 
-    /* Header fades out as final grid appears */
-    var hdrOp=p<0.76?1:Math.max(0,1-(p-0.76)/0.06);
-    if(hdr)hdr.style.opacity=hdrOp.toString();
-
-    /* Each spotlight occupies 1/phases of scroll */
-    spots.forEach(function(spot,i){
-      var start=i/phases;
-      var end=(i+1)/phases;
-      var dur=end-start;
-      var fadeIn=start+dur*0.25;
-      var fadeOut=end-dur*0.25;
-      var op;
-      if(p<=start)op=0;
-      else if(p<=fadeIn)op=(p-start)/(fadeIn-start);
-      else if(p<=fadeOut)op=1;
-      else if(p<=end)op=1-(p-fadeOut)/(end-fadeOut);
-      else op=0;
-      var sc=0.84+op*0.16;
-      spot.style.opacity=op.toString();
-      spot.style.transform='scale('+sc+')';
+    /* Progress bars */
+    fills.forEach(function(fill,i){
+      var tp=(p-i/phases)*phases;
+      fill.style.width=(tp<0?0:tp>1?100:Math.min(100,tp*100))+'%';
     });
 
-    /* Final grid: last 1/phases */
+    /* Header + progress fade out at final phase */
+    var uiOp=p<0.76?1:Math.max(0,1-(p-0.76)/0.06);
+    if(hdr)hdr.style.opacity=uiOp.toString();
+    if(prog)prog.style.opacity=uiOp.toString();
+
+    /* Spotlight animations */
+    spots.forEach(function(spot,i){
+      var pStart=i/phases;
+      var pEnd=(i+1)/phases;
+      var dur=pEnd-pStart;
+
+      /* Left-list target position */
+      var lx=-(W*0.28);          /* pixels left of center */
+      var ly=(i-1.5)*74;         /* vertical stack */
+      var lSc=0.46;
+      var lOp=0.65;
+
+      var x,y,sc,op;
+
+      if(p<pStart){
+        /* Not yet: invisible above center */
+        x=0; y=38; sc=0.88; op=0;
+
+      } else if(p<=pEnd){
+        /* Active phase: enter big → exit to left */
+        var t=(p-pStart)/dur;
+        var enterP=ease(Math.min(1,t/0.28));
+        var exitP=ease(Math.max(0,(t-0.68)/0.32));
+
+        x=lerp(0,lx,exitP);
+        y=lerp(0,ly,exitP)+(1-enterP)*38;
+        sc=lerp(1,lSc,exitP);
+        op=enterP*(1-exitP*0.38);
+
+      } else if(p<0.8){
+        /* Resting on left */
+        x=lx; y=ly; sc=lSc; op=lOp;
+
+      } else {
+        /* Final: drag from left to center */
+        var fp=ease(Math.min(1,(p-0.8)/0.2));
+        x=lerp(lx,0,fp);
+        y=lerp(ly,(i-1.5)*18,fp);
+        sc=lerp(lSc,0.62,fp);
+        op=lerp(lOp,0,Math.min(1,fp*1.6));
+      }
+
+      spot.style.transform='translate(calc(-50% + '+Math.round(x)+'px), calc(-50% + '+Math.round(y)+'px)) scale('+sc.toFixed(3)+')';
+      spot.style.opacity=Math.max(0,Math.min(1,op)).toFixed(3);
+    });
+
+    /* Final grid */
     if(allGrid){
-      var fs=N/phases; /* 0.8 */
-      var fp=Math.max(0,Math.min(1,(p-fs)/(1/phases)));
-      var fadeIn=Math.min(1,fp*2.5);
-      allGrid.style.opacity=fadeIn.toString();
-      allGrid.style.transform='translateY('+(30*(1-fadeIn))+'px)';
-      allGrid.style.pointerEvents=fp>0.1?'auto':'none';
+      var fp2=ease(Math.max(0,Math.min(1,(p-0.8)/0.2)));
+      allGrid.style.opacity=Math.min(1,fp2*2.2).toFixed(3);
+      allGrid.style.transform='translateY('+(28*(1-fp2))+'px)';
+      allGrid.style.pointerEvents=fp2>0.05?'auto':'none';
     }
   }
 
