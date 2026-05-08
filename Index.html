@@ -36,7 +36,7 @@ a{color:inherit;text-decoration:none}
 
 /* ── Layout ─────────────────────────────────────── */
 .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(18px,4vw,52px)}
-.section{padding:clamp(72px,9vw,120px) 0}
+.section{padding:clamp(52px,7vw,90px) 0}
 
 /* ── Type ───────────────────────────────────────── */
 .eyebrow{font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--green);margin-bottom:12px}
@@ -72,31 +72,21 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 @media(max-width:768px){.h-nav,.h-cta{display:none!important}.h-burger{display:flex}}
 
 /* ── Hero ───────────────────────────────────────── */
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100svh;padding-top:66px}
-.hero-body{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,80px) clamp(24px,4vw,72px)}
-.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.hero{display:flex;align-items:center;justify-content:center;min-height:100svh;padding-top:66px;text-align:center;position:relative}
+.hero-body{display:flex;flex-direction:column;align-items:center;padding:clamp(40px,6vw,80px) clamp(24px,4vw,72px);max-width:760px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;justify-content:center}
 .pill{background:var(--green-l);color:var(--green);font-size:.73rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:5px 12px;border-radius:100px}
-.hero-name{margin-bottom:22px}
-.hero-sub{max-width:420px;margin-bottom:38px}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.hero-img{overflow:hidden;position:relative}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
-@media(max-width:800px){
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-img{height:420px;order:-1}
-  .hero-body{padding:36px 20px 52px}
-}
+.hero-name{margin-bottom:14px}
+.hero-tagline{font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.6rem);color:var(--green);font-style:italic;margin-bottom:24px;letter-spacing:.02em}
+.hero-sub{max-width:460px;margin-bottom:42px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+@media(max-width:600px){.hero-body{padding:36px 20px 52px}}
 
-/* ── Sobre mí — dynamic ─────────────────────────── */
+/* ── Sobre mí ────────────────────────────────────── */
 #sobre-mi{padding:0}
-.sobre-marquee-strip{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;background:var(--bg-alt)}
-.sobre-marquee{display:flex;gap:0;animation:mq 28s linear infinite;width:max-content}
-.sobre-mq-item{display:flex;align-items:center;gap:0;white-space:nowrap;font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 28px}
-.sobre-mq-item::after{content:'·';color:var(--green);padding-left:28px}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.sobre-new{display:grid;grid-template-columns:1fr 1fr;min-height:82vh}
-.sobre-photo-col{overflow:hidden;min-height:520px;position:relative}
-.sobre-photo-col img{width:100%;height:100%;object-fit:cover;object-position:center 12%}
+.sobre-new{display:grid;grid-template-columns:1fr 1fr;min-height:90vh}
+.sobre-photo-col{overflow:hidden;min-height:560px;position:relative}
+.sobre-photo-col img{width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block}
 .sobre-content-col{padding:clamp(52px,7vw,96px) clamp(36px,5vw,80px);display:flex;flex-direction:column;justify-content:center}
 .sobre-pull{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.8rem);font-style:italic;line-height:1.45;color:var(--green);margin:20px 0 28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
 .sobre-paras{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
@@ -150,19 +140,28 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 .incl li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700}
 @media(max-width:768px){.srv-grid{grid-template-columns:1fr}}
 
-/* ── Metodología ─────────────────────────────────── */
-.met-grid{display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:start}
-.met-steps{display:flex;flex-direction:column;gap:36px}
-.met-step{display:flex;gap:22px}
-.met-n{font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--border);line-height:1;flex-shrink:0;width:52px;text-align:right;padding-top:4px}
-.met-body{padding-top:6px}
-.met-t{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:6px}
-.met-d{font-size:.87rem;color:var(--muted);line-height:1.75}
-.met-callout{background:var(--green);color:#fff;border-radius:20px;padding:40px;position:sticky;top:96px}
-.callout-q{font-family:var(--serif);font-size:1.55rem;line-height:1.45;font-style:italic;margin-bottom:24px}
-.callout-sep{height:1px;background:rgba(255,255,255,.2);margin-bottom:20px}
-.callout-by{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;opacity:.55}
-@media(max-width:768px){.met-grid{grid-template-columns:1fr;gap:40px}.met-callout{position:static}}
+/* ── Metodología scroll ──────────────────────────── */
+.met-scroll-section{height:550vh;position:relative;padding:0}
+.met-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:var(--bg-alt)}
+.met-hdr{position:absolute;top:clamp(32px,6vh,64px);left:0;right:0;text-align:center;transition:opacity .4s}
+.met-spotlight{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(60px,10vh,120px) clamp(24px,6vw,80px) 0;opacity:0;pointer-events:none;will-change:opacity,transform}
+.met-spot-n{font-family:var(--serif);font-size:clamp(5rem,14vw,9rem);font-weight:700;color:var(--green);opacity:.12;line-height:1;margin-bottom:4px}
+.met-spot-t{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.8rem);font-weight:600;line-height:1.2;margin-bottom:18px;max-width:580px}
+.met-spot-d{font-size:clamp(.88rem,1.2vw,.98rem);color:var(--muted);line-height:1.8;max-width:500px}
+.met-all{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(60px,10vh,120px) clamp(24px,6vw,60px) 0;opacity:0;pointer-events:none}
+.met-all-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px;width:100%}
+.met-all-card{background:#fff;border-radius:14px;padding:22px 20px;border:1.5px solid var(--border)}
+.met-all-n{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--green);opacity:.25;line-height:1;margin-bottom:6px}
+.met-all-t{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:5px}
+.met-all-d{font-size:.8rem;color:var(--muted);line-height:1.7}
+@media(max-width:640px){
+  .met-scroll-section{height:auto;padding:64px 0}
+  .met-sticky{position:relative;height:auto;gap:0;padding:0}
+  .met-hdr{position:relative;top:auto;margin-bottom:40px}
+  .met-spotlight{position:relative;inset:auto;opacity:1;pointer-events:auto;padding:28px 24px;margin-bottom:4px}
+  .met-all{display:none}
+  .met-spot-n{font-size:3.5rem}
+}
 
 /* ── Test inicial form ───────────────────────────── */
 .form-wrap{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:clamp(24px,4vw,48px)}
@@ -210,8 +209,10 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
 .foot-c{font-size:.76rem;color:rgba(255,255,255,.28)}
 
 /* ── Animations ─────────────────────────────────── */
-.fu{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.fu{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .fu.on{opacity:1;transform:translateY(0)}
+.fl{opacity:0;transform:translateX(-52px) scale(.97);transition:opacity .9s cubic-bezier(.22,.97,.44,1),transform .9s cubic-bezier(.22,.97,.44,1)}
+.fl.on{opacity:1;transform:translateX(0) scale(1)}
 </style>
 </head>
 <body>
@@ -250,51 +251,32 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
       <span class="pill">Nutrición clínica</span>
     </div>
     <h1 class="display hero-name">Carmen<br>Marañón</h1>
+    <p class="hero-tagline">Nutrición general y deportiva</p>
     <p class="lead hero-sub">Alimentación personalizada que se adapta a tu vida, tus objetivos y tu manera de moverte por el mundo.</p>
     <div class="hero-ctas">
       <button class="btn btn-green btn-lg" onclick="goTo('test-inicial')">Solicitar primera consulta</button>
       <button class="btn btn-outline btn-lg" onclick="goTo('servicios')">Ver servicios</button>
     </div>
   </div>
-  <div class="hero-img">
-    <img src="uploads/photo-1778258607889.jpg" alt="Carmen Marañón — Nutricionista"/>
-  </div>
 </section>
 
 <!-- ══ SOBRE MÍ ═══════════════════════════════════ -->
 <section id="sobre-mi">
-  <!-- Marquee strip -->
-  <div class="sobre-marquee-strip">
-    <div class="sobre-marquee">
-      <span class="sobre-mq-item">Nutrición deportiva</span>
-      <span class="sobre-mq-item">Nutrición clínica</span>
-      <span class="sobre-mq-item">Planes personalizados</span>
-      <span class="sobre-mq-item">Sin restricciones</span>
-      <span class="sobre-mq-item">Resultados sostenibles</span>
-      <span class="sobre-mq-item">Enfoque integral</span>
-      <span class="sobre-mq-item">Nutrición deportiva</span>
-      <span class="sobre-mq-item">Nutrición clínica</span>
-      <span class="sobre-mq-item">Planes personalizados</span>
-      <span class="sobre-mq-item">Sin restricciones</span>
-      <span class="sobre-mq-item">Resultados sostenibles</span>
-      <span class="sobre-mq-item">Enfoque integral</span>
-    </div>
-  </div>
   <!-- Grid: photo + content -->
   <div class="sobre-new">
-    <div class="sobre-photo-col">
-      <img src="uploads/photo-1778258607889.jpg" alt="Carmen Marañón"/>
+    <div class="sobre-photo-col fl">
+      <img src="foto.jpg" alt="Carmen Marañón"/>
     </div>
     <div class="sobre-content-col">
       <div class="eyebrow fu">Sobre mí</div>
-      <h2 class="h2 fu" style="margin-bottom:0;transition-delay:.07s">Hola,<br>soy Carmen</h2>
-      <p class="sobre-pull fu" style="transition-delay:.14s">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</p>
+      <h2 class="h2 fu" style="margin-bottom:0;transition-delay:.1s">Hola,<br>soy Carmen</h2>
+      <p class="sobre-pull fu" style="transition-delay:.2s">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</p>
       <div class="sobre-paras">
-        <p class="body fu" style="transition-delay:.2s">Soy nutricionista clínica y deportiva. Me apasiona ayudar a las personas a entender cómo la alimentación puede convertirse en una herramienta real para mejorar el rendimiento, la salud y el bienestar.</p>
-        <p class="body fu" style="transition-delay:.28s">Trabajo desde un enfoque completamente personalizado: sin dietas restrictivas, sin soluciones genéricas. Cada plan parte de quién eres tú, tus objetivos, tu rutina y tu estilo de vida.</p>
-        <p class="body fu" style="transition-delay:.36s">Si eres deportista, te acompaño a optimizar tu rendimiento. Si buscas mejorar tu salud general, encontramos juntos el camino que tiene sentido para ti.</p>
+        <p class="body fu" style="transition-delay:.32s">Soy nutricionista clínica y deportiva. Me apasiona ayudar a las personas a entender cómo la alimentación puede convertirse en una herramienta real para mejorar el rendimiento, la salud y el bienestar.</p>
+        <p class="body fu" style="transition-delay:.46s">Trabajo desde un enfoque completamente personalizado: sin dietas restrictivas, sin soluciones genéricas. Cada plan parte de quién eres tú, tus objetivos, tu rutina y tu estilo de vida.</p>
+        <p class="body fu" style="transition-delay:.60s">Si eres deportista, te acompaño a optimizar tu rendimiento. Si buscas mejorar tu salud general, encontramos juntos el camino que tiene sentido para ti.</p>
       </div>
-      <div class="sobre-stats fu" style="transition-delay:.44s">
+      <div class="sobre-stats fu" style="transition-delay:.74s">
         <div class="sobre-stat">
           <div class="sobre-stat-num"><span data-count="200" data-suffix="+">0</span></div>
           <div class="sobre-stat-label">Pacientes</div>
@@ -420,51 +402,63 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
 </section>
 
 <!-- ══ METODOLOGÍA ════════════════════════════════ -->
-<section class="section" id="metodologia" style="background:var(--bg-alt)">
-  <div class="wrap">
-    <div class="met-grid">
-      <div class="fu">
-        <div class="eyebrow">Cómo trabajo</div>
-        <h2 class="h2" style="margin-bottom:52px">Un proceso pensado para ti</h2>
-        <div class="met-steps">
-          <div class="met-step">
-            <div class="met-n">01</div>
-            <div class="met-body">
-              <div class="met-t">Te conozco a fondo</div>
-              <div class="met-d">Antes de la primera consulta, completas un formulario con tus objetivos, hábitos, historial y rutina. Así llego preparada para aprovechar al máximo nuestro tiempo juntas.</div>
-            </div>
-          </div>
-          <div class="met-step">
-            <div class="met-n">02</div>
-            <div class="met-body">
-              <div class="met-t">Diseñamos tu plan</div>
-              <div class="met-d">Creo un plan nutricional adaptado a ti: tu metabolismo, tus gustos, tu estilo de vida y tus objetivos. Sin plantillas genéricas, sin restricciones innecesarias.</div>
-            </div>
-          </div>
-          <div class="met-step">
-            <div class="met-n">03</div>
-            <div class="met-body">
-              <div class="met-t">Seguimiento de verdad</div>
-              <div class="met-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos lo que sí. El seguimiento es donde ocurre el cambio real. Estoy contigo en cada paso.</div>
-            </div>
-          </div>
-          <div class="met-step">
-            <div class="met-n">04</div>
-            <div class="met-body">
-              <div class="met-t">Resultados que duran</div>
-              <div class="met-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
-            </div>
-          </div>
+<section class="met-scroll-section" id="metodologia">
+  <div class="met-sticky">
+
+    <div class="met-hdr" id="met-hdr">
+      <div class="eyebrow">Cómo trabajo</div>
+      <h2 class="h2" style="margin-top:8px">Un proceso pensado para ti</h2>
+    </div>
+
+    <div class="met-spotlight" data-idx="0">
+      <div class="met-spot-n">01</div>
+      <div class="met-spot-t">Te conozco a fondo</div>
+      <div class="met-spot-d">Antes de la primera consulta completas un formulario con tus objetivos, hábitos, historial y rutina. Así llego preparada para aprovechar al máximo nuestro tiempo juntas.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="1">
+      <div class="met-spot-n">02</div>
+      <div class="met-spot-t">Diseñamos tu plan</div>
+      <div class="met-spot-d">Creo un plan nutricional adaptado a ti: tu metabolismo, tus gustos, tu estilo de vida y tus objetivos. Sin plantillas genéricas, sin restricciones innecesarias.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="2">
+      <div class="met-spot-n">03</div>
+      <div class="met-spot-t">Seguimiento de verdad</div>
+      <div class="met-spot-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos lo que sí. El seguimiento es donde ocurre el cambio real. Estoy contigo en cada paso.</div>
+    </div>
+
+    <div class="met-spotlight" data-idx="3">
+      <div class="met-spot-n">04</div>
+      <div class="met-spot-t">Resultados que duran</div>
+      <div class="met-spot-d">Busco que entiendas tu alimentación y puedas tomar decisiones autónomas. Los cambios que duran son los que tienen sentido para ti, no los que te impongo.</div>
+    </div>
+
+    <div class="met-all" id="met-all">
+      <div class="met-all-grid">
+        <div class="met-all-card">
+          <div class="met-all-n">01</div>
+          <div class="met-all-t">Te conozco a fondo</div>
+          <div class="met-all-d">Formulario inicial con tus objetivos, hábitos y rutina para aprovechar al máximo cada sesión.</div>
         </div>
-      </div>
-      <div class="fu" style="transition-delay:.15s">
-        <div class="met-callout">
-          <div class="callout-q">"La mejor dieta es la que puedes mantener el resto de tu vida sin que parezca una dieta."</div>
-          <div class="callout-sep"></div>
-          <div class="callout-by">Mi filosofía de trabajo</div>
+        <div class="met-all-card">
+          <div class="met-all-n">02</div>
+          <div class="met-all-t">Diseñamos tu plan</div>
+          <div class="met-all-d">Plan nutricional completamente personalizado, sin plantillas genéricas ni restricciones innecesarias.</div>
+        </div>
+        <div class="met-all-card">
+          <div class="met-all-n">03</div>
+          <div class="met-all-t">Seguimiento de verdad</div>
+          <div class="met-all-d">Revisamos la evolución, ajustamos lo que no funciona y celebramos cada avance contigo.</div>
+        </div>
+        <div class="met-all-card">
+          <div class="met-all-n">04</div>
+          <div class="met-all-t">Resultados que duran</div>
+          <div class="met-all-d">Aprenderás a entender tu alimentación y tomar decisiones autónomas para siempre.</div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -733,19 +727,74 @@ function animCount(el, target, suffix, dur){
     var scrolled=-rect.top;
     var p=Math.max(0,Math.min(1,scrolled/range));
     var ep=p<0.5?2*p*p:-1+(4-2*p)*p;
-    var scale=0.52+ep*1.82; /* 0.52 → 2.34 */
+    var scale=0.52+ep*1.82;
     frame.style.transform='scale('+scale+')';
     if(ctx)ctx.style.opacity=Math.max(0,1-p*6).toString();
   }
   window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(update);},{passive:true});
   update();
 })();
+
+/* Metodología scroll cinematic */
+(function(){
+  var section=document.querySelector('.met-scroll-section');
+  if(!section)return;
+  var spots=section.querySelectorAll('.met-spotlight');
+  var allGrid=document.getElementById('met-all');
+  var hdr=document.getElementById('met-hdr');
+  var N=spots.length; /* 4 */
+  var phases=N+1;     /* 5 total: 4 spotlights + 1 final */
+
+  function update(){
+    var rect=section.getBoundingClientRect();
+    var total=section.offsetHeight-window.innerHeight;
+    if(total<=0)return;
+    var p=Math.max(0,Math.min(1,-rect.top/total));
+
+    /* Header fades out as final grid appears */
+    var hdrOp=p<0.76?1:Math.max(0,1-(p-0.76)/0.06);
+    if(hdr)hdr.style.opacity=hdrOp.toString();
+
+    /* Each spotlight occupies 1/phases of scroll */
+    spots.forEach(function(spot,i){
+      var start=i/phases;
+      var end=(i+1)/phases;
+      var dur=end-start;
+      var fadeIn=start+dur*0.25;
+      var fadeOut=end-dur*0.25;
+      var op;
+      if(p<=start)op=0;
+      else if(p<=fadeIn)op=(p-start)/(fadeIn-start);
+      else if(p<=fadeOut)op=1;
+      else if(p<=end)op=1-(p-fadeOut)/(end-fadeOut);
+      else op=0;
+      var sc=0.84+op*0.16;
+      spot.style.opacity=op.toString();
+      spot.style.transform='scale('+sc+')';
+    });
+
+    /* Final grid: last 1/phases */
+    if(allGrid){
+      var fs=N/phases; /* 0.8 */
+      var fp=Math.max(0,Math.min(1,(p-fs)/(1/phases)));
+      var fadeIn=Math.min(1,fp*2.5);
+      allGrid.style.opacity=fadeIn.toString();
+      allGrid.style.transform='translateY('+(30*(1-fadeIn))+'px)';
+      allGrid.style.pointerEvents=fp>0.1?'auto':'none';
+    }
+  }
+
+  var raf=null;
+  window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(){raf=null;update();});},{passive:true});
+  update();
+})();
 (function(){
   var ob=new IntersectionObserver(function(en){
     en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');ob.unobserve(e.target);}});
-  },{threshold:.08,rootMargin:'0px 0px -36px 0px'});
-  function tick(){document.querySelectorAll('.fu:not([data-ob])').forEach(function(el){el.setAttribute('data-ob','1');ob.observe(el);});}
+  },{threshold:0,rootMargin:'0px 0px -60px 0px'});
+  function tick(){document.querySelectorAll('.fu:not([data-ob]),.fl:not([data-ob])').forEach(function(el){el.setAttribute('data-ob','1');ob.observe(el);});}
   document.addEventListener('DOMContentLoaded',function(){tick();setInterval(tick,300);});
+  window.addEventListener('load',tick);
 })();
 </script>
 </body>
