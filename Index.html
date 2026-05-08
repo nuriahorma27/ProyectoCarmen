@@ -93,7 +93,7 @@ header.up{border-bottom-color:var(--border);background:rgba(255,255,255,.96)}
 @media(max-width:768px){.sobre-new{grid-template-columns:1fr}.sobre-photo-col{height:320px}}
 
 /* ── Laptop zoom (MVP2) ─────────────────────────── */
-.laptop-section{height:280vh;position:relative;background:var(--bg-alt);overflow:clip}
+.laptop-section{height:220vh;position:relative;background:var(--bg-alt);overflow:clip}
 .laptop-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 .laptop-ctx{position:absolute;top:clamp(48px,8vh,80px);left:0;right:0;text-align:center;z-index:2;transition:opacity .1s}
 .laptop-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
@@ -359,10 +359,6 @@ footer{background:var(--text);border-top:1px solid rgba(255,255,255,.07);padding
 <!-- ══ MVP2 LAPTOP ZOOM ═══════════════════════════ -->
 <section class="laptop-section" id="mvp2">
   <div class="laptop-sticky">
-    <div class="laptop-ctx">
-      <div class="eyebrow">Próximamente · MVP 2</div>
-      <h2 class="h2" style="max-width:520px;margin:10px auto 0">Tu portal de paciente, en camino</h2>
-    </div>
     <div class="laptop-stage">
       <div class="laptop-frame" id="laptop-frame">
         <div class="laptop-lid">
@@ -664,7 +660,7 @@ function animCount(el, target, suffix, dur){
     var scrolled=-rect.top;
     var p=Math.max(0,Math.min(1,scrolled/range));
     var ep=p<0.5?2*p*p:-1+(4-2*p)*p;
-    var scale=0.52+ep*1.82;
+    var scale=0.72+ep*1.62;
     frame.style.transform='scale('+scale+')';
     if(ctx)ctx.style.opacity=Math.max(0,1-p*14).toString();
   }
